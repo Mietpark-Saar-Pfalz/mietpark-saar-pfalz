@@ -61,6 +61,13 @@ body {
   background-position: center center;
 }
 
+/* React App Container - muss über dem Video liegen */
+.app {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+}
+
 /* Video Background - nur auf Desktop und bei erlaubter Bewegung */
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
   body::before {
