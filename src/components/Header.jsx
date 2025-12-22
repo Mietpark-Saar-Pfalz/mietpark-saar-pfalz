@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated } from 'react-spring'; // eslint-disable-line no-unused-vars
 import { Link } from 'react-router-dom';
 
 export default function Header() {
