@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSpring } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 
 export default function Header() {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSpring } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 
 const ProductGallery = ({ images, title }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
