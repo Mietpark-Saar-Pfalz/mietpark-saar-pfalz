@@ -50,22 +50,6 @@ export default function ProductDetail() {
     const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
     const [fieldErrors, setFieldErrors] = useState({});
 
-    // Structured Data Script in useEffect hinzufügen
-    React.useEffect(() => {
-        // Product Schema wird später definiert, daher nur bei product.id Änderung
-        if (product.id) {
-            // Warten bis productSchema verfügbar ist
-            setTimeout(() => {
-                const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
-                existingScripts.forEach(script => {
-                    if (script.textContent.includes('"Product"')) {
-                        script.remove();
-                    }
-                });
-            }, 100);
-        }
-    }, [product.id]);
-
     // Get today's date in YYYY-MM-DD format
     const getTodayDate = () => {
         const today = new Date();
@@ -261,14 +245,10 @@ export default function ProductDetail() {
         }
     };
 
-    if (!product) {
-        return <div className="container" style={{ padding: '5rem 1rem' }}>Produkt nicht gefunden. <Link to="/">Zurück zur Übersicht</Link></div>;
-    }
-
-    const images = product.gallery && product.gallery.length > 0 ? product.gallery : (product.image ? [product.image] : []);
-
-    // Zweiter useEffect für Structured Data nach productSchema Definition
+    // useEffect für Structured Data - vor der if (!product) return
     React.useEffect(() => {
+        if (!product) return; // Early return if no product
+
         const productSchema = {
             "@context": "http://schema.org",
             "@type": "Product",
@@ -306,6 +286,12 @@ export default function ProductDetail() {
             });
         };
     }, [product]); // Abhängig von product
+
+    if (!product) {
+        return <div className="container" style={{ padding: '5rem 1rem' }}>Produkt nicht gefunden. <Link to="/">Zurück zur Übersicht</Link></div>;
+    }
+
+    const images = product.gallery && product.gallery.length > 0 ? product.gallery : (product.image ? [product.image] : []);
 
     return (
         <div className="product-detail-page">
