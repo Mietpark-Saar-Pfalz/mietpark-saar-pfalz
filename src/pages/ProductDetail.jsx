@@ -50,6 +50,22 @@ export default function ProductDetail() {
     const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
     const [fieldErrors, setFieldErrors] = useState({});
 
+    // Structured Data Script in useEffect hinzufügen
+    React.useEffect(() => {
+        // Product Schema wird später definiert, daher nur bei product.id Änderung
+        if (product.id) {
+            // Warten bis productSchema verfügbar ist
+            setTimeout(() => {
+                const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
+                existingScripts.forEach(script => {
+                    if (script.textContent.includes('"Product"')) {
+                        script.remove();
+                    }
+                });
+            }, 100);
+        }
+    }, [product.id]);
+
     // Get today's date in YYYY-MM-DD format
     const getTodayDate = () => {
         const today = new Date();
@@ -59,6 +75,7 @@ export default function ProductDetail() {
     // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        // e wird verwendet, daher kein unused var Fehler
         const newFormData = { ...formData, [name]: value };
         setFormData(newFormData);
 
@@ -271,16 +288,8 @@ export default function ProductDetail() {
         }
     };
 
-    // Structured Data Script in useEffect hinzufügen
+    // Zweiter useEffect für Structured Data nach productSchema Definition
     React.useEffect(() => {
-        // Entferne vorhandene Product Structured Data
-        const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
-        existingScripts.forEach(script => {
-            if (script.textContent.includes('"Product"')) {
-                script.remove();
-            }
-        });
-
         // Neue Product Structured Data hinzufügen
         const script = document.createElement('script');
         script.type = 'application/ld+json';
@@ -296,7 +305,7 @@ export default function ProductDetail() {
                 }
             });
         };
-    }, [product.id]); // Abhängig von product.id um bei Produkt-Wechsel zu aktualisieren
+    }, [product.id, productSchema]); // Abhängig von product.id und productSchema
 
     return (
         <div className="product-detail-page">

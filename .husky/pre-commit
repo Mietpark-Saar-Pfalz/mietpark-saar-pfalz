@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run linting
+npm run lint
+
+# Run tests (if available)
+npm run test
+
+# Check if README and CHANGELOG are up to date
+if git diff --cached --name-only | grep -q "src/\|package.json"; then
+  echo "⚠️  Code changes detected. Please ensure README.md and CHANGELOG.md are up to date!"
+  echo "Run 'npm run changelog' to update CHANGELOG.md"
+fi

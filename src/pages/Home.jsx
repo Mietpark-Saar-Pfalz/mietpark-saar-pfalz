@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring } from 'react-spring';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import SEOHead from '../components/SEOHead';
@@ -199,11 +199,11 @@ export default function Home() {
                                 delay: 100 * index + 900 // Staggered delay after hero animations
                             });
                             return (
-                                <animated.div key={index} className="benefit" style={benefitAnimation}>
+                                <div key={index} className="benefit" style={benefitAnimation}>
                                     <div className="icon">{benefit.icon}</div>
                                     <h3>{benefit.title}</h3>
                                     <p>{benefit.description}</p>
-                                </animated.div>
+                                </div>
                             );
                         })}
                     </div>
