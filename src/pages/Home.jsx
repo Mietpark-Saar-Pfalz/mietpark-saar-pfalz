@@ -1,9 +1,27 @@
 import React from 'react';
-import { useSpring } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import SEOHead from '../components/SEOHead';
 import { products } from '../data/products';
+
+// Separate component for benefit cards with animation
+const BenefitCard = ({ benefit, index }) => {
+    const benefitAnimation = useSpring({
+        from: { opacity: 0, transform: 'translateY(50px)' },
+        to: { opacity: 1, transform: 'translateY(0)' },
+        config: { mass: 1, tension: 170, friction: 26 },
+        delay: 100 * index + 900 // Staggered delay after hero animations
+    });
+
+    return (
+        <animated.div className="benefit" style={benefitAnimation}>
+            <div className="icon">{benefit.icon}</div>
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+        </animated.div>
+    );
+};
 
 export default function Home() {
     // Seasonal logic for Hero Section
@@ -99,53 +117,53 @@ export default function Home() {
         }
     ];
 
-    const localBusinessSchema = {
-        "@context": "http://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Mietpark Saar-Pfalz",
-        "image": "https://mietpark-saar-pfalz.com/images/logo.png",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Kastanienweg 17",
-            "addressLocality": "Homburg",
-            "postalCode": "66424",
-            "addressRegion": "Saarland",
-            "addressCountry": "DE"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "49.2838384",
-            "longitude": "7.3414247"
-        },
-        "url": "https://mietpark-saar-pfalz.com/",
-        "telephone": "+491737615995",
-        "priceRange": "€€",
-        "openingHoursSpecification": [
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday"
-                ],
-                "opens": "09:00",
-                "closes": "17:00"
-            },
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                    "Saturday"
-                ],
-                "opens": "09:00",
-                "closes": "13:00"
-            }
-        ]
-    };
-
     // Structured Data Script in useEffect hinzufügen
     React.useEffect(() => {
+        const localBusinessSchema = {
+            "@context": "http://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Mietpark Saar-Pfalz",
+            "image": "https://mietpark-saar-pfalz.com/images/logo.png",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Kastanienweg 17",
+                "addressLocality": "Homburg",
+                "postalCode": "66424",
+                "addressRegion": "Saarland",
+                "addressCountry": "DE"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "49.2838384",
+                "longitude": "7.3414247"
+            },
+            "url": "https://mietpark-saar-pfalz.com/",
+            "telephone": "+491737615995",
+            "priceRange": "€€",
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday"
+                    ],
+                    "opens": "09:00",
+                    "closes": "17:00"
+                },
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Saturday"
+                    ],
+                    "opens": "09:00",
+                    "closes": "13:00"
+                }
+            ]
+        };
+
         // Entferne vorhandene Structured Data
         const existingScript = document.querySelector('script[type="application/ld+json"]');
         if (existingScript) {
@@ -169,7 +187,7 @@ export default function Home() {
 
     return (
         <>
-            <SEOHead pageType="home" />
+            <SEOHead />
             {/* Hero Section */}
             <section className="hero" id="home" style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('${heroConfig.image}')`,
@@ -191,21 +209,9 @@ export default function Home() {
             <section className="section bg-light">
                 <div className="container">
                     <div className="benefits-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-xl)' }}>
-                        {benefitsData.map((benefit, index) => {
-                            const benefitAnimation = useSpring({
-                                from: { opacity: 0, transform: 'translateY(50px)' },
-                                to: { opacity: 1, transform: 'translateY(0)' },
-                                config: { mass: 1, tension: 170, friction: 26 },
-                                delay: 100 * index + 900 // Staggered delay after hero animations
-                            });
-                            return (
-                                <div key={index} className="benefit" style={benefitAnimation}>
-                                    <div className="icon">{benefit.icon}</div>
-                                    <h3>{benefit.title}</h3>
-                                    <p>{benefit.description}</p>
-                                </div>
-                            );
-                        })}
+                        {benefitsData.map((benefit, index) => (
+                            <BenefitCard key={index} benefit={benefit} index={index} />
+                        ))}
                     </div>
                 </div>
             </section>

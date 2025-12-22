@@ -258,12 +258,7 @@ export default function BlogDetail() {
 
     return (
         <div className="blog-detail-page">
-            <SEOHead
-                pageType="blog"
-                pageId={post.id}
-                pageData={post}
-                url={`https://mietpark-saar-pfalz.com/blog/${post.id}`}
-            />
+            <SEOHead />
             {/* Hero Section */}
             <section style={{
                 background: 'linear-gradient(135deg, #1a4d2e 0%, #4f772d 100%)',

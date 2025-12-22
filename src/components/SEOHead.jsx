@@ -3,13 +3,7 @@ import React from 'react';
 export default function SEOHead({
   title,
   description,
-  keywords,
-  image,
-  url,
-  type = 'website',
-  pageType,
-  pageId,
-  pageData
+  keywords
 }) {
   // Einfache SEO ohne externe Dependencies - verwendet useEffect für document manipulation
   React.useEffect(() => {

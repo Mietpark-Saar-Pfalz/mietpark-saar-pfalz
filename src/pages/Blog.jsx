@@ -65,7 +65,7 @@ export default function Blog() {
 
     return (
         <div className="blog-page">
-            <SEOHead pageType="blog" />
+            <SEOHead />
             {/* Hero Section */}
             <section className="hero" style={{
                 background: 'linear-gradient(135deg, #0f3d24 0%, #2d5a3d 50%, #1a4d2e 100%)',

@@ -18,7 +18,7 @@ export default function ProductDetail() {
         if (cached) {
             try {
                 return JSON.parse(cached);
-            } catch (e) {
+            } catch {
                 return {
                     user_name: '',
                     user_email: '',
@@ -97,16 +97,16 @@ export default function ProductDetail() {
             case 'car_model':
                 return ![3, 4, 5].includes(product.id) ? value.trim() !== '' : true;
             case 'rental_start':
-            case 'rental_end':
+            case 'rental_end': {
                 if (!value) return false;
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const startDate = new Date(formData.rental_start);
-                const endDate = new Date(formData.rental_end);
 
                 if (name === 'rental_start' && new Date(value) < today) return false;
                 if (name === 'rental_end' && new Date(value) <= startDate) return false;
                 return true;
+            }
             default:
                 return true;
         }
@@ -267,29 +267,29 @@ export default function ProductDetail() {
 
     const images = product.gallery && product.gallery.length > 0 ? product.gallery : (product.image ? [product.image] : []);
 
-    const productSchema = {
-        "@context": "http://schema.org",
-        "@type": "Product",
-        "name": product.title,
-        "image": window.location.origin + product.image, // Absolute URL
-        "description": product.description,
-        "sku": product.id, // Using product ID as SKU
-        "brand": {
-            "@type": "Brand",
-            "name": "Mietpark Saar-Pfalz"
-        },
-        "offers": {
-            "@type": "Offer",
-            "url": window.location.href,
-            "priceCurrency": "EUR",
-            "price": product.prices?.base || product.price?.match(/(\d+)/)[0] || '0',
-            "availability": "http://schema.org/InStock", // Assuming always in stock for booking
-            "itemCondition": "http://schema.org/UsedCondition"
-        }
-    };
-
     // Zweiter useEffect für Structured Data nach productSchema Definition
     React.useEffect(() => {
+        const productSchema = {
+            "@context": "http://schema.org",
+            "@type": "Product",
+            "name": product.title,
+            "image": window.location.origin + product.image, // Absolute URL
+            "description": product.description,
+            "sku": product.id, // Using product ID as SKU
+            "brand": {
+                "@type": "Brand",
+                "name": "Mietpark Saar-Pfalz"
+            },
+            "offers": {
+                "@type": "Offer",
+                "url": window.location.href,
+                "priceCurrency": "EUR",
+                "price": product.prices?.base || product.price?.match(/(\d+)/)[0] || '0',
+                "availability": "http://schema.org/InStock", // Assuming always in stock for booking
+                "itemCondition": "http://schema.org/UsedCondition"
+            }
+        };
+
         // Neue Product Structured Data hinzufügen
         const script = document.createElement('script');
         script.type = 'application/ld+json';
@@ -305,16 +305,11 @@ export default function ProductDetail() {
                 }
             });
         };
-    }, [product.id, productSchema]); // Abhängig von product.id und productSchema
+    }, [product]); // Abhängig von product
 
     return (
         <div className="product-detail-page">
-            <SEOHead
-                pageType="product"
-                pageId={product.id}
-                pageData={product}
-                url={`https://mietpark-saar-pfalz.com/product/${product.id}`}
-            />
+            <SEOHead />
             {/* Hero / Header for Product */}
             <div style={{
                 background: 'linear-gradient(135deg, #1a4d2e 0%, #4f772d 100%)',

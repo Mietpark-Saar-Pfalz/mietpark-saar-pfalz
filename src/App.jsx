@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -12,17 +12,13 @@ import Datenschutz from './pages/Datenschutz';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
-  const [showCookieBanner, setShowCookieBanner] = useState(false);
-  const [hasAcceptedCookies, setHasAcceptedCookies] = useState(false);
+  const getInitialCookieConsent = () => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('cookieConsent') === 'accepted';
+  };
 
-  useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent');
-    if (consent === 'accepted') {
-      setHasAcceptedCookies(true);
-    } else {
-      setShowCookieBanner(true);
-    }
-  }, []);
+  const [showCookieBanner, setShowCookieBanner] = useState(() => !getInitialCookieConsent());
+  const [hasAcceptedCookies, setHasAcceptedCookies] = useState(() => getInitialCookieConsent());
 
   const acceptCookies = () => {
     localStorage.setItem('cookieConsent', 'accepted');
