@@ -38,7 +38,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/mietpark-saar-pfalz">
       <ScrollToTop />
       <div className="app">
         <Header />
