@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import ProductCard from '../components/ProductCard';
+import SEOHead from '../components/SEOHead';
 import { products } from '../data/products';
 
 export default function Home() {
@@ -103,7 +103,7 @@ export default function Home() {
         "@context": "http://schema.org",
         "@type": "LocalBusiness",
         "name": "Mietpark Saar-Pfalz",
-        "image": "http://localhost:5173/images/logo.png", // Replace with absolute URL
+        "image": "https://mietpark-saar-pfalz.com/images/logo.png",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Kastanienweg 17",
@@ -117,7 +117,7 @@ export default function Home() {
             "latitude": "49.2838384",
             "longitude": "7.3414247"
         },
-        "url": "http://localhost:5173/", // Replace with absolute URL
+        "url": "https://mietpark-saar-pfalz.com/",
         "telephone": "+491737615995",
         "priceRange": "€€",
         "openingHoursSpecification": [
@@ -146,6 +146,7 @@ export default function Home() {
 
     return (
         <>
+            <SEOHead pageType="home" />
             <Helmet>
                 <script type="application/ld+json">
                     {JSON.stringify(localBusinessSchema)}

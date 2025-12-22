@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
 
 export default function BlogDetail() {
     const { id } = useParams();
@@ -257,6 +258,12 @@ export default function BlogDetail() {
 
     return (
         <div className="blog-detail-page">
+            <SEOHead
+                pageType="blog"
+                pageId={post.id}
+                pageData={post}
+                url={`https://mietpark-saar-pfalz.com/blog/${post.id}`}
+            />
             {/* Hero Section */}
             <section style={{
                 background: 'linear-gradient(135deg, #1a4d2e 0%, #4f772d 100%)',

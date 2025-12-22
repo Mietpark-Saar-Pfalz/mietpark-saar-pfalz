@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { products } from '../data/products';
 import emailjs from '@emailjs/browser';
 import ProductGallery from '../components/ProductGallery';
+import SEOHead from '../components/SEOHead';
 import { Helmet } from 'react-helmet';
 
 export default function ProductDetail() {
@@ -273,6 +274,12 @@ export default function ProductDetail() {
 
     return (
         <div className="product-detail-page">
+            <SEOHead
+                pageType="product"
+                pageId={product.id}
+                pageData={product}
+                url={`https://mietpark-saar-pfalz.com/product/${product.id}`}
+            />
             <Helmet>
                 <script type="application/ld+json">
                     {JSON.stringify(productSchema)}

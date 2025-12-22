@@ -19,8 +19,8 @@
       },
       "telephone": "+49 173 761 5995",
       "email": "kontakt@mietpark-saar-pfalz.com",
-      "url": "http://www.mietpark-saar-pfalz.de",
-      "image": "http://www.mietpark-saar-pfalz.de/images/logo.png",
+      "url": "https://mietpark-saar-pfalz.com/",
+      "image": "https://mietpark-saar-pfalz.com/images/logo.png",
       "description": "Ihr zuverlässiger Partner für Dachboxen, Fahrradträger und mehr in Homburg.",
       "hasMap": "https://www.google.com/maps/place/Mietpark+Saar-Pfalz/@49.333333,7.333333,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d49.333333!4d7.333333",
       "openingHours": "Mo-Fr 09:00-18:00",
@@ -145,6 +145,28 @@
     </button>
 
     <div id="root"></div>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back to the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -19,7 +19,7 @@ export default function Footer() {
                 <div className="footer-section">
                     <h3>Links</h3>
                     <ul>
-                        <li><a href="/#home">Startseite</a></li>
+                        <li><Link to="/">Startseite</Link></li>
                         <li><Link to="/blog">Blog</Link></li>
                         <li><Link to="/impressum">Impressum</Link></li>
                         <li><Link to="/agb">AGB</Link></li>
