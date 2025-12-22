@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # to push commits to repository
+      pages: write     # to deploy to GitHub Pages
 
     steps:
       - name: Checkout code
@@ -43,7 +46,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          publish_branch: gh-pages
           cname: mietpark-saar-pfalz.com
+          allow_empty_commit: true
+          force_orphan: true
 
       - name: Update deployment status
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
