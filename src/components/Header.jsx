@@ -34,7 +34,12 @@ export default function Header() {
                 <a href="/#contact" className="btn btn-primary nav-desktop-btn">Anfrage senden</a>
 
                 {/* Mobile Hamburger Icon */}
-                <button className="hamburger-menu-icon" onClick={toggleMobileMenu}>
+                <button
+                    className="hamburger-menu-icon"
+                    onClick={toggleMobileMenu}
+                    aria-label="Menü öffnen"
+                    aria-expanded={isMobileMenuOpen}
+                >
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
