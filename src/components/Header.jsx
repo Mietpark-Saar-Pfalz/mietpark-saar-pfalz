@@ -25,13 +25,13 @@ export default function Header() {
                 <nav className="nav-desktop">
                     <ul className="nav-list">
                         <li><Link to="/">Startseite</Link></li>
-                        <li><a href="#products">Vermietung</a></li>
+                        <li><a href="/#products">Vermietung</a></li>
                         <li><Link to="/blog">Blog</Link></li>
-                        <li><a href="#contact">Kontakt</a></li>
+                        <li><a href="/#contact">Kontakt</a></li>
                         <li><a href="https://wa.me/491737615995" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', fontWeight: 'bold' }}>WhatsApp</a></li>
                     </ul>
                 </nav>
-                <a href="#contact" className="btn btn-primary nav-desktop-btn">Anfrage senden</a>
+                <a href="/#contact" className="btn btn-primary nav-desktop-btn">Anfrage senden</a>
 
                 {/* Mobile Hamburger Icon */}
                 <button className="hamburger-menu-icon" onClick={toggleMobileMenu}>
@@ -45,11 +45,11 @@ export default function Header() {
                     <button className="close-mobile-menu" onClick={toggleMobileMenu}>×</button>
                     <ul className="nav-list-mobile">
                         <li><Link to="/" onClick={toggleMobileMenu}>Startseite</Link></li>
-                        <li><a href="#products" onClick={toggleMobileMenu}>Vermietung</a></li>
+                        <li><a href="/#products" onClick={toggleMobileMenu}>Vermietung</a></li>
                         <li><Link to="/blog" onClick={toggleMobileMenu}>Blog</Link></li>
-                        <li><a href="#contact" onClick={toggleMobileMenu}>Kontakt</a></li>
+                        <li><a href="/#contact" onClick={toggleMobileMenu}>Kontakt</a></li>
                         <li><a href="https://wa.me/491737615995" target="_blank" rel="noopener noreferrer" onClick={toggleMobileMenu} style={{ color: '#25D366', fontWeight: 'bold' }}>WhatsApp</a></li>
-                        <li><a href="#contact" className="btn btn-primary" onClick={toggleMobileMenu}>Anfrage senden</a></li>
+                        <li><a href="/#contact" className="btn btn-primary" onClick={toggleMobileMenu}>Anfrage senden</a></li>
                     </ul>
                 </animated.nav>
             </div>
