@@ -5,6 +5,30 @@ Alle wichtigen Änderungen an der Mietpark Saar-Pfalz Website werden in dieser D
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-12-22
+
+### ✨ Added - Neue Features
+
+- **PWA-Unterstützung**: manifest.json für Progressive Web App Funktionalität
+  - App-Installation auf Mobilgeräten möglich
+  - Offline-Fähigkeiten und bessere Performance
+  - Native App-ähnliche Erfahrung
+
+### 🔧 Changed - Verbesserungen
+
+- **Mobile Responsivität**: Umfassende Optimierung für mobile Geräte
+  - Mobile Navigation mit absolut positioniertem Hamburger-Menü
+  - Produkte-Grid von 320px auf 280px minimale Breite reduziert
+  - Benefits-Grid von 300px auf 250px minimale Breite reduziert
+  - Optimierte Hero-Sektion, Karten und Footer für kleine Bildschirme
+  - Verbesserte Touch-Ziele und Barrierefreiheit (aria-labels)
+  - Bessere mobile Container-Abstände und Layouts
+
+- **Mobile Menu**: Verbesserte Benutzerfreundlichkeit
+  - Sichtbares und zugängliches Hamburger-Menü-Icon
+  - Verbesserte Animation und Backdrop-Effekte
+  - Accessibility-Verbesserungen mit aria-expanded Attributen
+
 ## [1.0.0] - 2025-12-22
 
 ### ✨ Added - Neue Features
