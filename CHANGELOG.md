@@ -16,6 +16,12 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
 
 ### 🔧 Changed - Verbesserungen
 
+- **Performance-Optimierung**: Alle Bilder neu hochgeladen nach Metadaten-Entfernung
+  - Reduzierte Dateigrößen bei gleichbleibender Qualität
+  - Schnellere Ladezeiten und bessere Performance
+  - 67 Bilddateien optimiert (Produkte, Hero-Bilder, Logos)
+  - Video-Dateien neu hochgeladen
+
 - **Mobile Responsivität**: Umfassende Optimierung für mobile Geräte
   - Mobile Navigation mit absolut positioniertem Hamburger-Menü
   - Produkte-Grid von 320px auf 280px minimale Breite reduziert
