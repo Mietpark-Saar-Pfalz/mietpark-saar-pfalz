@@ -29,6 +29,9 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
   - Optimierte Hero-Sektion, Karten und Footer für kleine Bildschirme
   - Verbesserte Touch-Ziele und Barrierefreiheit (aria-labels)
   - Bessere mobile Container-Abstände und Layouts
+  - Neue Hero-Typografie-Klassen für konsistente Breakpoints
+  - Horizontale Produktkarten stapeln auf Mobilgeräten automatisch
+  - Apple-Touch-Icon & iOS-spezifische Backdrop-Filter für sauberere Darstellung
 
 - **Mobile Menu**: Verbesserte Benutzerfreundlichkeit
   - Sichtbares und zugängliches Hamburger-Menü-Icon
