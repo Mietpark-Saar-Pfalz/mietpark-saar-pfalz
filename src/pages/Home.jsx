@@ -61,28 +61,7 @@ export default function Home() {
         config: { mass: 1, tension: 120, friction: 14 },
         delay: 200
     });
-    const h1Style = {
-        marginBottom: 'var(--spacing-md)',
-        fontSize: '3.2rem',
-        fontWeight: '900',
-        color: 'white',
-        textShadow: '0 3px 6px rgba(0,0,0,0.4), 0 6px 12px rgba(0,0,0,0.3)',
-        letterSpacing: '-0.025em',
-        lineHeight: '1.1',
-        textAlign: 'center'
-    }
-    const pStyle = {
-        marginBottom: 'var(--spacing-lg)',
-        fontSize: '1.3rem',
-        fontWeight: '400',
-        color: 'rgba(255,255,255,0.95)',
-        textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-        lineHeight: '1.6',
-        textAlign: 'center',
-        maxWidth: '800px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-    }
+    // Use CSS classes for responsive typography (.hero-title, .hero-subtitle)
 
     const subtitleAnimation = useSpring({
         from: { opacity: 0, transform: 'translateY(50px)' },
@@ -196,8 +175,8 @@ export default function Home() {
                 position: 'relative'
             }}>
                 <div className="container hero-content" style={{ position: 'relative', zIndex: 1 }}>
-                    <animated.h1 style={{...titleAnimation, ...h1Style}}>{heroConfig.title}</animated.h1>
-                    <animated.p style={{...subtitleAnimation, ...pStyle}}>{heroConfig.subtitle}</animated.p>
+                    <animated.h1 className="hero-title" style={titleAnimation}>{heroConfig.title}</animated.h1>
+                    <animated.p className="hero-subtitle" style={subtitleAnimation}>{heroConfig.subtitle}</animated.p>
                     <animated.div className="hero-actions" style={actionsAnimation}>
                         <a href="#products" className="btn btn-accent">Zum Angebot</a>
                         <a href="#contact" className="btn btn-secondary">Kontakt</a>
@@ -251,17 +230,7 @@ export default function Home() {
                     <div className="products-list-vertical" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xxl)', maxWidth: '900px', margin: '0 auto' }}>
                         {products.map(product => (
                             <Link to={`/product/${product.id}`} key={product.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <div className="card product-card-horizontal" style={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    padding: 'var(--spacing-xl)',
-                                    gap: 'var(--spacing-lg)',
-                                    transition: 'transform 0.3s, box-shadow 0.3s',
-                                    cursor: 'pointer',
-                                    borderRadius: '16px',
-                                    boxShadow: '0 10px 25px rgba(0,0,0,0.08)'
-                                }}
+                                <div className="card product-card-horizontal"
                                     onMouseEnter={(e) => {
                                         e.currentTarget.style.transform = 'translateY(-8px)';
                                         e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)';
@@ -271,7 +240,7 @@ export default function Home() {
                                         e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.08)';
                                     }}
                                 >
-                                    <div style={{ flex: '0 0 250px', height: '180px', borderRadius: '12px', overflow: 'hidden', background: '#f8f9fa', border: '1px solid #eee' }}>
+                                    <div className="product-image">
                                         {product.image ? (
                                             <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
                                                 {/* TODO: Bilder in WebP konvertieren und <picture>-Elemente verwenden für bessere Performance */}
@@ -293,7 +262,7 @@ export default function Home() {
                                             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc' }}>Kein Bild</div>
                                         )}
                                     </div>
-                                    <div style={{ flex: 1 }}>
+                                    <div className="product-card-body">
                                         <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', fontSize: '1.8rem', fontWeight: 'bold' }}>
                                             {product.title}
                                             {[1, 2, 6].includes(product.id) && <span style={{ fontSize: '0.9rem', fontWeight: 'normal', color: 'var(--text-muted)', display: 'block', marginTop: 'var(--spacing-xxs)' }}>(Träger optional)</span>}
