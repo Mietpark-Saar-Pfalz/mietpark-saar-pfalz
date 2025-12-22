@@ -281,8 +281,8 @@ Wir verwenden [Conventional Commits](COMMIT_CONVENTIONS.md):
 
 Alle wichtigen Änderungen werden in der [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
-### Aktuelle Version: 1.0.0
-- ✅ Vollständige Website mit allen Features
+### Aktuelle Version: 1.0.1
+- ✅ PWA-Unterstützung plus verbesserte Mobile-Experience (Hero-Typografie, Produktkarten, iOS-Optimierungen)
 - ✅ SEO-Optimierung und Performance
 - ✅ GitHub Pages Deployment
 - ✅ Custom Domain Integration
@@ -290,7 +290,6 @@ Alle wichtigen Änderungen werden in der [CHANGELOG.md](CHANGELOG.md) dokumentie
 ## 📞 Support & Kontakt
 
 **Mietpark Saar-Pfalz**
-- **Adresse:** Kastanienweg 17, 66424 Homburg/Saar
 - **Telefon:** +49 173 761 5995
 - **Email:** kontakt@mietpark-saar-pfalz.com
 - **Website:** [mietpark-saar-pfalz.com](https://mietpark-saar-pfalz.com)
