@@ -4,7 +4,6 @@ import { products } from '../data/products';
 import emailjs from '@emailjs/browser';
 import ProductGallery from '../components/ProductGallery';
 import SEOHead from '../components/SEOHead';
-import { Helmet } from 'react-helmet';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -272,6 +271,33 @@ export default function ProductDetail() {
         }
     };
 
+    // Structured Data Script in useEffect hinzufügen
+    React.useEffect(() => {
+        // Entferne vorhandene Product Structured Data
+        const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
+        existingScripts.forEach(script => {
+            if (script.textContent.includes('"Product"')) {
+                script.remove();
+            }
+        });
+
+        // Neue Product Structured Data hinzufügen
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(productSchema);
+        document.head.appendChild(script);
+
+        // Cleanup beim Unmount
+        return () => {
+            const scriptsToRemove = document.querySelectorAll('script[type="application/ld+json"]');
+            scriptsToRemove.forEach(script => {
+                if (script.textContent.includes('"Product"')) {
+                    script.remove();
+                }
+            });
+        };
+    }, [product.id]); // Abhängig von product.id um bei Produkt-Wechsel zu aktualisieren
+
     return (
         <div className="product-detail-page">
             <SEOHead
@@ -280,11 +306,6 @@ export default function ProductDetail() {
                 pageData={product}
                 url={`https://mietpark-saar-pfalz.com/product/${product.id}`}
             />
-            <Helmet>
-                <script type="application/ld+json">
-                    {JSON.stringify(productSchema)}
-                </script>
-            </Helmet>
             {/* Hero / Header for Product */}
             <div style={{
                 background: 'linear-gradient(135deg, #1a4d2e 0%, #4f772d 100%)',

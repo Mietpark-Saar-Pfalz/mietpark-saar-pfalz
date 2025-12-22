@@ -144,14 +144,32 @@ export default function Home() {
         ]
     };
 
+    // Structured Data Script in useEffect hinzufügen
+    React.useEffect(() => {
+        // Entferne vorhandene Structured Data
+        const existingScript = document.querySelector('script[type="application/ld+json"]');
+        if (existingScript) {
+            existingScript.remove();
+        }
+
+        // Neue Structured Data hinzufügen
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(localBusinessSchema);
+        document.head.appendChild(script);
+
+        // Cleanup beim Unmount
+        return () => {
+            const scriptToRemove = document.querySelector('script[type="application/ld+json"]');
+            if (scriptToRemove) {
+                scriptToRemove.remove();
+            }
+        };
+    }, []);
+
     return (
         <>
             <SEOHead pageType="home" />
-            <Helmet>
-                <script type="application/ld+json">
-                    {JSON.stringify(localBusinessSchema)}
-                </script>
-            </Helmet>
             {/* Hero Section */}
             <section className="hero" id="home" style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('${heroConfig.image}')`,
