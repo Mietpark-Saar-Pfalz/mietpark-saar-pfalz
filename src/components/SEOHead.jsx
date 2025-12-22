@@ -60,90 +60,22 @@ export default function SEOHead({
   pageId,
   pageData
 }) {
-  // Basis-Konfiguration
-  const baseConfig = seoConfig.default;
-
-  // Seiten-spezifische Konfiguration
-  let pageConfig = {};
-  if (pageType && seoConfig[pageType]) {
-    pageConfig = seoConfig[pageType];
-  }
-
-  // Dynamische Daten für Produkte/Blog
-  let dynamicConfig = {};
-  if (pageType && pageId && pageData) {
-    dynamicConfig = getDynamicSEO(pageType, pageId, pageData);
-  }
-
-  // Finale SEO-Daten (Priorität: dynamic > page > base)
-  const finalSEO = {
-    ...baseConfig,
-    ...pageConfig,
-    ...dynamicConfig,
-    ...(title && { title }),
-    ...(description && { description }),
-    ...(keywords && { keywords }),
-    ...(image && { image }),
-    ...(url && { url })
-  };
+  // Temporäre Vereinfachung für Debugging
+  const defaultTitle = 'Mietpark Saar-Pfalz - Dachboxen, Fahrradträger & mehr mieten';
+  const defaultDescription = 'Ihr zuverlässiger Partner für Dachboxen, Heckboxen, Fahrradträger und Hüpfburgen in Homburg. Flexible Mietpreise, Montageservice inklusive.';
 
   return (
     <Helmet>
-      {/* Basis Meta Tags */}
-      <title>{finalSEO.title}</title>
-      <meta name="description" content={finalSEO.description} />
-      <meta name="keywords" content={finalSEO.keywords} />
-
-      {/* Canonical URL */}
-      <link rel="canonical" href={finalSEO.url} />
-
-      {/* Open Graph */}
-      <meta property="og:title" content={finalSEO.title} />
-      <meta property="og:description" content={finalSEO.description} />
-      <meta property="og:image" content={finalSEO.image} />
-      <meta property="og:url" content={finalSEO.url} />
-      <meta property="og:type" content={type} />
-      <meta property="og:site_name" content="Mietpark Saar-Pfalz" />
-
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={finalSEO.title} />
-      <meta name="twitter:description" content={finalSEO.description} />
-      <meta name="twitter:image" content={finalSEO.image} />
-
-      {/* Zusätzliche SEO Meta Tags */}
-      <meta name="robots" content="index, follow" />
-      <meta name="language" content="de-DE" />
-      <meta name="author" content="Mietpark Saar-Pfalz" />
-      <meta name="publisher" content="Mietpark Saar-Pfalz" />
-
-      {/* Geo Tags */}
-      <meta name="geo.region" content="DE-SL" />
-      <meta name="geo.placename" content="Homburg" />
-      <meta name="geo.position" content="49.2838384;7.3414247" />
-      <meta name="ICBM" content="49.2838384, 7.3414247" />
-
-      {/* Business Informationen */}
-      <meta name="business:contact_data:street_address" content="Kastanienweg 17" />
-      <meta name="business:contact_data:locality" content="Homburg" />
-      <meta name="business:contact_data:region" content="Saarland" />
-      <meta name="business:contact_data:postal_code" content="66424" />
-      <meta name="business:contact_data:country_name" content="Deutschland" />
-      <meta name="business:contact_data:phone_number" content="+49 173 761 5995" />
-
-      {/* Theme Color für Mobile */}
-      <meta name="theme-color" content="#1a4d2e" />
-      <meta name="msapplication-TileColor" content="#1a4d2e" />
-
-      {/* Favicon und Icons */}
-      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-
-      {/* Preconnect für Performance */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-      {/* JSON-LD Structured Data wird separat behandelt */}
+      <title>{title || defaultTitle}</title>
+      <meta name="description" content={description || defaultDescription} />
+      {keywords && <meta name="keywords" content={keywords} />}
+    </Helmet>
+  );
+  return (
+    <Helmet>
+      <title>{title || defaultTitle}</title>
+      <meta name="description" content={description || defaultDescription} />
+      {keywords && <meta name="keywords" content={keywords} />}
     </Helmet>
   );
 }
