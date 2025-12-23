@@ -223,6 +223,14 @@ npm run deploy
 git log --oneline origin/gh-pages
 ```
 
+### Automatisches Deployment (GitHub Actions)
+
+- Workflow: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+- Triggert bei jedem Push/PR auf `main`
+- Schritte: `npm ci` → `npm run lint` → `npm test` → `npm run build` (+ `npm run build:custom` Test)
+- Deployment via `peaceiris/actions-gh-pages@v3` nach `gh-pages` inkl. CNAME `mietpark-saar-pfalz.com`
+- Statusausgabe im Job verrät Live-URL & Build-Größe
+
 ## 📊 Analytics & Monitoring
 
 ### Verfügbare Metriken
