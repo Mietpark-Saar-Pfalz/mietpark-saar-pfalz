@@ -607,7 +607,7 @@ export default function Home() {
                     <h2 className="section-title" style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: '1rem' }}>So finden Sie uns</h2>
                     <p className="section-subtitle" style={{ textAlign: 'center', marginBottom: '3rem' }}>Mietpark Saar-Pfalz, Kastanienweg 17, 66424 Homburg</p>
 
-                    <div className="contact-wrapper">
+                    <div className="contact-wrapper contact-grid">
                         <div className="contact-content">
                             <div className="map-container">
                                 <iframe
@@ -619,10 +619,19 @@ export default function Home() {
                                 ></iframe>
                             </div>
                         </div>
-                    </div>
-                    <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
-                        <p>Haben Sie allgemeine Fragen?</p>
-                        <a href="mailto:kontakt@mietpark-saar-pfalz.com" className="btn btn-primary" style={{ marginTop: 'var(--spacing-md)' }}>Email senden</a>
+
+                        <div className="contact-helper">
+                            <div className="support-card">
+                                <img src="/images/Betreiber.jpeg" alt="Daniel Brußig" className="support-avatar" />
+                                <p className="support-tagline">Ihr Partner im Saarland, Homburg und Umgebung seit 2023</p>
+                                <h3>Haben Sie Fragen?</h3>
+                                <p>Kontaktieren Sie mich direkt – ich beantworte jede Anfrage persönlich und begleite Sie vom ersten Gespräch bis zur Übergabe.</p>
+                                <div className="support-actions">
+                                    <a href="mailto:kontakt@mietpark-saar-pfalz.com" className="btn btn-primary support-btn">Email senden</a>
+                                    <a href="tel:+491737615995" className="btn btn-secondary support-btn">Jetzt anrufen</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
