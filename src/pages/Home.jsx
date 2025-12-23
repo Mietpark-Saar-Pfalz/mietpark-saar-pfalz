@@ -39,21 +39,21 @@ export default function Home() {
         heroConfig = {
             image: '/images/hero_winter.jpg', // Geändert zu hero_winter.jpg für besseren Kontrast
             title: 'Mehr Raum für Winterabenteuer.',
-            subtitle: makeSubtitle('Dachboxen & Skiträger für Ihren Skiurlaub – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
+            subtitle: makeSubtitle('Dachboxen für Ski & Snowboard – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
         };
     } else if ([8, 9].includes(currentMonth)) {
         // Autumn: Sep, Oct
         heroConfig = {
             image: '/images/hero_autumn.jpg',
             title: 'Ihr Begleiter für den Herbst.',
-            subtitle: makeSubtitle('Stauraum für goldene Oktober-Touren – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
+            subtitle: makeSubtitle('Stauraum für goldene Oktober-Touren und Snowboard-Equipment – Mieten in Homburg und Umgebung.')
         };
     } else {
         // Spring/Summer: Mar - Aug
         heroConfig = {
             image: '/images/hero_summer.jpg',
             title: 'Mehr Platz für den Sommerurlaub.',
-            subtitle: makeSubtitle('Dachboxen, Fahrradträger & mehr für Ihre Reise – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
+            subtitle: makeSubtitle('Dachboxen, Fahrradträger & Wintersport-Ausrüstung für Ihre Reise – Mieten in Homburg und Umgebung.')
         };
     }
 
@@ -215,7 +215,7 @@ export default function Home() {
                     <div className="partner-avatar-block">
                         <img src="/images/Betreiber.jpeg" alt="Daniel Brußig" />
                         <p><strong>Daniel Brußig</strong> – Betreiber & Ansprechpartner</p>
-                        <p className="partner-avatar-caption">Ihr zuverlässiger Partner für Dachboxen, Fahrradträger & Skiträger seit 2023.</p>
+                        <p className="partner-avatar-caption">Ihr zuverlässiger Partner für Dachboxen, Fahrradträger & Wintersport-Ausrüstung seit 2023.</p>
                     </div>
                 </div>
             </section>

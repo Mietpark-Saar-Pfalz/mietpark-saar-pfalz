@@ -836,6 +836,45 @@ button {
   color: var(--text-muted);
 }
 
+.detail-support-callout {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  background: #fff0f7;
+  border: 1px solid rgba(144, 169, 85, 0.5);
+  border-radius: 1.5rem;
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.detail-support-callout img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+}
+
+.detail-support-callout .callout-title {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.detail-support-callout .callout-text {
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-main);
+}
+
+.detail-support-callout .callout-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
 /* Form Styles */
 .form-group {
   margin-bottom: var(--spacing-md);

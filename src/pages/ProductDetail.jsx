@@ -759,6 +759,18 @@ export default function ProductDetail() {
                                 </small>
                             </p>
                         </form>
+
+                        <div className="detail-support-callout" aria-live="polite">
+                            <img src="/images/Betreiber.jpeg" alt="Daniel Brußig" />
+                            <div>
+                                <p className="callout-title">Bei Fragen zögern Sie nicht – ich bin persönlich für Sie da.</p>
+                                <p className="callout-text">Als Betreiber und Ansprechpartner beantworte ich alle offenen Punkte rund um Dachboxen, Ski- & Snowboard-Transport oder Zubehör.</p>
+                                <div className="callout-actions">
+                                    <a href="mailto:kontakt@mietpark-saar-pfalz.com" className="btn btn-primary">Email senden</a>
+                                    <a href="tel:+491737615995" className="btn btn-secondary">Anrufen</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
