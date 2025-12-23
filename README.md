@@ -18,6 +18,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Blog & Ratgeber** - 6 Fachartikel zu Wintersport und Transportthemen
 - **Responsive Design** - Optimierte Darstellung auf allen Geräten
 - **Mehrsprachige SEO** - Vollständige Suchmaschinenoptimierung
+- **Persönliche Hilfe vor Ort** - Betreiber Daniel Brußig beantwortet jede Anfrage direkt, inklusive Telefon/Email + Avatar-Callout auf allen Produktseiten
 
 ### 🎨 Benutzeroberfläche
 - **Moderne UI/UX** - Clean Design mit natürlichen Farben (Waldgrün)
@@ -315,6 +316,7 @@ Alle wichtigen Änderungen werden in der [CHANGELOG.md](CHANGELOG.md) dokumentie
 - **Telefon:** +49 173 761 5995
 - **Email:** kontakt@mietpark-saar-pfalz.com
 - **Website:** [mietpark-saar-pfalz.com](https://mietpark-saar-pfalz.com)
+- Persönlich erreichbar: Unsere Homepage zeigt Daniel Brußig mit Avatar in der Hilfe-Sektion, damit jede Frage direkt an den Betreiber geht.
 
 ### Technischer Support
 - **Issues:** [GitHub Issues](https://github.com/Mietpark-Saar-Pfalz/mietpark-saar-pfalz/issues)

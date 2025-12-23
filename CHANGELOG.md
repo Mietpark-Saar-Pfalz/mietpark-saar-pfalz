@@ -5,6 +5,17 @@ Alle wichtigen Änderungen an der Mietpark Saar-Pfalz Website werden in dieser D
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-12-23
+
+### ✨ Added - Neue Features
+
+- **Persönlicher Support**: Avatar-basierter Hilfebereich auf allen Produktseiten mit direkten E-Mail- und Telefon-CTAs, damit Besucher sofort wissen, dass sie Daniel Brußig erreichen können.
+ 
+### 🔧 Changed - Verbesserungen
+
+- **Regional Storytelling**: Hero-Subtitles und Structured Data kommunizieren jetzt klar „Ihr verlässlicher Partner im Saarland, Homburg und Umgebung seit 2023“ inklusive Hinweis auf Ski- und Snowboard-Transport.
+- **Navigation**: Mobile Hamburger-Menü und Desktop-Navigation zeigen aktuell Impressum, AGB und Datenschutz; alle Links wurden für bessere Orientierung ergänzt.
+
 ## [1.0.1] - 2025-12-22
 
 ### ✨ Added - Neue Features
