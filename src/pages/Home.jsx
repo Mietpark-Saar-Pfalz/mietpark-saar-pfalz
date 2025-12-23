@@ -25,33 +25,35 @@ const BenefitCard = ({ benefit, index }) => {
 
 export default function Home() {
     // Seasonal logic for Hero Section
-    const currentMonth = new Date().getMonth(); // 0-11
-    let heroConfig = {
-        image: '/images/hero_summer.jpg',
-        title: 'Mehr Platz für Ihre Erlebnisse.',
-        subtitle: 'Dachboxen, Heckboxen & mehr – Mieten statt kaufen im Mietpark Saar-Pfalz.'
-    };
+        const currentMonth = new Date().getMonth(); // 0-11
+        const partnerLine = 'Ihr verlässlicher Partner im Saarland, Homburg und Umgebung seit 2023.';
+        const makeSubtitle = (text) => `${partnerLine} ${text}`;
+        let heroConfig = {
+            image: '/images/hero_summer.jpg',
+            title: 'Mehr Platz für Ihre Erlebnisse.',
+            subtitle: makeSubtitle('Dachboxen, Heckboxen & mehr – Mieten statt kaufen im Mietpark Saar-Pfalz.')
+        };
 
     if ([10, 11, 0, 1].includes(currentMonth)) {
         // Winter: Nov, Dec, Jan, Feb
         heroConfig = {
             image: '/images/hero_winter.jpg', // Geändert zu hero_winter.jpg für besseren Kontrast
             title: 'Mehr Raum für Winterabenteuer.',
-            subtitle: 'Dachboxen & Skiträger für Ihren Skiurlaub – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.'
+            subtitle: makeSubtitle('Dachboxen & Skiträger für Ihren Skiurlaub – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
         };
     } else if ([8, 9].includes(currentMonth)) {
         // Autumn: Sep, Oct
         heroConfig = {
             image: '/images/hero_autumn.jpg',
             title: 'Ihr Begleiter für den Herbst.',
-            subtitle: 'Stauraum für goldene Oktober-Touren – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.'
+            subtitle: makeSubtitle('Stauraum für goldene Oktober-Touren – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
         };
     } else {
         // Spring/Summer: Mar - Aug
         heroConfig = {
             image: '/images/hero_summer.jpg',
             title: 'Mehr Platz für den Sommerurlaub.',
-            subtitle: 'Dachboxen, Fahrradträger & mehr für Ihre Reise – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.'
+            subtitle: makeSubtitle('Dachboxen, Fahrradträger & mehr für Ihre Reise – Mieten in Homburg und Umgebung im Mietpark Saar-Pfalz.')
         };
     }
 
@@ -77,6 +79,9 @@ export default function Home() {
         config: { mass: 1, tension: 120, friction: 14 },
         delay: 800
     });
+
+    const seoDescription = `${partnerLine} Flexible Dachbox-Miete, Montageservice und persönliche Beratung für Urlauber und Pendler im Saarland.`;
+    const seoKeywords = 'Dachbox mieten Saarland, Dachbox Homburg, Heckbox Vermietung, Fahrradträger leihen';
 
     const benefitsData = [
         {
@@ -118,6 +123,7 @@ export default function Home() {
             },
             "url": "https://mietpark-saar-pfalz.com/",
             "telephone": "+491737615995",
+            "description": partnerLine,
             "priceRange": "€€",
             "openingHoursSpecification": [
                 {
@@ -166,7 +172,7 @@ export default function Home() {
 
     return (
         <>
-            <SEOHead />
+            <SEOHead description={seoDescription} keywords={seoKeywords} />
             {/* Hero Section */}
             <section className="hero" id="home" style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('${heroConfig.image}')`,
@@ -181,6 +187,36 @@ export default function Home() {
                         <a href="#products" className="btn btn-accent">Zum Angebot</a>
                         <a href="#contact" className="btn btn-secondary">Kontakt</a>
                     </animated.div>
+                </div>
+            </section>
+
+            <section className="section partner-highlight">
+                <div className="container partner-card">
+                    <div className="partner-text">
+                        <div className="partner-badge">Seit 2023</div>
+                        <h2 style={{ marginBottom: 'var(--spacing-xs)' }}>Verlässlicher Partner für Dachboxen im Saarland</h2>
+                        <p>{partnerLine} Von der Beratung über Abholung bis zur Montage – wir sind Ihr persönlicher Ansprechpartner.</p>
+                        <div className="partner-list">
+                            <div>
+                                <span>📍</span>
+                                <p>Homburg & Umgebung ist unsere Heimat – schnelle Abholung & Rückgabe.</p>
+                            </div>
+                            <div>
+                                <span>🤝</span>
+                                <p>Persönliche Betreuung: Daniel Brußig steht mit Rat und Tat zur Seite.</p>
+                            </div>
+                            <div>
+                                <span>⚡</span>
+                                <p>Antworten innerhalb eines Werktages, inklusive telefonischer Beratung.</p>
+                            </div>
+                        </div>
+                        <a href="#contact" className="btn btn-accent" style={{ marginTop: 'var(--spacing-md)' }}>Direkt anfragen</a>
+                    </div>
+                    <div className="partner-avatar-block">
+                        <img src="/images/Betreiber.jpeg" alt="Daniel Brußig" />
+                        <p><strong>Daniel Brußig</strong> – Betreiber & Ansprechpartner</p>
+                        <p className="partner-avatar-caption">Ihr zuverlässiger Partner für Dachboxen, Fahrradträger & Skiträger seit 2023.</p>
+                    </div>
                 </div>
             </section>
 
