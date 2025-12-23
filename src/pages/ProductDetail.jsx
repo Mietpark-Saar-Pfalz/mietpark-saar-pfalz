@@ -5,6 +5,11 @@ import emailjs from '@emailjs/browser';
 import ProductGallery from '../components/ProductGallery';
 import SEOHead from '../components/SEOHead';
 
+const emailServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const emailTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const emailPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const imgbbApiKey = import.meta.env.VITE_IMGBB_API_KEY;
+
 export default function ProductDetail() {
     const { id } = useParams();
     const product = products.find(p => p.id === parseInt(id));
@@ -103,12 +108,15 @@ export default function ProductDetail() {
 
     // Upload image to ImgBB
     const uploadImageToImgBB = async (file) => {
-        const apiKey = '2ae3aeca469a07addaffec8df543fab4'; // Your ImgBB API key
+        if (!imgbbApiKey) {
+            console.warn('ImgBB upload skipped: Missing VITE_IMGBB_API_KEY');
+            return null;
+        }
         const formData = new FormData();
         formData.append('image', file);
 
         try {
-            const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
                 method: 'POST',
                 body: formData,
             });
@@ -181,6 +189,17 @@ export default function ProductDetail() {
             return;
         }
 
+        const missingEnvVars = [];
+        if (!emailServiceId) missingEnvVars.push('VITE_EMAILJS_SERVICE_ID');
+        if (!emailTemplateId) missingEnvVars.push('VITE_EMAILJS_TEMPLATE_ID');
+        if (!emailPublicKey) missingEnvVars.push('VITE_EMAILJS_PUBLIC_KEY');
+
+        if (missingEnvVars.length > 0) {
+            console.error(`EmailJS configuration missing: ${missingEnvVars.join(', ')}`);
+            setSubmitStatus('error');
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmitStatus(null);
 
@@ -212,10 +231,10 @@ export default function ProductDetail() {
 
             // Send email via EmailJS
             await emailjs.send(
-                'service_eoki0zq',      // Your Service ID
-                'template_v8lbj8o',     // Your Template ID
+                emailServiceId,
+                emailTemplateId,
                 templateParams,
-                'Pn9poFZrT8SKErloi'     // Your Public Key
+                emailPublicKey
             );
 
             setSubmitStatus('success');

@@ -110,6 +110,20 @@ npm run preview
 npm run deploy
 ```
 
+## 🔐 Environment Variables
+
+Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys für EmailJS und ImgBB.
+
+1. Datei [.env.example](.env.example) kopieren und als `.env.local` speichern.
+2. Eigene Werte für `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY` und `VITE_IMGBB_API_KEY` eintragen.
+3. `.env.local` nicht committen – Vite liest die Variablen automatisch über `import.meta.env`.
+
+### GitHub Actions
+
+- In den Repository-Secrets die gleichen Variablennamen hinterlegen (`VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_IMGBB_API_KEY`).
+- Der Workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) exportiert diese Secrets während des Builds, sodass die statische Seite mit den richtigen Werten generiert wird.
+- Änderungen an den Keys erfordern einen neuen Build, damit die Werte in der ausgelieferten App landen.
+
 ## 📁 Projektstruktur
 
 ```

@@ -12,6 +12,11 @@ jobs:
     permissions:
       contents: write  # to push commits to repository
       pages: write     # to deploy to GitHub Pages
+    env:
+      VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+      VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+      VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+      VITE_IMGBB_API_KEY: ${{ secrets.VITE_IMGBB_API_KEY }}
 
     steps:
       - name: Checkout code
