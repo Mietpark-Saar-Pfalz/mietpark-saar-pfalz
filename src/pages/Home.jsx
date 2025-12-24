@@ -396,7 +396,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <NewsletterSection sectionId="newsletter" />
+            <NewsletterSection sectionId="newsletter" source="home" />
 
             {/* Location Section */}
             <section className="section section-dark" id="contact">

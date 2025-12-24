@@ -776,7 +776,7 @@ export default function ProductDetail() {
                 </section>
             </div>
 
-            <NewsletterSection sectionId="newsletter-detail" variant="compact" />
+            <NewsletterSection sectionId="newsletter-detail" variant="compact" source="product_detail" />
         </div>
     );
 }

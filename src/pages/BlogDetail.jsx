@@ -325,7 +325,7 @@ export default function BlogDetail() {
                 </div>
             </article>
 
-            <NewsletterSection sectionId="newsletter-article" variant="compact" />
+            <NewsletterSection sectionId="newsletter-article" variant="compact" source="article" />
         </div>
     );
 }

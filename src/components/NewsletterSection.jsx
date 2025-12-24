@@ -7,14 +7,14 @@ const benefitItems = [
     { icon: '✉️', title: 'Max. 4 E-Mails/Jahr', text: 'Nur relevante Infos, Abmeldung jederzeit möglich.' }
 ];
 
-export default function NewsletterSection({ sectionId, variant = 'default' }) {
+export default function NewsletterSection({ sectionId, variant = 'default', source = 'home' }) {
     const [newsletterEmail, setNewsletterEmail] = useState('');
     const [newsletterConsent, setNewsletterConsent] = useState(false);
     const [newsletterStatus, setNewsletterStatus] = useState({ type: 'idle', message: '' });
     const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
     const newsletterEndpoint = import.meta.env.VITE_NEWSLETTER_ENDPOINT;
     // NOTE: This regex must stay in sync with workers/newsletter/src/index.js
-    const newsletterEmailRegex = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*$/i;
+    const newsletterEmailRegex = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
 
     const isCompact = variant === 'compact';
     const headingId = sectionId ? `${sectionId}-heading` : 'newsletter-heading';
@@ -48,7 +48,7 @@ export default function NewsletterSection({ sectionId, variant = 'default' }) {
             const response = await fetch(newsletterEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, consent: newsletterConsent, source: variant === 'compact' ? 'article' : 'home' }),
+                body: JSON.stringify({ email, consent: newsletterConsent, source }),
                 mode: 'cors'
             });
 
