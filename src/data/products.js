@@ -102,7 +102,7 @@ export const products = [
         dimensions: "115 x 54 x 57 cm",
         details: {
             deposit: "150€",
-            note: "Zuladung 20kg. Benötigt Anhängerkupplung. Kippbar für Kofferraumzugang."
+            note: "Zuladung 20kg. Benötigt Anhängerkupplung. Kippbar für Kofferraumzugang. Zusätzlich wird ein separates Nummernschild ohne Plakette benötigt."
         },
         image: "/images/heckbox_home_preview.jpg",
         gallery: [
@@ -132,7 +132,7 @@ export const products = [
         calendarUrl: "https://calendar.google.com/calendar/embed?src=c_dc2b0497c2d7fc848be4e800c0481e4bdd4df06b29d336c59a76dccbfb543dae%40group.calendar.google.com&ctz=Europe%2FBerlin",
         details: {
             deposit: "50€",
-            note: "Max. 60kg Zuladung - Ideal für E-Bikes. Inklusive Einweisung (keine Montage).",
+            note: "Max. 60kg Zuladung - Ideal für E-Bikes. Inklusive Einweisung (keine Montage). Für den Betrieb ist ein zusätzliches Nummernschild ohne Plakette erforderlich.",
             capacity: "2 Fahrräder",
             weight: "ca. 18 kg",
             dimensions: "142 x 70 x 58 cm",
