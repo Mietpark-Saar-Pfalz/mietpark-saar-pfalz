@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSpring, animated } from 'react-spring'; // eslint-disable-line no-unused-vars
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import SEOHead from '../components/SEOHead';
 import { products } from '../data/products';
+import NewsletterSection from '../components/NewsletterSection';
 
 // Separate component for benefit cards with animation
 const BenefitCard = ({ benefit, index }) => {
@@ -100,64 +101,6 @@ export default function Home() {
             description: 'Wir helfen bei der Montage & Einweisung.'
         }
     ];
-
-    const [newsletterEmail, setNewsletterEmail] = useState('');
-    const [newsletterConsent, setNewsletterConsent] = useState(false);
-    const [newsletterStatus, setNewsletterStatus] = useState({ type: 'idle', message: '' });
-    const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
-    const newsletterEndpoint = import.meta.env.VITE_NEWSLETTER_ENDPOINT;
-    // NOTE: This regex must stay in sync mit workers/newsletter/src/index.js
-    const newsletterEmailRegex = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
-
-    const handleNewsletterSubmit = async (event) => {
-        event.preventDefault();
-        const email = newsletterEmail.trim();
-
-        if (!newsletterEmailRegex.test(email)) {
-            setNewsletterStatus({ type: 'error', message: 'Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. ihr.name@example.com).' });
-            return;
-        }
-
-        if (!newsletterConsent) {
-            setNewsletterStatus({ type: 'error', message: 'Bitte bestätigen Sie die Datenschutzerklärung, um den Newsletter zu erhalten.' });
-            return;
-        }
-
-        if (!newsletterEndpoint) {
-            if (import.meta.env.DEV) {
-                console.warn('Newsletter endpoint ist nicht konfiguriert. Bitte VITE_NEWSLETTER_ENDPOINT setzen.');
-            }
-            setNewsletterStatus({ type: 'error', message: 'Newsletter-Service ist momentan nicht verfügbar. Bitte versuchen Sie es später erneut.' });
-            return;
-        }
-
-        setNewsletterSubmitting(true);
-        setNewsletterStatus({ type: 'loading', message: 'Anmeldung wird gesendet …' });
-
-        try {
-            const response = await fetch(newsletterEndpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, consent: newsletterConsent, source: 'home' }),
-                mode: 'cors'
-            });
-
-            const result = await response.json().catch(() => null);
-
-            if (!response.ok) {
-                throw new Error(result?.message || 'Leider konnte die Anmeldung nicht abgeschlossen werden.');
-            }
-
-            setNewsletterStatus({ type: 'success', message: result?.message || 'Vielen Dank! Bitte bestätige deine Anmeldung im Posteingang.' });
-            setNewsletterEmail('');
-            setNewsletterConsent(false);
-        } catch (error) {
-            const fallback = error instanceof Error ? error.message : 'Es ist ein unbekannter Fehler aufgetreten.';
-            setNewsletterStatus({ type: 'error', message: fallback.includes('fetch') ? 'Netzwerkfehler – bitte versuche es in wenigen Sekunden erneut.' : fallback });
-        } finally {
-            setNewsletterSubmitting(false);
-        }
-    };
 
     // Structured Data Script in useEffect hinzufügen
     React.useEffect(() => {
@@ -316,10 +259,31 @@ export default function Home() {
             </section>
 
             {/* Products Section (List View) */}
-            <section className="section" id="products">
+            <section className="section section-dark" id="products">
                 <div className="container">
-                    <h2 className="section-title" style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: 'var(--spacing-md)', fontSize: '3rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>Unser Mietangebot</h2>
-                    <p className="section-subtitle" style={{ textAlign: 'center', marginBottom: 'var(--spacing-xxxl)', color: 'var(--text-muted)', fontSize: '1.2rem' }}>Wählen Sie einen Artikel für Details und Buchung.</p>
+                    <h2
+                        className="section-title"
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 'var(--spacing-md)',
+                            fontSize: '3rem',
+                            fontWeight: '800',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            color: 'var(--white)',
+                            textShadow: '0 3px 6px rgba(0,0,0,0.45)'
+                        }}
+                    >Unser Mietangebot</h2>
+                    <p
+                        className="section-subtitle"
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 'var(--spacing-xxxl)',
+                            color: 'rgba(255,255,255,0.9)',
+                            fontSize: '1.2rem',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.35)'
+                        }}
+                    >Wählen Sie einen Artikel für Details und Buchung.</p>
 
                     <div className="products-list-vertical" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xxl)', maxWidth: '900px', margin: '0 auto' }}>
                         {products.map(product => (
@@ -394,7 +358,7 @@ export default function Home() {
             </section>
 
             {/* FAQ and Blog Section */}
-            <section className="section">
+            <section className="section section-dark">
                 <div className="container" style={{ textAlign: 'center' }}>
                     <h2
                         className="section-title"
@@ -432,155 +396,10 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Newsletter Section */}
-            <section className="section bg-light" id="newsletter">
-                <div className="container">
-                    <div className="newsletter-card" style={{
-                        background: 'white',
-                        borderRadius: 'var(--border-radius-lg)',
-                        padding: 'var(--spacing-xxxl)',
-                        boxShadow: 'var(--shadow-lg)',
-                        position: 'relative',
-                        overflow: 'hidden'
-                    }}>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                            gap: 'var(--spacing-xxl)',
-                            alignItems: 'center'
-                        }}>
-                            <div>
-                                <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                                    <span style={{
-                                        background: 'var(--accent)',
-                                        color: 'white',
-                                        padding: '0.4rem 0.8rem',
-                                        borderRadius: '999px',
-                                        fontSize: '0.85rem',
-                                        letterSpacing: '0.05em'
-                                    }}>Vierteljährlich · Persönlich · DSGVO-konform</span>
-                                </div>
-                                <h2 style={{ fontSize: '2.3rem', color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Newsletter</h2>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: 1.7 }}>
-                                    Erhalte einmal pro Quartal kompakte Updates zu Verfügbarkeiten, Dachbox-Checks und regionalen Transport-Tipps. Kurz, persönlich und nur dann, wenn es wirklich etwas Neues gibt.
-                                </p>
-
-                                <div style={{ display: 'grid', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-xl)' }}>
-                                    {[
-                                        { icon: '📅', title: 'Saisonale Tipps', text: 'Praktische Checklisten für Ferien- und Wintersaison.' },
-                                        { icon: '📦', title: 'Verfügbarkeiten zuerst', text: 'Frühzeitige Hinweise, wenn Dachboxen knapp werden.' },
-                                        { icon: '✉️', title: 'Max. 4 E-Mails/Jahr', text: 'Nur relevante Infos, Abmeldung jederzeit möglich.' }
-                                    ].map((item, index) => (
-                                        <div key={item.title} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 'var(--spacing-md)', alignItems: 'center' }}>
-                                            <div style={{
-                                                width: '52px',
-                                                height: '52px',
-                                                borderRadius: '999px',
-                                                background: index === 0 ? 'rgba(25,135,84,0.15)' : index === 1 ? 'rgba(0,123,255,0.13)' : 'rgba(255,193,7,0.2)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                fontSize: '1.5rem'
-                                            }}>{item.icon}</div>
-                                            <div>
-                                                <strong style={{ display: 'block', color: 'var(--primary)' }}>{item.title}</strong>
-                                                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{item.text}</span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div style={{
-                                background: 'var(--primary)',
-                                color: 'white',
-                                borderRadius: 'var(--border-radius-lg)',
-                                padding: 'var(--spacing-xl) var(--spacing-xxl)',
-                                position: 'relative'
-                            }}>
-                                <div style={{ position: 'absolute', top: '20px', right: '20px', opacity: 0.15, fontSize: '2rem' }}>✉️</div>
-                                <h3
-                                    id="newsletter-heading"
-                                    style={{ marginBottom: 'var(--spacing-md)', fontSize: '1.7rem' }}
-                                >Jetzt vormerken lassen</h3>
-                                <p style={{ marginBottom: 'var(--spacing-lg)', lineHeight: 1.6 }}>
-                                    Nur E-Mail-Adresse + Einwilligung – danach erhältst du eine kurze Bestätigungsmail. Ohne Klick auf den persönlichen Link erfolgt kein Versand.
-                                </p>
-                                <form
-                                    onSubmit={handleNewsletterSubmit}
-                                    aria-labelledby="newsletter-heading"
-                                    style={{ display: 'grid', gap: 'var(--spacing-md)' }}
-                                >
-                                    <div>
-                                        <label htmlFor="newsletter-email" style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 600 }}>E-Mail-Adresse *</label>
-                                        <input
-                                            id="newsletter-email"
-                                            className="newsletter-input"
-                                            type="email"
-                                            value={newsletterEmail}
-                                            onChange={(event) => setNewsletterEmail(event.target.value)}
-                                            placeholder="ihre.email@example.com"
-                                            required
-                                        />
-                                    </div>
-
-                                    <label style={{ display: 'flex', gap: '0.6rem', fontSize: '0.9rem', alignItems: 'flex-start' }}>
-                                        <input
-                                            type="checkbox"
-                                            checked={newsletterConsent}
-                                            onChange={(event) => setNewsletterConsent(event.target.checked)}
-                                            required
-                                            style={{ marginTop: '0.2rem' }}
-                                        />
-                                        <span>
-                                            Ich bestätige, dass ich den Newsletter erhalten möchte und habe die <a href="/datenschutz" style={{ color: 'white', textDecoration: 'underline' }}>Datenschutzerklärung</a> gelesen.
-                                        </span>
-                                    </label>
-
-                                    <button
-                                        type="submit"
-                                        disabled={newsletterSubmitting}
-                                        style={{
-                                            background: 'white',
-                                            color: 'var(--primary)',
-                                            border: 'none',
-                                            padding: '0.9rem 1.5rem',
-                                            borderRadius: 'var(--border-radius-md)',
-                                            fontWeight: 700,
-                                            fontSize: '1rem',
-                                            cursor: 'pointer',
-                                            transition: 'transform 0.2s, box-shadow 0.2s',
-                                            opacity: newsletterSubmitting ? 0.7 : 1
-                                        }}
-                                    >
-                                        {newsletterSubmitting ? 'Wird gesendet …' : 'Per E-Mail vormerken'}
-                                    </button>
-                                </form>
-
-                                <div aria-live="polite" style={{ minHeight: '3rem', marginTop: 'var(--spacing-sm)' }}>
-                                    {newsletterStatus.type !== 'idle' && (
-                                        <div style={{
-                                            padding: '0.8rem 1rem',
-                                            borderRadius: 'var(--border-radius-md)',
-                                            background: newsletterStatus.type === 'success' ? 'rgba(25,135,84,0.15)' : newsletterStatus.type === 'error' ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.1)',
-                                            border: '1px solid rgba(255,255,255,0.3)'
-                                        }}>
-                                            {newsletterStatus.message}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <p style={{ fontSize: '0.85rem', marginTop: 'var(--spacing-lg)', opacity: 0.9 }}>
-                                    Versand maximal viermal im Jahr. Abmeldung jederzeit per Link in jeder E-Mail, kein individuelles Öffnungs-Tracking.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <NewsletterSection sectionId="newsletter" source="home" />
 
             {/* Location Section */}
-            <section className="section" id="contact">
+            <section className="section section-dark" id="contact">
                 <div className="container">
                     <h2
                         className="section-title"

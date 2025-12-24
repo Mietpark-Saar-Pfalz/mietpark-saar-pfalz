@@ -642,6 +642,12 @@ button {
   padding: var(--spacing-xxxl) 0;
 }
 
+.section-dark {
+  background: linear-gradient(135deg, #0b2a18 0%, #1f4d2d 50%, #0b2a18 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 /* Organic wave divider effect could be added here, simplified for now */
 .bg-light {
   background-color: #f7faf5; /* Slightly greener tint */

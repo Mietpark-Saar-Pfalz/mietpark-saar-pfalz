@@ -4,6 +4,7 @@ import { products } from '../data/products';
 import emailjs from '@emailjs/browser';
 import ProductGallery from '../components/ProductGallery';
 import SEOHead from '../components/SEOHead';
+import NewsletterSection from '../components/NewsletterSection';
 
 const emailServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const emailTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -774,6 +775,8 @@ export default function ProductDetail() {
                     </div>
                 </section>
             </div>
+
+            <NewsletterSection sectionId="newsletter-detail" variant="compact" source="product_detail" />
         </div>
     );
 }

@@ -1,6 +1,7 @@
 const EMAIL_REGEX = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 5;
+// NOTE: For long-lived/persistent rate limits consider Durable Objects or KV storage.
 const submissionLog = new Map();
 
 function parseAllowedOrigins(env) {
@@ -71,7 +72,9 @@ async function sendBrevoDoubleOptIn(email, request, env, source) {
     const listId = parseInt(env.BREVO_LIST_ID, 10);
 
     if (!env.BREVO_API_KEY || Number.isNaN(templateId) || Number.isNaN(listId)) {
-        console.error('Brevo-Konfiguration ist unvollständig: Bitte API-Key, Template-ID und List-ID prüfen.');
+        if (env.ENVIRONMENT === 'development') {
+            console.error('Brevo-Konfiguration ist unvollständig: Bitte API-Key, Template-ID und List-ID prüfen.');
+        }
         throw new Error('Newsletter-Anmeldung ist derzeit nicht möglich. Bitte versuchen Sie es später erneut.');
     }
 

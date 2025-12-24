@@ -65,7 +65,7 @@ export default function Datenschutz() {
 
                         <h3 style={{ fontSize: '1.1rem', marginTop: '2rem', marginBottom: '0.5rem' }}>1.2</h3>
                         <p style={{ lineHeight: '1.8', color: '#444' }}>
-                            Verantwortlicher für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist <strong>Daniel Brußig, Kastanienweg 17, 66424 Homburg, Deutschland</strong>, Tel.: +491737615995, E-Mail: kontakt@mietpark-saarpfalz.com. Der für die Verarbeitung von personenbezogenen Daten Verantwortliche ist diejenige natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.
+                            Verantwortlicher für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist <strong>Daniel Brußig, Kastanienweg 17, 66424 Homburg, Deutschland</strong>, Tel.: +491737615995, E-Mail: kontakt@mietpark-saar-pfalz.com. Der für die Verarbeitung von personenbezogenen Daten Verantwortliche ist diejenige natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.
                         </p>
 
                         <h3 style={{ fontSize: '1.1rem', marginTop: '2rem', marginBottom: '0.5rem' }}>1.3</h3>
