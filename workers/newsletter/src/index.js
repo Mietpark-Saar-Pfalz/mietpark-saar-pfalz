@@ -1,6 +1,7 @@
-const EMAIL_REGEX = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
+const EMAIL_REGEX = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*$/i;
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 5;
+// NOTE: For long-lived/persistent rate limits consider Durable Objects or KV storage.
 const submissionLog = new Map();
 
 function parseAllowedOrigins(env) {
@@ -56,6 +57,10 @@ function registerSubmission(ip) {
     const now = Date.now();
     const history = submissionLog.get(key)?.filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS) || [];
 
+    if (!history.length) {
+        submissionLog.delete(key);
+    }
+
     if (history.length >= RATE_LIMIT_MAX_REQUESTS) {
         submissionLog.set(key, history);
         return false;
@@ -71,7 +76,9 @@ async function sendBrevoDoubleOptIn(email, request, env, source) {
     const listId = parseInt(env.BREVO_LIST_ID, 10);
 
     if (!env.BREVO_API_KEY || Number.isNaN(templateId) || Number.isNaN(listId)) {
-        console.error('Brevo-Konfiguration ist unvollständig: Bitte API-Key, Template-ID und List-ID prüfen.');
+        if (env.ENVIRONMENT === 'development') {
+            console.error('Brevo-Konfiguration ist unvollständig: Bitte API-Key, Template-ID und List-ID prüfen.');
+        }
         throw new Error('Newsletter-Anmeldung ist derzeit nicht möglich. Bitte versuchen Sie es später erneut.');
     }
 
@@ -118,11 +125,6 @@ export default {
             return jsonResponse({ message: 'Method not allowed' }, { status: 405, corsHeaders });
         }
 
-        const ipAddress = request.headers.get('CF-Connecting-IP') || 'anonymous';
-        if (!registerSubmission(ipAddress)) {
-            return jsonResponse({ message: 'Zu viele Anfragen. Bitte versuche es in einer Minute erneut.' }, { status: 429, corsHeaders });
-        }
-
         let payload;
         try {
             payload = await request.json();
@@ -133,7 +135,10 @@ export default {
         const email = (payload.email || '').trim().toLowerCase();
         const consent = Boolean(payload.consent);
         const rawSource = (payload.source || 'website').toString();
-        const source = rawSource.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 60) || 'website';
+        let source = rawSource.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 60);
+        if (!source) {
+            source = 'website';
+        }
 
         if (!EMAIL_REGEX.test(email)) {
             return jsonResponse({ message: 'Bitte eine gültige E-Mail-Adresse angeben.' }, { status: 400, corsHeaders });
@@ -141,6 +146,11 @@ export default {
 
         if (!consent) {
             return jsonResponse({ message: 'Die Einwilligung ist erforderlich.' }, { status: 400, corsHeaders });
+        }
+
+        const ipAddress = request.headers.get('CF-Connecting-IP') || 'anonymous';
+        if (!registerSubmission(ipAddress)) {
+            return jsonResponse({ message: 'Zu viele Anfragen. Bitte versuche es in einer Minute erneut.' }, { status: 429, corsHeaders });
         }
 
         try {
