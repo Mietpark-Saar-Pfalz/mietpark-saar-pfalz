@@ -1,3 +1,19 @@
+## [1.0.5] - 2025-12-24
+
+### ✨ Added - Neue Features
+
+- **NewsletterSection**: Neue wiederverwendbare React-Komponente, die auf Start-, Blog- und Produktdetailseiten identische Texte, Formularlogik und Double-Opt-In-Hinweise ausspielt.
+
+### 🔧 Changed - Verbesserungen
+
+- **Frontend-Tracking**: `NewsletterSection` akzeptiert nun einen `source`-Prop, sodass der Worker jede Anmeldung eindeutig (home/article/product_detail) zuordnen kann.
+- **E-Mail-Validierung**: Regex im Frontend und im Worker wieder synchronisiert – TLD ist erneut Pflicht, wodurch `user@domain` ohne Suffix abgelehnt wird.
+- **Rate-Limit**: Worker führt das Request-Limit wieder vor der Payload-Verarbeitung aus und bereinigt die Submission-Map ohne unnötiges Löschen.
+
+### 🧹 Documentation
+
+- README ergänzt um den neuen Newsletter-CTA, die Komponentenstruktur sowie einen Hinweis auf die `source`-Prop.
+
 ## [1.0.4] - 2025-12-24
 
 ### ✨ Added - Neue Features
