@@ -318,8 +318,29 @@ export default function Home() {
             {/* Products Section (List View) */}
             <section className="section" id="products">
                 <div className="container">
-                    <h2 className="section-title" style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: 'var(--spacing-md)', fontSize: '3rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>Unser Mietangebot</h2>
-                    <p className="section-subtitle" style={{ textAlign: 'center', marginBottom: 'var(--spacing-xxxl)', color: 'var(--text-muted)', fontSize: '1.2rem' }}>Wählen Sie einen Artikel für Details und Buchung.</p>
+                    <h2
+                        className="section-title"
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 'var(--spacing-md)',
+                            fontSize: '3rem',
+                            fontWeight: '800',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            color: 'var(--white)',
+                            textShadow: '0 3px 6px rgba(0,0,0,0.45)'
+                        }}
+                    >Unser Mietangebot</h2>
+                    <p
+                        className="section-subtitle"
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 'var(--spacing-xxxl)',
+                            color: 'rgba(255,255,255,0.9)',
+                            fontSize: '1.2rem',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.35)'
+                        }}
+                    >Wählen Sie einen Artikel für Details und Buchung.</p>
 
                     <div className="products-list-vertical" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xxl)', maxWidth: '900px', margin: '0 auto' }}>
                         {products.map(product => (
