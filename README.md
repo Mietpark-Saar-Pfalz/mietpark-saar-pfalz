@@ -19,6 +19,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Responsive Design** - Optimierte Darstellung auf allen Geräten
 - **Mehrsprachige SEO** - Vollständige Suchmaschinenoptimierung
 - **Persönliche Hilfe vor Ort** - Betreiber Daniel Brußig beantwortet jede Anfrage direkt, inklusive Telefon/Email + Avatar-Callout auf allen Produktseiten
+- **Newsletter CTA überall** - Einheitliche NewsletterSection inklusive Double-Opt-In-Flow auf Start-, Blog- und Produktdetailseiten
 
 ### 🎨 Benutzeroberfläche
 - **Moderne UI/UX** - Clean Design mit natürlichen Farben (Waldgrün)
@@ -127,7 +128,7 @@ Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys
 
 ## 📬 Newsletter-Setup (Cloudflare Worker + Brevo)
 
-Der Newsletter wird über ein serverloses Setup mit Cloudflare Workers und Brevo (Sendinblue) realisiert. So bleiben API-Keys geheim, Double-Opt-In ist rechtssicher nachweisbar und die Frontend-App bleibt komplett statisch.
+Der Newsletter wird über ein serverloses Setup mit Cloudflare Workers und Brevo (Sendinblue) realisiert. So bleiben API-Keys geheim, Double-Opt-In ist rechtssicher nachweisbar und die Frontend-App bleibt komplett statisch. Das Frontend sendet je nach Einsatzort (`home`, `article`, `product_detail`) einen `source`-Wert mit, damit der Worker jede Anmeldung sauber einsortieren und auswerten kann.
 
 ### 1. Templates & Branding
 - Double-Opt-In- und Willkommens-Templates werden lokal unter `docs/newsletter-templates/` abgelegt. Die Ordnereinträge `*.html`, `*.htm` **und** `*.txt` sind via `.gitignore` ausgeschlossen und können gefahrlos angepasst werden.
@@ -174,6 +175,7 @@ mietpark-saar-pfalz/
 │   │   ├── Footer.jsx     # Footer mit Links
 │   │   ├── ProductCard.jsx # Produkt-Vorschau
 │   │   ├── ProductGallery.jsx # Bildergalerie
+│   │   ├── NewsletterSection.jsx # Einheitliche Newsletter-CTA inkl. Formular-Logik
 │   │   ├── SEOHead.jsx    # SEO Meta-Tags
 │   │   └── ScrollToTop.jsx # UX Verbesserung
 │   ├── pages/             # Seiten-Komponenten
