@@ -123,7 +123,7 @@ export default function Datenschutz() {
                             <li><strong>Tracking:</strong> Wir werten nur aggregierte Öffnungs- und Klickraten aus, keine personenbezogenen Profile.</li>
                         </ul>
                         <p style={{ lineHeight: '1.8', color: '#444', marginTop: '1rem' }}>
-                            Sie können den Newsletter jederzeit über den Abmeldelink in jeder E-Mail oder per Nachricht an <a href="mailto:kontakt@mietpark-saarpfalz.com" style={{ color: 'var(--primary)' }}>kontakt@mietpark-saarpfalz.com</a> abbestellen. Ihre ursprüngliche Einwilligung können Sie ebenfalls widerrufen; die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt hiervon unberührt.
+                            Sie können den Newsletter jederzeit über den Abmeldelink in jeder E-Mail oder per Nachricht an <a href="mailto:kontakt@mietpark-saar-pfalz.com" style={{ color: 'var(--primary)' }}>kontakt@mietpark-saar-pfalz.com</a> abbestellen. Ihre ursprüngliche Einwilligung können Sie ebenfalls widerrufen; die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt hiervon unberührt.
                         </p>
                     </section>
 

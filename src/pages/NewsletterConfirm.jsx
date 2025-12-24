@@ -61,10 +61,10 @@ export default function NewsletterConfirm() {
                     }}>
                         <span role="img" aria-label="success">✅</span> Anmeldung bestätigt
                     </p>
-                    <h1 style={{ fontSize: '2.8rem', marginBottom: '1rem' }}>Willkommen in der Newsletter Beratung</h1>
+                    <h1 style={{ fontSize: '2.8rem', marginBottom: '1rem' }}>Willkommen im Mietpark Newsletter</h1>
                     <p style={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
                         Vielen Dank! Ihre Anmeldung wurde erfolgreich bestätigt. Sie erhalten maximal vier Nachrichten pro Jahr – mit regionalen Verfügbarkeitsupdates,
-                        Transport-Tipps und exklusiven Hinweise von Mietpark Saar-Pfalz.
+                        Transport-Tipps und exklusiven Hinweisen von Mietpark Saar-Pfalz.
                     </p>
                     <div style={{ marginTop: '2rem' }}>
                         <Link to="/" className="btn btn-secondary" style={{ marginRight: '1rem' }}>Zur Startseite</Link>
