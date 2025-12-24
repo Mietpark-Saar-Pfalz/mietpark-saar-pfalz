@@ -9,6 +9,7 @@ import BlogDetail from './pages/BlogDetail';
 import Impressum from './pages/Impressum';
 import Agb from './pages/Agb';
 import Datenschutz from './pages/Datenschutz';
+import NewsletterConfirm from './pages/NewsletterConfirm';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/agb" element={<Agb />} />
             <Route path="/datenschutz" element={<Datenschutz />} />
+            <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
           </Routes>
         </main>
         <Footer />

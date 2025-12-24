@@ -108,7 +108,27 @@ export default function Datenschutz() {
                     </section>
 
                     <section style={{ marginBottom: '3rem' }}>
-                        <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>5. Rechte des Betroffenen</h2>
+                        <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>5. Newsletter & Double-Opt-In</h2>
+                        <p style={{ lineHeight: '1.8', color: '#444' }}>
+                            Wenn Sie sich auf unserer Website für den vierteljährlichen Newsletter anmelden, verarbeiten wir ausschließlich Ihre E-Mail-Adresse sowie den Zeitpunkt der Anmeldung. Die Eingabe erfolgt über ein Formular, das durch einen Cloudflare Worker gesichert ist. Dieser Worker übernimmt die Validierung, speichert keine Daten dauerhaft und leitet die geprüften Informationen ausschließlich an unseren E-Mail-Dienstleister Brevo (Sendinblue GmbH, Deutschland) weiter.
+                        </p>
+                        <p style={{ lineHeight: '1.8', color: '#444' }}>
+                            Die Anmeldung erfolgt mittels Double-Opt-In-Verfahren: Nach Absenden des Formulars erhalten Sie eine Bestätigungsmail von Brevo, in der Sie Ihre Anmeldung über einen personalisierten Link bestätigen müssen. Ohne Bestätigung findet kein Versand statt. Brevo protokolliert Zeitstempel, IP-Adresse und den Klick auf den Bestätigungslink, sodass wir Ihrer Einwilligung gemäß Art. 7 DSGVO nachkommen können.
+                        </p>
+                        <ul style={{ lineHeight: '1.8', color: '#444', paddingLeft: '2rem', marginTop: '1rem' }}>
+                            <li><strong>Zweck:</strong> Versand des vierteljährlichen Newsletters mit Tipps, Verfügbarkeiten und Hinweisen zu Mietprodukten.</li>
+                            <li><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).</li>
+                            <li><strong>Empfänger:</strong> Brevo (Sendinblue GmbH) als Auftragsverarbeiter; Verarbeitung innerhalb der EU.</li>
+                            <li><strong>Speicherdauer:</strong> Bis zum Widerruf Ihrer Einwilligung; anschließend Löschung binnen 30 Tagen.</li>
+                            <li><strong>Tracking:</strong> Wir werten nur aggregierte Öffnungs- und Klickraten aus, keine personenbezogenen Profile.</li>
+                        </ul>
+                        <p style={{ lineHeight: '1.8', color: '#444', marginTop: '1rem' }}>
+                            Sie können den Newsletter jederzeit über den Abmeldelink in jeder E-Mail oder per Nachricht an <a href="mailto:kontakt@mietpark-saarpfalz.com" style={{ color: 'var(--primary)' }}>kontakt@mietpark-saarpfalz.com</a> abbestellen. Ihre ursprüngliche Einwilligung können Sie ebenfalls widerrufen; die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt hiervon unberührt.
+                        </p>
+                    </section>
+
+                    <section style={{ marginBottom: '3rem' }}>
+                        <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>6. Rechte des Betroffenen</h2>
                         <p style={{ lineHeight: '1.8', color: '#444' }}>
                             Das geltende Datenschutzrecht gewährt Ihnen gegenüber dem Verantwortlichen hinsichtlich der Verarbeitung Ihrer personenbezogenen Daten umfassende Betroffenenrechte (Auskunfts- und Interventionsrechte):
                         </p>
@@ -124,7 +144,7 @@ export default function Datenschutz() {
                     </section>
 
                     <section style={{ marginBottom: '3rem' }}>
-                        <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>6. Dauer der Speicherung personenbezogener Daten</h2>
+                        <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>7. Dauer der Speicherung personenbezogener Daten</h2>
                         <p style={{ lineHeight: '1.8', color: '#444' }}>
                             Die Dauer der Speicherung von personenbezogenen Daten bemisst sich anhand der jeweiligen Rechtsgrundlage, am Verarbeitungszweck und – sofern einschlägig – zusätzlich anhand der jeweiligen gesetzlichen Aufbewahrungsfrist (z.B. handels- und steuerrechtliche Aufbewahrungsfristen).
                         </p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring'; // eslint-disable-line no-unused-vars
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
@@ -100,6 +100,60 @@ export default function Home() {
             description: 'Wir helfen bei der Montage & Einweisung.'
         }
     ];
+
+    const [newsletterEmail, setNewsletterEmail] = useState('');
+    const [newsletterConsent, setNewsletterConsent] = useState(false);
+    const [newsletterStatus, setNewsletterStatus] = useState({ type: 'idle', message: '' });
+    const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+    const newsletterEndpoint = import.meta.env.VITE_NEWSLETTER_ENDPOINT;
+    const newsletterEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const handleNewsletterSubmit = async (event) => {
+        event.preventDefault();
+        const email = newsletterEmail.trim();
+
+        if (!newsletterEmailRegex.test(email)) {
+            setNewsletterStatus({ type: 'error', message: 'Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. ihr.name@example.com).' });
+            return;
+        }
+
+        if (!newsletterConsent) {
+            setNewsletterStatus({ type: 'error', message: 'Bitte bestätigen Sie die Datenschutzerklärung, um den Newsletter zu erhalten.' });
+            return;
+        }
+
+        if (!newsletterEndpoint) {
+            setNewsletterStatus({ type: 'error', message: 'Newsletter-Service ist momentan nicht verfügbar. Bitte versuchen Sie es später erneut.' });
+            return;
+        }
+
+        setNewsletterSubmitting(true);
+        setNewsletterStatus({ type: 'loading', message: 'Anmeldung wird gesendet …' });
+
+        try {
+            const response = await fetch(newsletterEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, consent: newsletterConsent, source: 'home' }),
+                mode: 'cors'
+            });
+
+            const result = await response.json().catch(() => null);
+
+            if (!response.ok) {
+                throw new Error(result?.message || 'Leider konnte die Anmeldung nicht abgeschlossen werden.');
+            }
+
+            setNewsletterStatus({ type: 'success', message: result?.message || 'Vielen Dank! Bitte bestätige deine Anmeldung im Posteingang.' });
+            setNewsletterEmail('');
+            setNewsletterConsent(false);
+        } catch (error) {
+            const fallback = error instanceof Error ? error.message : 'Es ist ein unbekannter Fehler aufgetreten.';
+            setNewsletterStatus({ type: 'error', message: fallback.includes('fetch') ? 'Netzwerkfehler – bitte versuche es in wenigen Sekunden erneut.' : fallback });
+        } finally {
+            setNewsletterSubmitting(false);
+        }
+    };
 
     // Structured Data Script in useEffect hinzufügen
     React.useEffect(() => {
@@ -355,6 +409,153 @@ export default function Home() {
                         <div className="faq-item" style={{ marginBottom: 'var(--spacing-md)', padding: 'var(--spacing-md)', background: '#f8f9fa', borderRadius: 'var(--border-radius-md)', borderLeft: '4px solid var(--accent)' }}>
                             <h4 style={{ margin: '0 0 var(--spacing-xxs) 0', color: 'var(--text-main)' }}>Welche Dachbox passt auf mein Auto?</h4>
                             <p style={{ margin: 0, color: 'var(--text-muted)' }}>Die meisten unserer Dachboxen passen auf gängige Dachträgersysteme. Im Formular können Sie Ihr Fahrzeugmodell angeben, wir beraten Sie gerne.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Newsletter Section */}
+            <section className="section bg-light" id="newsletter">
+                <div className="container">
+                    <div style={{
+                        background: 'white',
+                        borderRadius: 'var(--border-radius-lg)',
+                        padding: 'var(--spacing-xxxl)',
+                        boxShadow: 'var(--shadow-lg)',
+                        position: 'relative',
+                        overflow: 'hidden'
+                    }}>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                            gap: 'var(--spacing-xxl)',
+                            alignItems: 'center'
+                        }}>
+                            <div>
+                                <div style={{ marginBottom: 'var(--spacing-md)' }}>
+                                    <span style={{
+                                        background: 'var(--accent)',
+                                        color: 'white',
+                                        padding: '0.4rem 0.8rem',
+                                        borderRadius: '999px',
+                                        fontSize: '0.85rem',
+                                        letterSpacing: '0.05em'
+                                    }}>Vierteljährlich · Persönlich · DSGVO-konform</span>
+                                </div>
+                                <h2 style={{ fontSize: '2.3rem', color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Newsletter Beratung</h2>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: 1.7 }}>
+                                    Erhalte einmal pro Quartal kompakte Updates zu Verfügbarkeiten, Dachbox-Checks und regionalen Transport-Tipps. Versand und Double-Opt-In laufen über unsere Cloudflare-Worker-Schnittstelle und Brevo – transparent, abgesichert, ohne Spam.
+                                </p>
+
+                                <div style={{ display: 'grid', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-xl)' }}>
+                                    {[
+                                        { icon: '🔒', title: 'Double-Opt-In', text: 'Bestätigungsmail via Brevo mit Nachweis & Zeitstempel.' },
+                                        { icon: '☁️', title: 'Cloudflare Worker', text: 'Serverlose API mit Validierung, Rate-Limits & EU-Hosting.' },
+                                        { icon: '📬', title: 'Minimaler Inhalt', text: 'Kurze Analysen, saisonale Hinweise, keine Werbeflut.' }
+                                    ].map((item, index) => (
+                                        <div key={item.title} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 'var(--spacing-md)', alignItems: 'center' }}>
+                                            <div style={{
+                                                width: '52px',
+                                                height: '52px',
+                                                borderRadius: '999px',
+                                                background: index === 0 ? 'rgba(25,135,84,0.15)' : index === 1 ? 'rgba(0,123,255,0.13)' : 'rgba(255,193,7,0.2)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                fontSize: '1.5rem'
+                                            }}>{item.icon}</div>
+                                            <div>
+                                                <strong style={{ display: 'block', color: 'var(--primary)' }}>{item.title}</strong>
+                                                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{item.text}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div style={{
+                                background: 'var(--primary)',
+                                color: 'white',
+                                borderRadius: 'var(--border-radius-lg)',
+                                padding: 'var(--spacing-xl) var(--spacing-xxl)',
+                                position: 'relative'
+                            }}>
+                                <div style={{ position: 'absolute', top: '20px', right: '20px', opacity: 0.15, fontSize: '2rem' }}>✉️</div>
+                                <h3 style={{ marginBottom: 'var(--spacing-md)', fontSize: '1.7rem' }}>Jetzt vormerken lassen</h3>
+                                <p style={{ marginBottom: 'var(--spacing-lg)', lineHeight: 1.6 }}>
+                                    Nur E-Mail-Adresse + Einwilligung – danach folgt eine Bestätigungsmail. Ohne Klick auf den persönlichen Link erfolgt kein Versand.
+                                </p>
+                                <form onSubmit={handleNewsletterSubmit} style={{ display: 'grid', gap: 'var(--spacing-md)' }}>
+                                    <div>
+                                        <label htmlFor="newsletter-email" style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 600 }}>E-Mail-Adresse *</label>
+                                        <input
+                                            id="newsletter-email"
+                                            type="email"
+                                            value={newsletterEmail}
+                                            onChange={(event) => setNewsletterEmail(event.target.value)}
+                                            placeholder="ihre.email@example.com"
+                                            required
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.9rem 1rem',
+                                                borderRadius: 'var(--border-radius-md)',
+                                                border: '1px solid rgba(255,255,255,0.3)',
+                                                fontSize: '1rem',
+                                                color: 'var(--text-main)'
+                                            }}
+                                        />
+                                    </div>
+
+                                    <label style={{ display: 'flex', gap: '0.6rem', fontSize: '0.9rem', alignItems: 'flex-start' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={newsletterConsent}
+                                            onChange={(event) => setNewsletterConsent(event.target.checked)}
+                                            required
+                                            style={{ marginTop: '0.2rem' }}
+                                        />
+                                        <span>
+                                            Ich bestätige, dass ich den Newsletter erhalten möchte und habe die <a href="/datenschutz" style={{ color: 'white', textDecoration: 'underline' }}>Datenschutzerklärung</a> gelesen.
+                                        </span>
+                                    </label>
+
+                                    <button
+                                        type="submit"
+                                        disabled={newsletterSubmitting}
+                                        style={{
+                                            background: 'white',
+                                            color: 'var(--primary)',
+                                            border: 'none',
+                                            padding: '0.9rem 1.5rem',
+                                            borderRadius: 'var(--border-radius-md)',
+                                            fontWeight: 700,
+                                            fontSize: '1rem',
+                                            cursor: 'pointer',
+                                            transition: 'transform 0.2s, box-shadow 0.2s',
+                                            opacity: newsletterSubmitting ? 0.7 : 1
+                                        }}
+                                    >
+                                        {newsletterSubmitting ? 'Wird gesendet …' : 'Per E-Mail vormerken'}
+                                    </button>
+                                </form>
+
+                                <div aria-live="polite" style={{ minHeight: '3rem', marginTop: 'var(--spacing-sm)' }}>
+                                    {newsletterStatus.type !== 'idle' && (
+                                        <div style={{
+                                            padding: '0.8rem 1rem',
+                                            borderRadius: 'var(--border-radius-md)',
+                                            background: newsletterStatus.type === 'success' ? 'rgba(25,135,84,0.15)' : newsletterStatus.type === 'error' ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.1)',
+                                            border: '1px solid rgba(255,255,255,0.3)'
+                                        }}>
+                                            {newsletterStatus.message}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <p style={{ fontSize: '0.85rem', marginTop: 'var(--spacing-lg)', opacity: 0.9 }}>
+                                    Versand über Cloudflare Worker & Brevo. Double-Opt-In-Link verfällt nach 48 Stunden. Aggregiertes Tracking, kein individuelles Öffnungs-Tracking.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

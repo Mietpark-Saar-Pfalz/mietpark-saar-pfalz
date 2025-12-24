@@ -1,3 +1,15 @@
+## [1.0.4] - 2025-12-24
+
+### ✨ Added - Neue Features
+
+- **Template-Dokumentation**: Neues Markdown-Dokument `docs/newsletter-templates/templates.md` beschreibt Betreffzeilen, Copy-Guidelines und HTML-Snippets für Double-Opt-In- sowie Willkommens-Mail.
+
+### 🔧 Changed - Verbesserungen
+
+- **README**: Newsletter-Anleitung verweist jetzt auf das neue Templates-Dokument und stellt klar, dass auch `.txt`-Exporte lokal gitignored bleiben.
+- **Sitemap**: `newsletter/confirm` ist nun aufgeführt und alle `lastmod`-Zeitstempel wurden auf den aktuellen Stand gebracht.
+- **.gitignore**: Zusätzlich zu HTML-Dateien werden nun auch `.txt`-Exporte im Ordner `docs/newsletter-templates/` ignoriert, damit Brevo-Backups lokal bleiben.
+
 # Changelog
 
 Alle wichtigen Änderungen an der Mietpark Saar-Pfalz Website werden in dieser Datei dokumentiert.
@@ -5,12 +17,26 @@ Alle wichtigen Änderungen an der Mietpark Saar-Pfalz Website werden in dieser D
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-12-24
+
+### ✨ Added - Neue Features
+
+- **Newsletter-Architektur**: Cloudflare-Worker + Brevo Double-Opt-In inklusive neuer Newsletter-Sektion auf der Startseite mit validiertem Formular, Consent-Checkbox und Nutzerfeedback.
+- **Worker-Code & Doku**: Eigenes Worker-Verzeichnis (`workers/newsletter`) plus README-Erweiterungen für Secrets, Wrangler-Setup und lokale Template-Ablage.
+- **Confirm Page**: Neue Seite `/newsletter/confirm` dient als professionelle Landingpage für Brevo-Weiterleitungen nach dem Double-Opt-In.
+
+### 🔧 Changed - Verbesserungen
+
+- **Datenschutz**: Neuer Abschnitt erläutert Double-Opt-In, Cloudflare Worker sowie Brevo als Auftragsverarbeiter.
+- **.env & .gitignore**: Neuer `VITE_NEWSLETTER_ENDPOINT`, lokale `.dev.vars` und HTML-Templates werden automatisch ignoriert.
+- **README**: Ausführliche Anleitung zur rechtssicheren Newsletter-Inbetriebnahme inkl. Templateverwaltung und Deployment-Checkliste.
+
 ## [1.0.2] - 2025-12-23
 
 ### ✨ Added - Neue Features
 
 - **Persönlicher Support**: Avatar-basierter Hilfebereich auf allen Produktseiten mit direkten E-Mail- und Telefon-CTAs, damit Besucher sofort wissen, dass sie Daniel Brußig erreichen können.
- 
+
 ### 🔧 Changed - Verbesserungen
 
 - **Regional Storytelling**: Hero-Subtitles und Structured Data kommunizieren jetzt klar „Ihr verlässlicher Partner im Saarland, Homburg und Umgebung seit 2023“ inklusive Hinweis auf Ski- und Snowboard-Transport.
