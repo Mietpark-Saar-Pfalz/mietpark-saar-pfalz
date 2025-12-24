@@ -106,7 +106,8 @@ export default function Home() {
     const [newsletterStatus, setNewsletterStatus] = useState({ type: 'idle', message: '' });
     const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
     const newsletterEndpoint = import.meta.env.VITE_NEWSLETTER_ENDPOINT;
-    const newsletterEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // NOTE: This regex must stay in sync mit workers/newsletter/src/index.js
+    const newsletterEmailRegex = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
 
     const handleNewsletterSubmit = async (event) => {
         event.preventDefault();
@@ -123,6 +124,9 @@ export default function Home() {
         }
 
         if (!newsletterEndpoint) {
+            if (import.meta.env.DEV) {
+                console.warn('Newsletter endpoint ist nicht konfiguriert. Bitte VITE_NEWSLETTER_ENDPOINT setzen.');
+            }
             setNewsletterStatus({ type: 'error', message: 'Newsletter-Service ist momentan nicht verfügbar. Bitte versuchen Sie es später erneut.' });
             return;
         }
@@ -392,8 +396,22 @@ export default function Home() {
             {/* FAQ and Blog Section */}
             <section className="section">
                 <div className="container" style={{ textAlign: 'center' }}>
-                    <h2 className="section-title" style={{ marginBottom: 'var(--spacing-md)' }}>Häufig gestellte Fragen & Tipps</h2>
-                    <p className="section-subtitle" style={{ marginBottom: 'var(--spacing-xxxl)' }}>Antworten auf Ihre Fragen und nützliche Blogartikel</p>
+                    <h2
+                        className="section-title"
+                        style={{
+                            marginBottom: 'var(--spacing-md)',
+                            color: 'var(--white)',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.35)'
+                        }}
+                    >Häufig gestellte Fragen & Tipps</h2>
+                    <p
+                        className="section-subtitle"
+                        style={{
+                            marginBottom: 'var(--spacing-xxxl)',
+                            color: 'rgba(255,255,255,0.9)',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.25)'
+                        }}
+                    >Antworten auf Ihre Fragen und nützliche Blogartikel</p>
 
                     <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--spacing-xl)', flexWrap: 'wrap' }}>
                         <Link to="/faq" className="btn btn-primary" style={{ padding: 'var(--spacing-md) var(--spacing-xxl)' }}>Zu den FAQs</Link>
@@ -417,7 +435,7 @@ export default function Home() {
             {/* Newsletter Section */}
             <section className="section bg-light" id="newsletter">
                 <div className="container">
-                    <div style={{
+                    <div className="newsletter-card" style={{
                         background: 'white',
                         borderRadius: 'var(--border-radius-lg)',
                         padding: 'var(--spacing-xxxl)',
@@ -442,16 +460,16 @@ export default function Home() {
                                         letterSpacing: '0.05em'
                                     }}>Vierteljährlich · Persönlich · DSGVO-konform</span>
                                 </div>
-                                <h2 style={{ fontSize: '2.3rem', color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Newsletter Beratung</h2>
+                                <h2 style={{ fontSize: '2.3rem', color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Newsletter</h2>
                                 <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: 1.7 }}>
-                                    Erhalte einmal pro Quartal kompakte Updates zu Verfügbarkeiten, Dachbox-Checks und regionalen Transport-Tipps. Versand und Double-Opt-In laufen über unsere Cloudflare-Worker-Schnittstelle und Brevo – transparent, abgesichert, ohne Spam.
+                                    Erhalte einmal pro Quartal kompakte Updates zu Verfügbarkeiten, Dachbox-Checks und regionalen Transport-Tipps. Kurz, persönlich und nur dann, wenn es wirklich etwas Neues gibt.
                                 </p>
 
                                 <div style={{ display: 'grid', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-xl)' }}>
                                     {[
-                                        { icon: '🔒', title: 'Double-Opt-In', text: 'Bestätigungsmail via Brevo mit Nachweis & Zeitstempel.' },
-                                        { icon: '☁️', title: 'Cloudflare Worker', text: 'Serverlose API mit Validierung, Rate-Limits & EU-Hosting.' },
-                                        { icon: '📬', title: 'Minimaler Inhalt', text: 'Kurze Analysen, saisonale Hinweise, keine Werbeflut.' }
+                                        { icon: '📅', title: 'Saisonale Tipps', text: 'Praktische Checklisten für Ferien- und Wintersaison.' },
+                                        { icon: '📦', title: 'Verfügbarkeiten zuerst', text: 'Frühzeitige Hinweise, wenn Dachboxen knapp werden.' },
+                                        { icon: '✉️', title: 'Max. 4 E-Mails/Jahr', text: 'Nur relevante Infos, Abmeldung jederzeit möglich.' }
                                     ].map((item, index) => (
                                         <div key={item.title} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 'var(--spacing-md)', alignItems: 'center' }}>
                                             <div style={{
@@ -481,28 +499,28 @@ export default function Home() {
                                 position: 'relative'
                             }}>
                                 <div style={{ position: 'absolute', top: '20px', right: '20px', opacity: 0.15, fontSize: '2rem' }}>✉️</div>
-                                <h3 style={{ marginBottom: 'var(--spacing-md)', fontSize: '1.7rem' }}>Jetzt vormerken lassen</h3>
+                                <h3
+                                    id="newsletter-heading"
+                                    style={{ marginBottom: 'var(--spacing-md)', fontSize: '1.7rem' }}
+                                >Jetzt vormerken lassen</h3>
                                 <p style={{ marginBottom: 'var(--spacing-lg)', lineHeight: 1.6 }}>
-                                    Nur E-Mail-Adresse + Einwilligung – danach folgt eine Bestätigungsmail. Ohne Klick auf den persönlichen Link erfolgt kein Versand.
+                                    Nur E-Mail-Adresse + Einwilligung – danach erhältst du eine kurze Bestätigungsmail. Ohne Klick auf den persönlichen Link erfolgt kein Versand.
                                 </p>
-                                <form onSubmit={handleNewsletterSubmit} style={{ display: 'grid', gap: 'var(--spacing-md)' }}>
+                                <form
+                                    onSubmit={handleNewsletterSubmit}
+                                    aria-labelledby="newsletter-heading"
+                                    style={{ display: 'grid', gap: 'var(--spacing-md)' }}
+                                >
                                     <div>
                                         <label htmlFor="newsletter-email" style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 600 }}>E-Mail-Adresse *</label>
                                         <input
                                             id="newsletter-email"
+                                            className="newsletter-input"
                                             type="email"
                                             value={newsletterEmail}
                                             onChange={(event) => setNewsletterEmail(event.target.value)}
                                             placeholder="ihre.email@example.com"
                                             required
-                                            style={{
-                                                width: '100%',
-                                                padding: '0.9rem 1rem',
-                                                borderRadius: 'var(--border-radius-md)',
-                                                border: '1px solid rgba(255,255,255,0.3)',
-                                                fontSize: '1rem',
-                                                color: 'var(--text-main)'
-                                            }}
                                         />
                                     </div>
 
@@ -553,7 +571,7 @@ export default function Home() {
                                 </div>
 
                                 <p style={{ fontSize: '0.85rem', marginTop: 'var(--spacing-lg)', opacity: 0.9 }}>
-                                    Versand über Cloudflare Worker & Brevo. Double-Opt-In-Link verfällt nach 48 Stunden. Aggregiertes Tracking, kein individuelles Öffnungs-Tracking.
+                                    Versand maximal viermal im Jahr. Abmeldung jederzeit per Link in jeder E-Mail, kein individuelles Öffnungs-Tracking.
                                 </p>
                             </div>
                         </div>
@@ -564,8 +582,24 @@ export default function Home() {
             {/* Location Section */}
             <section className="section" id="contact">
                 <div className="container">
-                    <h2 className="section-title" style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: '1rem' }}>So finden Sie uns</h2>
-                    <p className="section-subtitle" style={{ textAlign: 'center', marginBottom: '3rem' }}>Mietpark Saar-Pfalz, Kastanienweg 17, 66424 Homburg</p>
+                    <h2
+                        className="section-title"
+                        style={{
+                            textAlign: 'center',
+                            color: 'var(--white)',
+                            marginBottom: '1rem',
+                            textShadow: '0 2px 6px rgba(0,0,0,0.4)'
+                        }}
+                    >So finden Sie uns</h2>
+                    <p
+                        className="section-subtitle"
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: '3rem',
+                            color: 'rgba(255,255,255,0.9)',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                        }}
+                    >Mietpark Saar-Pfalz, Kastanienweg 17, 66424 Homburg</p>
 
                     <div className="contact-wrapper contact-grid">
                         <div className="contact-content">

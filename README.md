@@ -130,8 +130,7 @@ Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys
 Der Newsletter wird über ein serverloses Setup mit Cloudflare Workers und Brevo (Sendinblue) realisiert. So bleiben API-Keys geheim, Double-Opt-In ist rechtssicher nachweisbar und die Frontend-App bleibt komplett statisch.
 
 ### 1. Templates & Branding
-- Double-Opt-In- und Willkommens-HTML werden lokal unter `docs/newsletter-templates/` abgelegt. Die Ordnereinträge `*.html` sind via `.gitignore` ausgeschlossen und können gefahrlos angepasst werden.
-- Double-Opt-In- und Willkommens-HTML werden lokal unter `docs/newsletter-templates/` abgelegt. Die Ordnereinträge `*.html`, `*.htm` **und** `*.txt` sind via `.gitignore` ausgeschlossen und können gefahrlos angepasst werden.
+- Double-Opt-In- und Willkommens-Templates werden lokal unter `docs/newsletter-templates/` abgelegt. Die Ordnereinträge `*.html`, `*.htm` **und** `*.txt` sind via `.gitignore` ausgeschlossen und können gefahrlos angepasst werden.
 - Detaillierte Brand- und Copy-Guidelines für beide Templates findest du in [`docs/newsletter-templates/templates.md`](docs/newsletter-templates/templates.md). Hier dokumentierst du auch neue Versionen, während die eigentlichen HTML-/TXT-Dateien lokal bleiben.
 - Die finalen HTML-Dateien werden in Brevo als Templates hochgeladen. Notiere die Template-IDs, z. B. `BREVO_DOI_TEMPLATE_ID` und optional `BREVO_WELCOME_TEMPLATE_ID`.
 - Brevo leitet nach erfolgreichem Klick auf die neue Bestätigungsseite unter [`/newsletter/confirm`](https://mietpark-saar-pfalz.com/newsletter/confirm) weiter. Setze dazu `BREVO_REDIRECT_URL=https://mietpark-saar-pfalz.com/newsletter/confirm` in deinen Worker-Secrets.
