@@ -31,7 +31,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Hybrid SSG/SEO** - Beste Kombination aus SPA-Performance und Suchmaschinenoptimierung
 - **Structured Data** - Rich Snippets für Google (LocalBusiness, Product Schema)
 - **Open Graph & Twitter Cards** - Optimale Social Media Darstellung
-- **Sitemap & Robots.txt** - Vollständige Crawling-Unterstützung
+- **Sitemap & Robots.txt** - Vollständige Crawling-Unterstützung inkl. Newsletter-Bestätigungsseite
 - **Core Web Vitals** - Lighthouse Score > 90 in allen Kategorien
 
 ### 🚀 Technische Features
@@ -113,17 +113,50 @@ npm run deploy
 
 ## 🔐 Environment Variables
 
-Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys für EmailJS und ImgBB.
+Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys für EmailJS und ImgBB. Für die Newsletter-Anmeldung wird zusätzlich der Cloudflare-Worker-Endpunkt hinterlegt.
 
 1. Datei [.env.example](.env.example) kopieren und als `.env.local` speichern.
-2. Eigene Werte für `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY` und `VITE_IMGBB_API_KEY` eintragen.
+2. Eigene Werte für `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_IMGBB_API_KEY` **und** `VITE_NEWSLETTER_ENDPOINT` (URL des Cloudflare-Workers) eintragen.
 3. `.env.local` nicht committen – Vite liest die Variablen automatisch über `import.meta.env`.
 
 ### GitHub Actions
 
-- In den Repository-Secrets die gleichen Variablennamen hinterlegen (`VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_IMGBB_API_KEY`).
+- In den Repository-Secrets die gleichen Variablennamen hinterlegen (`VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_IMGBB_API_KEY`, `VITE_NEWSLETTER_ENDPOINT`).
 - Der Workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) exportiert diese Secrets während des Builds, sodass die statische Seite mit den richtigen Werten generiert wird.
 - Änderungen an den Keys erfordern einen neuen Build, damit die Werte in der ausgelieferten App landen.
+
+## 📬 Newsletter-Setup (Cloudflare Worker + Brevo)
+
+Der Newsletter wird über ein serverloses Setup mit Cloudflare Workers und Brevo (Sendinblue) realisiert. So bleiben API-Keys geheim, Double-Opt-In ist rechtssicher nachweisbar und die Frontend-App bleibt komplett statisch.
+
+### 1. Templates & Branding
+- Double-Opt-In- und Willkommens-HTML werden lokal unter `docs/newsletter-templates/` abgelegt. Die Ordnereinträge `*.html` sind via `.gitignore` ausgeschlossen und können gefahrlos angepasst werden.
+- Double-Opt-In- und Willkommens-HTML werden lokal unter `docs/newsletter-templates/` abgelegt. Die Ordnereinträge `*.html`, `*.htm` **und** `*.txt` sind via `.gitignore` ausgeschlossen und können gefahrlos angepasst werden.
+- Detaillierte Brand- und Copy-Guidelines für beide Templates findest du in [`docs/newsletter-templates/templates.md`](docs/newsletter-templates/templates.md). Hier dokumentierst du auch neue Versionen, während die eigentlichen HTML-/TXT-Dateien lokal bleiben.
+- Die finalen HTML-Dateien werden in Brevo als Templates hochgeladen. Notiere die Template-IDs, z. B. `BREVO_DOI_TEMPLATE_ID` und optional `BREVO_WELCOME_TEMPLATE_ID`.
+- Brevo leitet nach erfolgreichem Klick auf die neue Bestätigungsseite unter [`/newsletter/confirm`](https://mietpark-saar-pfalz.com/newsletter/confirm) weiter. Setze dazu `BREVO_REDIRECT_URL=https://mietpark-saar-pfalz.com/newsletter/confirm` in deinen Worker-Secrets.
+
+### 2. Cloudflare Worker konfigurieren
+- Basiscode liegt unter [`workers/newsletter`](workers/newsletter). Er validiert E-Mail-Adressen, erzwingt die Einwilligung und ruft die Brevo Double-Opt-In-API auf.
+- Lokales Testing: `cd workers/newsletter && wrangler dev`. Secrets liegen in `.dev.vars` (siehe `.gitignore`). Beispiel:
+   ```bash
+   echo "BREVO_API_KEY=xxx" >> .dev.vars
+   echo "BREVO_LIST_ID=12" >> .dev.vars
+   echo "BREVO_DOI_TEMPLATE_ID=34" >> .dev.vars
+   echo "ALLOWED_ORIGINS=https://mietpark-saar-pfalz.com,https://www.mietpark-saar-pfalz.com,http://localhost:5173" >> .dev.vars
+   ```
+- Production-Secrets setzen: `wrangler secret put BREVO_API_KEY` (analog für `BREVO_LIST_ID`, `BREVO_DOI_TEMPLATE_ID`, optional `BREVO_REDIRECT_URL`).
+- Deployment: `wrangler publish`. Die Workers.dev-URL oder eine eigene Route dient anschließend als `VITE_NEWSLETTER_ENDPOINT`.
+
+### 3. Rechte & Datenschutz
+- Der Worker speichert keine Daten, sondern reicht sie an Brevo weiter. Wir protokollieren nur aggregierte Metriken.
+- Double-Opt-In-Mails dürfen ausschließlich den Bestätigungszweck enthalten; die Willkommensmail startet erst nach erfolgreicher Bestätigung.
+- Die Datenschutzerklärung enthält einen Abschnitt zu Cloudflare Worker, Brevo und Widerrufsrecht (siehe `src/pages/Datenschutz.jsx`).
+
+### 4. Governance & Secrets
+- Newsletter-relevante Secrets niemals im Code speichern. Rotation spätestens alle 90 Tage.
+- Zugriff auf Cloudflare & Brevo dokumentieren (wer pflegt Keys, Templates, DNS für DKIM/SPF/DMARC).
+- Domain-Authentifizierung in Brevo abschließen, damit DOI- und Newsletter-Mails zuverlässig zugestellt werden.
 
 ## 📁 Projektstruktur
 
@@ -159,7 +192,12 @@ mietpark-saar-pfalz/
 ├── docs/                  # Dokumentation
 │   ├── CHANGELOG.md       # Versionshistorie
 │   ├── COMMIT_CONVENTIONS.md # Commit-Standards
-│   └── CONTRIBUTING.md    # Entwicklungsanleitung
+│   ├── CONTRIBUTING.md    # Entwicklungsanleitung
+│   └── newsletter-templates/ # Lokale HTML-Referenzen (gitignored für *.html)
+├── workers/
+│   └── newsletter/
+│       ├── src/index.js   # Cloudflare Worker Logik
+│       └── wrangler.toml  # Worker-Konfiguration
 └── package.json          # Dependencies & Scripts
 ```
 

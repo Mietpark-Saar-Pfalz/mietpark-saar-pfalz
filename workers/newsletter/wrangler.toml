@@ -1,0 +1,7 @@
+name = "newsletter-worker"
+main = "src/index.js"
+compatibility_date = "2024-12-24"
+workers_dev = true
+
+[vars]
+BREVO_REDIRECT_URL = "https://mietpark-saar-pfalz.com/newsletter/confirm"
