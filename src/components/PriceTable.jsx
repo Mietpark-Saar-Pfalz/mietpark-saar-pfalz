@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
 
 export default function PriceTable({ product }) {
     const pricing = product?.pricing;
@@ -24,15 +24,7 @@ export default function PriceTable({ product }) {
                         )}
                     </div>
                     {pricing.tooltip && showRoofRackColumn && (
-                        <span
-                            className="price-tooltip-trigger"
-                            tabIndex={0}
-                            role="button"
-                            aria-label="Info zur Dachträger-Option"
-                            data-tooltip={pricing.tooltip}
-                        >
-                            i
-                        </span>
+                        <TooltipTrigger text={pricing.tooltip} />
                     )}
                 </div>
 
@@ -83,6 +75,37 @@ export default function PriceTable({ product }) {
                 )}
             </div>
         </section>
+    );
+}
+
+function TooltipTrigger({ text }) {
+    const tooltipId = useId();
+    const [visible, setVisible] = useState(false);
+
+    return (
+        <span
+            className="tooltip-wrapper"
+            onMouseEnter={() => setVisible(true)}
+            onMouseLeave={() => setVisible(false)}
+        >
+            <button
+                type="button"
+                className="tooltip-trigger"
+                aria-describedby={tooltipId}
+                onFocus={() => setVisible(true)}
+                onBlur={() => setVisible(false)}
+            >
+                i
+            </button>
+            <span
+                id={tooltipId}
+                role="tooltip"
+                className={`tooltip-bubble ${visible ? 'visible' : ''}`}
+                aria-hidden={!visible}
+            >
+                {text}
+            </span>
+        </span>
     );
 }
 

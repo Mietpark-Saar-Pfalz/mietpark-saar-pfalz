@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 
 const currencyFormatter = new Intl.NumberFormat('de-DE', {
     style: 'currency',
@@ -77,16 +77,7 @@ export default function PriceCalculator({
                         <div className="roofrack-selector" role="group" aria-label="Dachträger-Option">
                             <span>
                                 Mit Dachträger?
-                                {pricing.tooltip && (
-                                    <button
-                                        type="button"
-                                        className="inline-tooltip"
-                                        data-tooltip={pricing.tooltip}
-                                        aria-label="Hinweis zur Dachträger-Option"
-                                    >
-                                        i
-                                    </button>
-                                )}
+                                {pricing.tooltip && <TooltipTrigger text={pricing.tooltip} />}
                             </span>
                             <div className="roofrack-buttons">
                                 <button
@@ -137,14 +128,14 @@ export default function PriceCalculator({
                             <details>
                                 <summary>Berechnungsdetails anzeigen</summary>
                                 <ul>
-                                    {calculation.breakdown.map(item => (
-                                        <li key={item}>{item}</li>
+                                    {calculation.breakdown.map((item, idx) => (
+                                        <li key={`${item}-${idx}`}>{item}</li>
                                     ))}
                                 </ul>
                             </details>
                         )}
                         <p className="price-calculator-disclaimer">
-                            Der angezeigte Betrag ist eine Orientierung. Sie erhalten den finalen Preis mit Ihrer Buchungsbestätigung.
+                            Der Preisrechner ist unverbindlich und dient nur zur Orientierung. Sie erhalten den finalen Betrag nach individueller Prüfung mit Ihrer Buchungsbestätigung.
                         </p>
                     </div>
                 )}
@@ -165,7 +156,7 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
     const end = toDate(endDate);
 
     if (!start || !end) {
-        return { error: 'Ungültige Datumsangabe.' };
+        return { error: 'Bitte geben Sie ein gültiges Datum im Format TT.MM.JJJJ ein.' };
     }
 
     if (end <= start) {
@@ -194,7 +185,12 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
         return typeof rate.withoutRack === 'number' ? rate.withoutRack : rate.withRack;
     };
 
-    const weeklyRates = [...(calculatorConfig.weeklyRates || [])].sort((a, b) => b.weeks - a.weeks);
+    const weeklyRatesConfig = calculatorConfig.weeklyRates || [];
+    const weeklyRates = [...weeklyRatesConfig].sort((a, b) => b.weeks - a.weeks);
+    const smallestWeeklyRate = weeklyRatesConfig.length > 0
+        ? weeklyRatesConfig.reduce((min, rate) => (rate.weeks < min.weeks ? rate : min), weeklyRatesConfig[0])
+        : null;
+    const hasDayRates = Boolean(calculatorConfig.dayRates?.weekday || calculatorConfig.dayRates?.weekend);
 
     while (remainingDays >= 7 && weeklyRates.length > 0) {
         const remainingWeeks = Math.floor(remainingDays / 7);
@@ -223,6 +219,17 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
         breakdown.push(`${calculatorConfig.weekendRate.label}: ${currencyFormatter.format(price)}`);
         remainingDays -= weekendPackageDays;
         cursor = addDays(cursor, weekendPackageDays);
+    }
+
+    if (remainingDays > 0 && !hasDayRates && smallestWeeklyRate) {
+        const price = selectPrice(smallestWeeklyRate);
+        basePrice += price;
+        breakdown.push(`${smallestWeeklyRate.label} (Zusatzwoche): ${currencyFormatter.format(price)}`);
+        remainingDays = 0;
+    }
+
+    if (remainingDays > 0 && !hasDayRates && !smallestWeeklyRate) {
+        return { error: 'Für dieses Produkt stehen nur Wochenpakete zur Verfügung. Bitte passen Sie Ihren Zeitraum an.' };
     }
 
     while (remainingDays > 0) {
@@ -259,9 +266,38 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
 const MS_IN_DAY = 1000 * 60 * 60 * 24;
 
 function toDate(value) {
-    const [year, month, day] = value.split('-').map(Number);
-    if (!year || !month || !day) return null;
-    return new Date(year, month - 1, day);
+    if (!value || typeof value !== 'string') return null;
+
+    const [yearStr, monthStr, dayStr] = value.split('-');
+    if (!yearStr || !monthStr || !dayStr) return null;
+
+    const year = Number(yearStr);
+    const month = Number(monthStr);
+    const day = Number(dayStr);
+
+    if (
+        !Number.isInteger(year) ||
+        !Number.isInteger(month) ||
+        !Number.isInteger(day) ||
+        month < 1 ||
+        month > 12 ||
+        day < 1 ||
+        day > 31
+    ) {
+        return null;
+    }
+
+    const date = new Date(year, month - 1, day);
+    if (
+        Number.isNaN(date.getTime()) ||
+        date.getFullYear() !== year ||
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day
+    ) {
+        return null;
+    }
+
+    return date;
 }
 
 function addDays(date, days) {
@@ -342,50 +378,60 @@ function calculateSeasonImpact(start, end, seasonPeriods = []) {
         return { seasonSurcharge: 0, seasonWeeks: 0 };
     }
 
-    const seasonCounters = seasonPeriods.map(period => ({ period, days: 0 }));
-
-    for (let cursor = new Date(start); cursor < end; cursor = addDays(cursor, 1)) {
-        seasonCounters.forEach(entry => {
-            if (isDateWithinSeason(cursor, entry.period)) {
-                entry.days += 1;
-            }
-        });
-    }
-
-    return seasonCounters.reduce((acc, entry) => {
-        if (!entry.days || !(entry.period?.surchargePerWeek > 0)) {
+    return seasonPeriods.reduce((acc, period) => {
+        const daysInSeason = calculateSeasonOverlapDays(start, end, period);
+        if (!daysInSeason || !(period?.surchargePerWeek > 0)) {
             return acc;
         }
 
-        const weeks = Math.ceil(entry.days / 7);
+        const weeks = Math.ceil(daysInSeason / 7);
         return {
-            seasonSurcharge: acc.seasonSurcharge + weeks * entry.period.surchargePerWeek,
+            seasonSurcharge: acc.seasonSurcharge + weeks * period.surchargePerWeek,
             seasonWeeks: acc.seasonWeeks + weeks
         };
     }, { seasonSurcharge: 0, seasonWeeks: 0 });
 }
 
-function isDateWithinSeason(date, period) {
-    if (!period) {
-        return false;
+function calculateSeasonOverlapDays(start, end, period) {
+    if (!period || !start || !end) {
+        return 0;
     }
 
-    const startValue = parseSeasonBoundary(period.start);
-    const endValue = parseSeasonBoundary(period.end);
+    const startBoundary = parseSeasonBoundary(period.start);
+    const endBoundary = parseSeasonBoundary(period.end);
 
-    if (!startValue || !endValue) {
-        return false;
+    if (!startBoundary || !endBoundary) {
+        return 0;
     }
 
-    const current = (date.getMonth() + 1) * 100 + date.getDate();
-    const startNumber = startValue.month * 100 + startValue.day;
-    const endNumber = endValue.month * 100 + endValue.day;
+    const rentalStart = new Date(start);
+    const rentalEnd = new Date(end);
 
-    if (startNumber <= endNumber) {
-        return current >= startNumber && current <= endNumber;
+    if (!(rentalStart < rentalEnd)) {
+        return 0;
     }
 
-    return current >= startNumber || current <= endNumber;
+    const startNumber = startBoundary.month * 100 + startBoundary.day;
+    const endNumber = endBoundary.month * 100 + endBoundary.day;
+    let totalDays = 0;
+    const startYear = rentalStart.getFullYear() - 1;
+    const endYear = rentalEnd.getFullYear() + 1;
+
+    for (let year = startYear; year <= endYear; year++) {
+        const seasonStart = new Date(year, startBoundary.month - 1, startBoundary.day);
+        const seasonEndYear = startNumber <= endNumber ? year : year + 1;
+        const seasonEnd = new Date(seasonEndYear, endBoundary.month - 1, endBoundary.day);
+        const seasonEndExclusive = addDays(seasonEnd, 1);
+
+        const overlapStart = seasonStart > rentalStart ? seasonStart : rentalStart;
+        const overlapEnd = seasonEndExclusive < rentalEnd ? seasonEndExclusive : rentalEnd;
+
+        if (overlapStart < overlapEnd) {
+            totalDays += Math.round((overlapEnd - overlapStart) / MS_IN_DAY);
+        }
+    }
+
+    return totalDays;
 }
 
 function parseSeasonBoundary(value) {
@@ -400,4 +446,35 @@ function parseSeasonBoundary(value) {
     }
 
     return { month, day };
+}
+
+function TooltipTrigger({ text }) {
+    const tooltipId = useId();
+    const [visible, setVisible] = useState(false);
+
+    return (
+        <span
+            className="tooltip-wrapper"
+            onMouseEnter={() => setVisible(true)}
+            onMouseLeave={() => setVisible(false)}
+        >
+            <button
+                type="button"
+                className="tooltip-trigger"
+                aria-describedby={tooltipId}
+                onFocus={() => setVisible(true)}
+                onBlur={() => setVisible(false)}
+            >
+                i
+            </button>
+            <span
+                id={tooltipId}
+                role="tooltip"
+                className={`tooltip-bubble ${visible ? 'visible' : ''}`}
+                aria-hidden={!visible}
+            >
+                {text}
+            </span>
+        </span>
+    );
 }

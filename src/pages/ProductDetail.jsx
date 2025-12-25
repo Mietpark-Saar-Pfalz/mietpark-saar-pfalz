@@ -8,6 +8,8 @@ import NewsletterSection from '../components/NewsletterSection';
 import PriceTable from '../components/PriceTable';
 import PriceCalculator from '../components/PriceCalculator';
 
+const MAX_PRICE_BREAKDOWN_LENGTH = 600;
+
 const buildPriceBreakdownText = (quote) => {
     if (!quote) {
         return 'Nicht berechnet';
@@ -30,8 +32,11 @@ const buildPriceBreakdownText = (quote) => {
     if (quote.breakdown?.length) {
         parts.push(`Details: ${quote.breakdown.join(' / ')}`);
     }
-
-    return parts.join(' | ');
+    const fullText = parts.join(' | ');
+    if (fullText.length > MAX_PRICE_BREAKDOWN_LENGTH) {
+        return `${fullText.slice(0, MAX_PRICE_BREAKDOWN_LENGTH)} … (Details gekürzt)`;
+    }
+    return fullText;
 };
 
 const emailServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -290,7 +295,7 @@ export default function ProductDetail() {
                 railing_type: '',
                 message: ''
             });
-            setRoofRackNeeded(false);
+            setRoofRackNeeded(product.pricing?.supportsRoofRack ? true : null);
             setFieldErrors({});
             setSelectedFile(null); // Reset selected file after successful submission
         } catch (error) {
@@ -510,8 +515,6 @@ export default function ProductDetail() {
                     onRoofRackChange={value => setRoofRackNeeded(value)}
                     onQuote={setLastPriceQuote}
                 />
-
-                <hr style={{ margin: 'var(--spacing-xxl) 0', opacity: 0.1 }} />
 
                 <hr style={{ margin: 'var(--spacing-xxl) 0', opacity: 0.1 }} />
 
