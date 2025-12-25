@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: 🚀 Deploy to GitHub Pages
 
 on:
   push:
@@ -7,47 +7,81 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  # CI Job - läuft bei jedem Push und PR
+  ci:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # to push commits to repository
-      pages: write     # to deploy to GitHub Pages
-    env:
-      VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
-      VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
-      VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
-      VITE_IMGBB_API_KEY: ${{ secrets.VITE_IMGBB_API_KEY }}
+    name: 🔍 CI Pipeline
 
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.19.x'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Run linting
+      - name: 🔍 Run linting
         run: npm run lint
 
-      - name: Run tests
-        run: npm test || echo "No tests defined"
+      - name: 🧪 Run tests
+        run: npm test
 
-      - name: Build for production
-        run: npm run build
-
-      - name: Build for custom domain test
+      - name: 🏗️ Build for production (dry-run)
         run: npm run build:custom
+        env:
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_IMGBB_API_KEY: ${{ secrets.VITE_IMGBB_API_KEY }}
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      - name: 📊 Build info
+        run: |
+          echo "📁 Build-Größe: $(du -sh dist | cut -f1)"
+          echo "📄 HTML-Dateien: $(find dist -name "*.html" | wc -l)"
+          echo "🎨 CSS-Dateien: $(find dist -name "*.css" | wc -l)"
+          echo "⚡ JS-Dateien: $(find dist -name "*.js" | wc -l)"
+
+  # Deploy Job - nur bei Push zu main
+  deploy:
+    runs-on: ubuntu-latest
+    name: 🚀 Deploy to Production
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    permissions:
+      contents: write  # to push commits to repository
+      pages: write     # to deploy to GitHub Pages
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.x'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Build for custom domain
+        run: npm run build:custom
+        env:
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_IMGBB_API_KEY: ${{ secrets.VITE_IMGBB_API_KEY }}
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
@@ -56,9 +90,9 @@ jobs:
           allow_empty_commit: true
           force_orphan: true
 
-      - name: Update deployment status
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      - name: 📢 Deployment erfolgreich
         run: |
-          echo "✅ Deployment erfolgreich nach https://mietpark-saar-pfalz.com"
+          echo "✅ Deployment erfolgreich!"
+          echo "🌐 Live-URL: https://mietpark-saar-pfalz.com"
           echo "📊 Build-Größe: $(du -sh dist | cut -f1)"
-          echo "🔗 Live-URL: https://mietpark-saar-pfalz.com"
+          echo "⏰ Deployed at: $(date)"
