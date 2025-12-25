@@ -1,8 +1,15 @@
 import React from 'react';
 
+import SEOHead from '../components/SEOHead';
+
 export default function Agb() {
     return (
         <div className="legal-page page-content container">
+            <SEOHead
+                title="AGB - Allgemeine Geschäftsbedingungen"
+                description="Allgemeine Geschäftsbedingungen (AGB) von Mietpark Saar-Pfalz für die Vermietung von Dachboxen, Trägersystemen und Hüpfburgen."
+                url="/agb"
+            />
             <h1>Allgemeine Geschäftsbedingungen (AGB)</h1>
             <p className="subtitle">von Mietpark Saar-Pfalz in Homburg/Saar</p>
 

@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import SEOHead from '../components/SEOHead';
+
 export default function Datenschutz() {
     return (
         <div className="legal-page datenschutz-page">
+            <SEOHead
+                title="Datenschutzerklärung"
+                description="Datenschutzerklärung des Mietpark Saar-Pfalz. Informationen zur Erhebung, Verarbeitung und Nutzung Ihrer personenbezogenen Daten."
+                url="/datenschutz"
+            />
             {/* Hero Section */}
             <div style={{
                 background: 'linear-gradient(135deg, #1a4d2e 0%, #4f772d 100%)',

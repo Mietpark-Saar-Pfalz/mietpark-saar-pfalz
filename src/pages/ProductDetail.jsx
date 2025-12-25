@@ -302,46 +302,6 @@ export default function ProductDetail() {
     };
 
     // useEffect für Structured Data - vor der if (!product) return
-    React.useEffect(() => {
-        if (!product) return; // Early return if no product
-
-        const productSchema = {
-            "@context": "http://schema.org",
-            "@type": "Product",
-            "name": product.title,
-            "image": window.location.origin + product.image, // Absolute URL
-            "description": product.description,
-            "sku": product.id, // Using product ID as SKU
-            "brand": {
-                "@type": "Brand",
-                "name": "Mietpark Saar-Pfalz"
-            },
-            "offers": {
-                "@type": "Offer",
-                "url": window.location.href,
-                "priceCurrency": "EUR",
-                "price": product.prices?.base || product.price?.match(/(\d+)/)[0] || '0',
-                "availability": "http://schema.org/InStock", // Assuming always in stock for booking
-                "itemCondition": "http://schema.org/UsedCondition"
-            }
-        };
-
-        // Neue Product Structured Data hinzufügen
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(productSchema);
-        document.head.appendChild(script);
-
-        // Cleanup beim Unmount
-        return () => {
-            const scriptsToRemove = document.querySelectorAll('script[type="application/ld+json"]');
-            scriptsToRemove.forEach(script => {
-                if (script.textContent.includes('"Product"')) {
-                    script.remove();
-                }
-            });
-        };
-    }, [product]); // Abhängig von product
 
     if (!product) {
         return <div className="container" style={{ padding: '5rem 1rem' }}>Produkt nicht gefunden. <Link to="/">Zurück zur Übersicht</Link></div>;
@@ -349,9 +309,40 @@ export default function ProductDetail() {
 
     const images = product.gallery && product.gallery.length > 0 ? product.gallery : (product.image ? [product.image] : []);
 
+    const canonicalUrl = `https://mietpark-saar-pfalz.com/product/${product.id}`;
+
+    // Schema.org Product Data
+    const productSchema = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": product.title,
+        "image": images.map(img => img.startsWith('http') ? img : `https://mietpark-saar-pfalz.com${img}`),
+        "description": product.description,
+        "brand": {
+            "@type": "Brand",
+            "name": "Mietpark Saar-Pfalz"
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": canonicalUrl,
+            "priceCurrency": "EUR",
+            "price": product.prices?.base || "0",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/UsedCondition"
+        }
+    };
+
     return (
         <div className="product-detail-page">
-            <SEOHead />
+            <SEOHead
+                title={product.title}
+                description={`${product.title} mieten in Homburg. ${product.description}`}
+                keywords={`Mieten, ${product.title}, Saarland, Homburg, Dachbox, Fahrradträger`}
+                image={product.image}
+                url={`/product/${product.id}`}
+                type="product"
+                schema={productSchema}
+            />
             {/* Hero / Header for Product */}
             <div style={{
                 background: 'linear-gradient(135deg, #1a4d2e 0%, #4f772d 100%)',
@@ -466,7 +457,7 @@ export default function ProductDetail() {
                                 <ul style={{ listStyle: 'none', padding: 0 }}>
                                     {product.prices?.tiers ? (
                                         product.prices.tiers.map((tier, idx) => (
-                                        <li key={idx} style={{ marginBottom: 'var(--spacing-xs)', display: 'flex', justifyContent: 'space-between' }}>
+                                            <li key={idx} style={{ marginBottom: 'var(--spacing-xs)', display: 'flex', justifyContent: 'space-between' }}>
                                                 <span>{tier.duration}:</span>
                                                 <strong>{tier.price}</strong>
                                             </li>
@@ -554,7 +545,8 @@ export default function ProductDetail() {
                     <div className="form-card" style={{ backgroundColor: '#f8f9fa', padding: 'var(--spacing-xl)', borderRadius: 'var(--border-radius-md)' }}>
                         {/* Hüpfburg Rich Info Display */}
                         {product.id === 5 && (
-                            <div style={{ marginBottom: 'var(--spacing-xl)',
+                            <div style={{
+                                marginBottom: 'var(--spacing-xl)',
                                 background: '#fff',
                                 border: '2px solid var(--accent)',
                                 borderRadius: 'var(--border-radius-lg)',

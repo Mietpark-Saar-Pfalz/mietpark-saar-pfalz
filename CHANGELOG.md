@@ -1,3 +1,22 @@
+## [1.0.7] - 2025-12-25
+
+### ✨ Added - Neue Features
+
+- **SEO-Overhaul**: Integration von `react-helmet-async` für professionelles Meta-Tag-Management.
+  - Dynamische Titel und Beschreibungen für alle Seiten.
+  - **Open Graph Tags**: Optimierte Darstellung beim Teilen auf Social Media (Facebook, WhatsApp, LinkedIn).
+  - **Structured Data (JSON-LD)**: Produktseiten enthalten jetzt detaillierte Schema.org-Daten (Preis, Verfügbarkeit, Bilder) für Rich Snippets in Google.
+- **Datenschutzerklärung**: Vollständige, DSGVO-konforme Datenschutzseite unter `/datenschutz` implementiert.
+
+### 🔧 Changed - Verbesserungen
+
+- **UI/UX Optimierungen**:
+  - **Header**: "Buchung" Button entfernt, Navigation auf Startseite/Vermietung/Kontakt fokussiert.
+  - **Produkt-Header**: Modernes Gradient-Design mit Glassmorphism-Effekten auf Detailseiten.
+  - **Formular**: Visuelles Feedback (rote Hintergründe) bei Validierungsfehlern für bessere User Guidance.
+  - **Bezahloptionen**: "oder per Rechnung" aus dem Footer entfernt (nur Bar/PayPal/EC vor Ort).
+  - **Produkt-Infos**: HSN/TSN Labels präzisiert ("Herstellernummer", "Typenschlüsselnummer") und Maße/Zubehör für Hüpfburg/Dachträger aktualisiert.
+
 ## [1.0.6] - 2025-12-25
 
 ### ✨ Added - Neue Features

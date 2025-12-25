@@ -26,14 +26,14 @@ const BenefitCard = ({ benefit, index }) => {
 
 export default function Home() {
     // Seasonal logic for Hero Section
-        const currentMonth = new Date().getMonth(); // 0-11
-        const partnerLine = 'Ihr verlässlicher Partner im Saarland, Homburg und Umgebung seit 2023.';
-        const makeSubtitle = (text) => `${partnerLine} ${text}`;
-        let heroConfig = {
-            image: '/images/hero_summer.jpg',
-            title: 'Mehr Platz für Ihre Erlebnisse.',
-            subtitle: makeSubtitle('Dachboxen, Heckboxen & mehr – Mieten statt kaufen im Mietpark Saar-Pfalz.')
-        };
+    const currentMonth = new Date().getMonth(); // 0-11
+    const partnerLine = 'Ihr verlässlicher Partner im Saarland, Homburg und Umgebung seit 2023.';
+    const makeSubtitle = (text) => `${partnerLine} ${text}`;
+    let heroConfig = {
+        image: '/images/hero_summer.jpg',
+        title: 'Mehr Platz für Ihre Erlebnisse.',
+        subtitle: makeSubtitle('Dachboxen, Heckboxen & mehr – Mieten statt kaufen im Mietpark Saar-Pfalz.')
+    };
 
     if ([10, 11, 0, 1].includes(currentMonth)) {
         // Winter: Nov, Dec, Jan, Feb
@@ -173,7 +173,14 @@ export default function Home() {
 
     return (
         <>
-            <SEOHead description={seoDescription} keywords={seoKeywords} />
+            <SEOHead
+                title={heroConfig.title}
+                description={seoDescription}
+                keywords={seoKeywords}
+                image={heroConfig.image}
+                url="/"
+            />
+
             {/* Hero Section */}
             <section className="hero" id="home" style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('${heroConfig.image}')`,
