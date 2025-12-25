@@ -1,3 +1,5 @@
+import { pricingById } from './pricingConfig';
+
 export const products = [
     {
         id: 1,
@@ -32,6 +34,7 @@ export const products = [
             "/images/dachbox1_detail_gallery_2.jpg",
             "/images/dachbox1_detail_gallery_3.jpg"
         ],
+        pricing: pricingById[1] ?? null,
         calendarUrl: "https://calendar.google.com/calendar/embed?src=c_45869d79b1bea0a3dadbffdf704c2d50916e158b98e1ca144095d2213a8b16f7%40group.calendar.google.com&ctz=Europe%2FBerlin"
     },
     {
@@ -59,6 +62,7 @@ export const products = [
             "/images/dachbox2_detail_gallery_2.jpg",
             "/images/dachbox2_detail_gallery_3.jpg"
         ],
+        pricing: pricingById[2] ?? null,
         calendarUrl: "https://calendar.google.com/calendar/embed?src=c_325271d09d1e42f08d6352af65db474f22363c9f34ea8bac21815715b62006a1%40group.calendar.google.com&ctz=Europe%2FBerlin"
     },
     {
@@ -83,6 +87,7 @@ export const products = [
             "/images/dachbox3_detail_gallery_2.jpg",
             "/images/dachbox3_detail_gallery_3.jpg"
         ],
+        pricing: pricingById[6] ?? null,
         calendarUrl: "https://calendar.google.com/calendar/embed?src=c_be91fd4328707c9ba54b5554a4c8d6e4c3fd52ddb0bebd2457e094d08983bf21%40group.calendar.google.com&ctz=Europe%2FBerlin"
     },
     {
@@ -113,6 +118,7 @@ export const products = [
             "/images/heckbox_detail_gallery_2.jpg",
             "/images/heckbox_detail_gallery_3.jpg"
         ],
+        pricing: pricingById[3] ?? null,
         calendarUrl: "https://calendar.google.com/calendar/embed?src=c_67b52d42d115607bc8287ee750efac0e4b5d4bfeec19532a22c412ff61dc83e9%40group.calendar.google.com&ctz=Europe%2FBerlin"
     },
     {
@@ -144,7 +150,8 @@ export const products = [
                 "Schnellverschluss-System",
                 "Komplett vormontiert"
             ]
-        }
+        },
+        pricing: pricingById[4] ?? null,
     },
     {
         id: 5,
@@ -161,6 +168,7 @@ export const products = [
             "/images/huepfburg_detail_gallery_3.jpg"
         ],
         calendarUrl: "https://calendar.google.com/calendar/embed?src=c_4986c8a9d132733c99d2f80982cf70ee74afa3a79c929d48c88f250c0004112e%40group.calendar.google.com&ctz=Europe%2FBerlin",
+        pricing: pricingById[5] ?? null,
         details: {
             deposit: "50€",
             dimensions: "4,24 x 3,00 x 2,40 m",
@@ -197,6 +205,7 @@ export const products = [
             note: "Auf Anfrage für Ihr Fahrzeugmodell verfügbar."
         },
         image: "/images/dachtraeger_home_preview.jpg",
-        gallery: ["/images/dachtraeger_detail_main.jpg"]
+        gallery: ["/images/dachtraeger_detail_main.jpg"],
+        pricing: pricingById[7] ?? null
     }
 ];

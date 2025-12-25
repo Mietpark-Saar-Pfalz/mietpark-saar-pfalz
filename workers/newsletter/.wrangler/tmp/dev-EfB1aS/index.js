@@ -2,7 +2,10 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
 // src/index.js
-var EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+var EMAIL_REGEX = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
+var RATE_LIMIT_WINDOW_MS = 6e4;
+var RATE_LIMIT_MAX_REQUESTS = 5;
+var submissionLog = /* @__PURE__ */ new Map();
 function parseAllowedOrigins(env) {
   const raw = env.ALLOWED_ORIGINS || "";
   return raw.split(",").map((value) => value.trim()).filter(Boolean);
@@ -45,11 +48,27 @@ function handleOptions(request, env) {
   return new Response(null, { headers: corsHeaders });
 }
 __name(handleOptions, "handleOptions");
+function registerSubmission(ip) {
+  const key = ip || "anonymous";
+  const now = Date.now();
+  const history = submissionLog.get(key)?.filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS) || [];
+  if (history.length >= RATE_LIMIT_MAX_REQUESTS) {
+    submissionLog.set(key, history);
+    return false;
+  }
+  history.push(now);
+  submissionLog.set(key, history);
+  return true;
+}
+__name(registerSubmission, "registerSubmission");
 async function sendBrevoDoubleOptIn(email, request, env, source) {
-  const templateId = Number(env.BREVO_DOI_TEMPLATE_ID || "");
-  const listId = Number(env.BREVO_LIST_ID || "");
-  if (!env.BREVO_API_KEY || !templateId || !listId) {
-    throw new Error("Brevo-Konfiguration ist unvollst\xE4ndig.");
+  const templateId = parseInt(env.BREVO_DOI_TEMPLATE_ID, 10);
+  const listId = parseInt(env.BREVO_LIST_ID, 10);
+  if (!env.BREVO_API_KEY || Number.isNaN(templateId) || Number.isNaN(listId)) {
+    if (env.ENVIRONMENT === "development") {
+      console.error("Brevo-Konfiguration ist unvollst\xE4ndig: Bitte API-Key, Template-ID und List-ID pr\xFCfen.");
+    }
+    throw new Error("Newsletter-Anmeldung ist derzeit nicht m\xF6glich. Bitte versuchen Sie es sp\xE4ter erneut.");
   }
   const body = {
     email,
@@ -71,7 +90,11 @@ async function sendBrevoDoubleOptIn(email, request, env, source) {
   });
   if (!response.ok) {
     const errorDetail = await response.text();
-    throw new Error(`Brevo API Fehler: ${errorDetail}`);
+    console.error("Brevo API error while sending double opt-in email:", {
+      status: response.status,
+      body: errorDetail
+    });
+    throw new Error("Fehler beim Versand der Best\xE4tigungs-E-Mail. Bitte versuchen Sie es sp\xE4ter erneut.");
   }
 }
 __name(sendBrevoDoubleOptIn, "sendBrevoDoubleOptIn");
@@ -85,6 +108,10 @@ var src_default = {
     if (request.method !== "POST") {
       return jsonResponse({ message: "Method not allowed" }, { status: 405, corsHeaders });
     }
+    const ipAddress = request.headers.get("CF-Connecting-IP") || "anonymous";
+    if (!registerSubmission(ipAddress)) {
+      return jsonResponse({ message: "Zu viele Anfragen. Bitte versuche es in einer Minute erneut." }, { status: 429, corsHeaders });
+    }
     let payload;
     try {
       payload = await request.json();
@@ -93,7 +120,8 @@ var src_default = {
     }
     const email = (payload.email || "").trim().toLowerCase();
     const consent = Boolean(payload.consent);
-    const source = (payload.source || "website").toString().slice(0, 60);
+    const rawSource = (payload.source || "website").toString();
+    const source = rawSource.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 60) || "website";
     if (!EMAIL_REGEX.test(email)) {
       return jsonResponse({ message: "Bitte eine g\xFCltige E-Mail-Adresse angeben." }, { status: 400, corsHeaders });
     }
