@@ -1,3 +1,20 @@
+## [1.0.6] - 2025-12-25
+
+### ✨ Added - Neue Features
+
+- **Preistafeln pro Produkt**: Jede Produktseite zeigt jetzt eine strukturierte Preistafel mit Staffelpreisen, Dachträger-Option und Saisonhinweis.
+- **Dynamischer Preisrechner**: Kunden können Mietzeitraum, Saison und Dachträger-Bedarf eingeben und erhalten sofort einen transparenten Preis inkl. Aufschlüsselung.
+
+### 🔧 Changed - Verbesserungen
+
+- **Produktdaten**: `src/data/products.js` enthält detaillierte Preis- und Saisonkonfigurationen für Dachboxen, Heckbox, Fahrradträger, Hüpfburg und Dachträger.
+- **Produktdetailseite**: Neue Komponenten `PriceTable` und `PriceCalculator` wurden integriert, inkl. Tooltip, Saison-Infobox sowie Übergabe der berechneten Preise an das Anfrageformular.
+- **Stylesheet**: Globale Styles in `index.css` um Karten-, Tabellen- und Button-Designs für Preistafel und Rechner erweitert.
+
+### 🧹 Documentation
+
+- README listet die neuen Pricing-Features sowie die zusätzlichen Komponenten in der Projektstruktur.
+
 ## [1.0.5] - 2025-12-24
 
 ### ✨ Added - Neue Features

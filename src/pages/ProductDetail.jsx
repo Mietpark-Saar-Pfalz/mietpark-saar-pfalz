@@ -5,6 +5,34 @@ import emailjs from '@emailjs/browser';
 import ProductGallery from '../components/ProductGallery';
 import SEOHead from '../components/SEOHead';
 import NewsletterSection from '../components/NewsletterSection';
+import PriceTable from '../components/PriceTable';
+import PriceCalculator from '../components/PriceCalculator';
+
+const buildPriceBreakdownText = (quote) => {
+    if (!quote) {
+        return 'Nicht berechnet';
+    }
+
+    const parts = [
+        `Gesamtsumme: ${quote.totalFormatted}`,
+        `Basismietpreis: ${quote.baseFormatted}`,
+        `Zeitraum: ${quote.periodLabel}`
+    ];
+
+    if (quote.seasonSurcharge > 0) {
+        parts.push(`Saisonaufschlag (${quote.seasonWeeks} Woche(n)): ${quote.seasonFormatted}`);
+    }
+
+    if (quote.roofRackLabel) {
+        parts.push(`Dachträger-Option: ${quote.roofRackLabel}`);
+    }
+
+    if (quote.breakdown?.length) {
+        parts.push(`Details: ${quote.breakdown.join(' / ')}`);
+    }
+
+    return parts.join(' | ');
+};
 
 const emailServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const emailTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -14,8 +42,14 @@ const imgbbApiKey = import.meta.env.VITE_IMGBB_API_KEY;
 export default function ProductDetail() {
     const { id } = useParams();
     const product = products.find(p => p.id === parseInt(id));
-    const [roofRackNeeded, setRoofRackNeeded] = useState(false);
+    const [roofRackNeeded, setRoofRackNeeded] = useState(() => {
+        if (!product?.pricing?.supportsRoofRack) {
+            return null;
+        }
+        return true;
+    });
     const [selectedFile, setSelectedFile] = useState(null);
+    const [lastPriceQuote, setLastPriceQuote] = useState(null);
 
     // Form state
     const [formData, setFormData] = useState(() => {
@@ -219,7 +253,9 @@ export default function ProductDetail() {
                 roof_rack_needed_text: roofRackNeeded ? 'Ja' : 'Nein', // Changed parameter name
                 railing_type: formData.railing_type || 'Nicht angegeben',
                 message: formData.message,
-                uploaded_file_url: '' // Will be updated with ImgBB URL
+                uploaded_file_url: '', // Will be updated with ImgBB URL
+                calculated_price: lastPriceQuote?.totalFormatted || 'Nicht berechnet',
+                price_breakdown: buildPriceBreakdownText(lastPriceQuote)
             };
 
             let imgbbUrl = '';
@@ -384,8 +420,6 @@ export default function ProductDetail() {
                     <ProductGallery images={images} title={product.title} />
                 </section>
 
-                <hr style={{ margin: 'var(--spacing-xxl) 0', opacity: 0.1 }} />
-
                 {/* Info Section */}
                 <section className="detail-section" style={{ marginBottom: 'var(--spacing-xxxl)' }}>
                     <h2 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Informationen</h2>
@@ -467,6 +501,17 @@ export default function ProductDetail() {
                         </div>
                     </div>
                 </section>
+
+                <PriceTable product={product} />
+
+                <PriceCalculator
+                    product={product}
+                    roofRackNeeded={product.pricing?.supportsRoofRack ? roofRackNeeded : null}
+                    onRoofRackChange={value => setRoofRackNeeded(value)}
+                    onQuote={setLastPriceQuote}
+                />
+
+                <hr style={{ margin: 'var(--spacing-xxl) 0', opacity: 0.1 }} />
 
                 <hr style={{ margin: 'var(--spacing-xxl) 0', opacity: 0.1 }} />
 
@@ -629,6 +674,17 @@ export default function ProductDetail() {
                                     {fieldErrors.rental_end && <p style={{ color: '#dc3545', fontSize: '0.85rem', marginTop: 'var(--spacing-xxs)' }}>Bitte geben Sie ein gültiges Enddatum ein, das nach dem Startdatum liegt.</p>}
                                 </div>
                             </div>
+
+                            {lastPriceQuote && (
+                                <div className="price-quote-banner" role="status">
+                                    <p style={{ margin: 0 }}>
+                                        Letzte Preisberechnung: <strong>{lastPriceQuote.totalFormatted}</strong> ({lastPriceQuote.periodLabel})
+                                    </p>
+                                    {product.pricing?.supportsRoofRack && (
+                                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#495057' }}>Auswahl: {lastPriceQuote.roofRackLabel}</p>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 1fr) minmax(250px, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
                                 <div className="form-group">

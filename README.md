@@ -20,6 +20,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Mehrsprachige SEO** - Vollständige Suchmaschinenoptimierung
 - **Persönliche Hilfe vor Ort** - Betreiber Daniel Brußig beantwortet jede Anfrage direkt, inklusive Telefon/Email + Avatar-Callout auf allen Produktseiten
 - **Newsletter CTA überall** - Einheitliche NewsletterSection inklusive Double-Opt-In-Flow auf Start-, Blog- und Produktdetailseiten
+- **Interaktive Preistafeln & Preisrechner** - Jede Produktseite verfügt über eine Preistabelle sowie einen dynamischen Rechner, der Mietzeitraum, Saisonaufschläge und Dachträger-Optionen sofort berücksichtigt
 
 ### 🎨 Benutzeroberfläche
 - **Moderne UI/UX** - Clean Design mit natürlichen Farben (Waldgrün)
@@ -175,6 +176,8 @@ mietpark-saar-pfalz/
 │   │   ├── Footer.jsx     # Footer mit Links
 │   │   ├── ProductCard.jsx # Produkt-Vorschau
 │   │   ├── ProductGallery.jsx # Bildergalerie
+│   │   ├── PriceTable.jsx   # Strukturierte Preistafeln je Produkt
+│   │   ├── PriceCalculator.jsx # Dynamischer Mietpreis-Rechner inkl. Saisonlogik
 │   │   ├── NewsletterSection.jsx # Einheitliche Newsletter-CTA inkl. Formular-Logik
 │   │   ├── SEOHead.jsx    # SEO Meta-Tags
 │   │   └── ScrollToTop.jsx # UX Verbesserung
