@@ -202,6 +202,7 @@ mietpark-saar-pfalz/
 │   └── newsletter/
 │       ├── src/index.js   # Cloudflare Worker Logik
 │       └── wrangler.toml  # Worker-Konfiguration
+├── REPOSITORY_VISIBILITY.md # Guide: Public → Private Umstellung
 └── package.json          # Dependencies & Scripts
 ```
 
@@ -341,6 +342,17 @@ Wir verwenden [Conventional Commits](COMMIT_CONVENTIONS.md):
 - `docs:` - Dokumentation
 - `style:` - Code-Formatierung
 - `refactor:` - Code-Refactoring
+
+## 🔐 Repository-Sichtbarkeit
+
+**Wichtige Information:** Wenn Sie planen, dieses Repository von Public auf Private umzustellen, lesen Sie bitte die detaillierte Dokumentation [REPOSITORY_VISIBILITY.md](REPOSITORY_VISIBILITY.md). Dort finden Sie:
+- ✅ Was weiterhin funktioniert (GitHub Pages, Deployment, etc.)
+- ⚠️ Was sich ändert (Code-Zugriff, GitHub Actions Minutes)
+- 💰 Kosten-Kalkulation und Monitoring
+- 🚀 Schritt-für-Schritt Migrationspfad
+- 🆘 Troubleshooting und Support
+
+**Kurz:** Die Website bleibt öffentlich, nur der Quellcode wird geschützt. Deployment und Hosting funktionieren ohne Änderungen.
 
 ## 📝 Changelog
 
