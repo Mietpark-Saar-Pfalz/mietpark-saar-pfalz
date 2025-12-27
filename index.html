@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mietpark-saar-pfalz</title>
+    <title>Dachbox & Fahrradträger mieten | Mietpark Saar-Pfalz Homburg</title>
+    <meta name="description" content="Mieten statt kaufen: Dachboxen, Heckboxen, Fahrradträger und Wintersport-Equipment in Homburg & Saarland. Persönliche Beratung, Montagehilfe und flexible Abholung." />
+    <link rel="alternate" hreflang="de" href="https://mietpark-saar-pfalz.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://mietpark-saar-pfalz.com/" />
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -37,7 +40,6 @@
       autoplay
       muted
       loop
-      playsinline
       preload="auto"
       poster="/images/winter_bg.jpg"
       oncanplay="console.log('Video kann abgespielt werden')"
@@ -47,6 +49,16 @@
       <source src="/video/winter1.mp4" type="video/mp4">
       <!-- Fallback wird über CSS poster-Attribut und body background geregelt -->
     </video>
+
+    <script>
+      // Aktiviert Inline-Playback dort, wo es unterstützt wird (ohne Lint-Warnung für nicht unterstützte Browser)
+      (() => {
+        const video = document.getElementById('background-video');
+        if (!video) return;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+      })();
+    </script>
 
     <!-- Video Debug Info (nur im Entwicklungsmodus) -->
     <div id="video-debug">

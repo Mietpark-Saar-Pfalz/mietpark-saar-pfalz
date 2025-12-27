@@ -8,23 +8,15 @@
       <period label="Weihnachtsferien (15.12 – 14.01)" start="12-15" end="01-14" surchargePerWeek="15" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Tag (Mo-Fr)" withRack="55" withoutRack="45" seasonNote="–" />
-      <row duration="1 Tag (Sa/So/Feiertag)" withRack="90" withoutRack="75" seasonNote="–" />
-      <row duration="Wochenende (Fr-So)" withRack="135" withoutRack="115" seasonNote="–" />
-      <row duration="1 Woche" withRack="250" withoutRack="230" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="500" withoutRack="460" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="750" withoutRack="690" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="55" withoutRack="45" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="90" withoutRack="75" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="135" withoutRack="115" seasonNote="+15€ / Woche in der Saison" />
     </tableRows>
     <calculator>
-      <dayRates>
-        <rate type="weekday" label="1 Tag (Mo-Fr)" withRack="55" withoutRack="45" />
-        <rate type="weekend" label="1 Tag (Sa/So/Feiertag)" withRack="90" withoutRack="75" />
-      </dayRates>
-      <weekendRate label="Wochenende (Fr-So)" days="3" withRack="135" withoutRack="115" />
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="250" withoutRack="230" />
-        <rate label="2 Wochen" weeks="2" withRack="500" withoutRack="460" />
-        <rate label="3 Wochen" weeks="3" withRack="750" withoutRack="690" />
+        <rate label="1 Woche" weeks="1" withRack="55" withoutRack="45" />
+        <rate label="2 Wochen" weeks="2" withRack="90" withoutRack="75" />
+        <rate label="3 Wochen" weeks="3" withRack="135" withoutRack="115" />
       </weeklyRates>
     </calculator>
   </product>
@@ -37,23 +29,15 @@
       <period label="Weihnachtsferien (15.12 – 14.01)" start="12-15" end="01-14" surchargePerWeek="15" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Tag (Mo-Fr)" withRack="55" withoutRack="45" seasonNote="–" />
-      <row duration="1 Tag (Sa/So/Feiertag)" withRack="90" withoutRack="75" seasonNote="–" />
-      <row duration="Wochenende (Fr-So)" withRack="135" withoutRack="115" seasonNote="–" />
-      <row duration="1 Woche" withRack="250" withoutRack="230" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="500" withoutRack="460" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="750" withoutRack="690" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="55" withoutRack="45" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="90" withoutRack="75" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="135" withoutRack="115" seasonNote="+15€ / Woche in der Saison" />
     </tableRows>
     <calculator>
-      <dayRates>
-        <rate type="weekday" label="1 Tag (Mo-Fr)" withRack="55" withoutRack="45" />
-        <rate type="weekend" label="1 Tag (Sa/So/Feiertag)" withRack="90" withoutRack="75" />
-      </dayRates>
-      <weekendRate label="Wochenende (Fr-So)" days="3" withRack="135" withoutRack="115" />
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="250" withoutRack="230" />
-        <rate label="2 Wochen" weeks="2" withRack="500" withoutRack="460" />
-        <rate label="3 Wochen" weeks="3" withRack="750" withoutRack="690" />
+        <rate label="1 Woche" weeks="1" withRack="55" withoutRack="45" />
+        <rate label="2 Wochen" weeks="2" withRack="90" withoutRack="75" />
+        <rate label="3 Wochen" weeks="3" withRack="135" withoutRack="115" />
       </weeklyRates>
     </calculator>
   </product>
@@ -65,23 +49,15 @@
       <period label="Sommerferien (Juli &amp; August)" start="07-01" end="08-31" surchargePerWeek="10" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Tag (Mo-Fr)" withRack="45" withoutRack="35" seasonNote="–" />
-      <row duration="1 Tag (Sa/So/Feiertag)" withRack="70" withoutRack="55" seasonNote="–" />
-      <row duration="Wochenende (Fr-So)" withRack="110" withoutRack="90" seasonNote="–" />
-      <row duration="1 Woche" withRack="150" withoutRack="130" seasonNote="+10€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="300" withoutRack="260" seasonNote="+10€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="450" withoutRack="410" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="45" withoutRack="35" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="70" withoutRack="55" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="110" withoutRack="85" seasonNote="+10€ / Woche in der Saison" />
     </tableRows>
     <calculator>
-      <dayRates>
-        <rate type="weekday" label="1 Tag (Mo-Fr)" withRack="45" withoutRack="35" />
-        <rate type="weekend" label="1 Tag (Sa/So/Feiertag)" withRack="70" withoutRack="55" />
-      </dayRates>
-      <weekendRate label="Wochenende (Fr-So)" days="3" withRack="110" withoutRack="90" />
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="150" withoutRack="130" />
-        <rate label="2 Wochen" weeks="2" withRack="300" withoutRack="260" />
-        <rate label="3 Wochen" weeks="3" withRack="450" withoutRack="410" />
+        <rate label="1 Woche" weeks="1" withRack="45" withoutRack="35" />
+        <rate label="2 Wochen" weeks="2" withRack="70" withoutRack="55" />
+        <rate label="3 Wochen" weeks="3" withRack="110" withoutRack="85" />
       </weeklyRates>
     </calculator>
   </product>
@@ -92,23 +68,15 @@
       <period label="Sommerferien (Juli &amp; August)" start="07-01" end="08-31" surchargePerWeek="10" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Tag (Mo-Fr)" withRack="50" seasonNote="–" />
-      <row duration="1 Tag (Sa/So/Feiertag)" withRack="80" seasonNote="–" />
-      <row duration="Wochenende (Fr-So)" withRack="120" seasonNote="–" />
-      <row duration="1 Woche" withRack="150" seasonNote="+10€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="300" seasonNote="+10€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="450" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="50" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="80" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="120" seasonNote="+10€ / Woche in der Saison" />
     </tableRows>
     <calculator>
-      <dayRates>
-        <rate type="weekday" label="1 Tag (Mo-Fr)" withRack="50" />
-        <rate type="weekend" label="1 Tag (Sa/So/Feiertag)" withRack="80" />
-      </dayRates>
-      <weekendRate label="Wochenende (Fr-So)" days="3" withRack="120" />
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="150" />
-        <rate label="2 Wochen" weeks="2" withRack="300" />
-        <rate label="3 Wochen" weeks="3" withRack="450" />
+        <rate label="1 Woche" weeks="1" withRack="50" />
+        <rate label="2 Wochen" weeks="2" withRack="80" />
+        <rate label="3 Wochen" weeks="3" withRack="120" />
       </weeklyRates>
     </calculator>
   </product>
@@ -116,19 +84,20 @@
   <product id="4" key="fahrradtraeger" supportsRoofRack="false">
     <info>Preise inklusive Einweisung in das Schnellverschluss-System.</info>
     <tableRows>
-      <row duration="1 Tag (Mo-Fr)" withRack="8" seasonNote="–" />
-      <row duration="1 Tag (Sa/So/Feiertag)" withRack="50" seasonNote="–" />
-      <row duration="Wochenende (Fr-So)" withRack="80" seasonNote="–" />
-      <row duration="1 Woche" withRack="120" seasonNote="–" />
+      <row duration="1 Tag" withRack="8" seasonNote="–" />
+      <row duration="1 Woche" withRack="50" seasonNote="–" />
+      <row duration="2 Wochen" withRack="80" seasonNote="–" />
+      <row duration="3 Wochen" withRack="120" seasonNote="–" />
     </tableRows>
     <calculator>
       <dayRates>
-        <rate type="weekday" label="1 Tag (Mo-Fr)" withRack="8" />
-        <rate type="weekend" label="1 Tag (Sa/So/Feiertag)" withRack="50" />
+        <rate type="weekday" label="1 Tag" withRack="8" />
+        <rate type="weekend" label="1 Tag" withRack="8" />
       </dayRates>
-      <weekendRate label="Wochenende (Fr-So)" days="3" withRack="80" />
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="120" />
+        <rate label="1 Woche" weeks="1" withRack="50" />
+        <rate label="2 Wochen" weeks="2" withRack="80" />
+        <rate label="3 Wochen" weeks="3" withRack="120" />
       </weeklyRates>
     </calculator>
   </product>
@@ -152,16 +121,16 @@
   <product id="7" key="dachtraeger" supportsRoofRack="false">
     <info>Passende Dachträger für Ihr Fahrzeugmodell, inklusive Einweisung und Anpassung.</info>
     <tableRows>
-      <row duration="1 Tag (Mo-Fr)" withRack="10" seasonNote="–" />
-      <row duration="1 Tag (Sa/So/Feiertag)" withRack="15" seasonNote="–" />
-      <row duration="Wochenende (Fr-So)" withRack="20" seasonNote="–" />
+      <row duration="1 Woche" withRack="10" seasonNote="–" />
+      <row duration="2 Wochen" withRack="15" seasonNote="–" />
+      <row duration="3 Wochen" withRack="20" seasonNote="–" />
     </tableRows>
     <calculator>
-      <dayRates>
-        <rate type="weekday" label="1 Tag (Mo-Fr)" withRack="10" />
-        <rate type="weekend" label="1 Tag (Sa/So/Feiertag)" withRack="15" />
-      </dayRates>
-      <weekendRate label="Wochenende (Fr-So)" days="3" withRack="20" />
+      <weeklyRates>
+        <rate label="1 Woche" weeks="1" withRack="10" />
+        <rate label="2 Wochen" weeks="2" withRack="15" />
+        <rate label="3 Wochen" weeks="3" withRack="20" />
+      </weeklyRates>
     </calculator>
   </product>
 </pricing>

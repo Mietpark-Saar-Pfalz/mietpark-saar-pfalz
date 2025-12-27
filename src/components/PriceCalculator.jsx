@@ -5,6 +5,24 @@ const currencyFormatter = new Intl.NumberFormat('de-DE', {
     currency: 'EUR'
 });
 
+const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+};
+
+const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
+};
+
+const addDaysToDateString = (dateString, days) => {
+    const d = new Date(dateString);
+    if (Number.isNaN(d.getTime())) return null;
+    d.setDate(d.getDate() + days);
+    return d.toISOString().split('T')[0];
+};
+
 export default function PriceCalculator({
     product,
     roofRackNeeded,
@@ -21,6 +39,17 @@ export default function PriceCalculator({
     const [error, setError] = useState('');
 
     const roofRackSelection = supportsRoofRack ? (roofRackNeeded ?? true) : true;
+
+    const minStart = getTodayDate();
+    const minEnd = (() => {
+        if (product?.id === 5) {
+            if (startDate) {
+                return addDaysToDateString(startDate, 1) || getTomorrowDate();
+            }
+            return getTomorrowDate();
+        }
+        return startDate || getTodayDate();
+    })();
 
     const handleCalculate = () => {
         if (!startDate || !endDate) {
@@ -67,11 +96,11 @@ export default function PriceCalculator({
                 <div className="price-calculator-grid">
                     <label>
                         <span>Startdatum</span>
-                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
+                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} min={minStart} />
                     </label>
                     <label>
                         <span>Enddatum</span>
-                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
+                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} min={minEnd} />
                     </label>
                     {supportsRoofRack && (
                         <div className="roofrack-selector" role="group" aria-label="Dachträger-Option">
@@ -195,6 +224,7 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
     };
 
     const weeklyRates = [...(calculatorConfig.weeklyRates || [])].sort((a, b) => b.weeks - a.weeks);
+    const smallestWeeklyRate = [...(calculatorConfig.weeklyRates || [])].sort((a, b) => a.weeks - b.weeks)[0];
 
     while (remainingDays >= 7 && weeklyRates.length > 0) {
         const remainingWeeks = Math.floor(remainingDays / 7);
@@ -225,12 +255,14 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
         cursor = addDays(cursor, weekendPackageDays);
     }
 
-    while (remainingDays > 0) {
+    const hasDayRates = calculatorConfig.dayRates?.weekday || calculatorConfig.dayRates?.weekend;
+
+    while (remainingDays > 0 && hasDayRates) {
         const isWeekendOrHoliday = isWeekend(cursor) || isPublicHoliday(cursor, holidaySet);
         const rate = isWeekendOrHoliday ? calculatorConfig.dayRates?.weekend : calculatorConfig.dayRates?.weekday;
 
         if (!rate) {
-            return { error: 'Für einzelne Tage ist noch kein Preis hinterlegt. Bitte kontaktieren Sie uns direkt.' };
+            break;
         }
 
         const price = selectPrice(rate);
@@ -238,6 +270,20 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
         breakdown.push(`${rate.label} (${formatDate(cursor)}): ${currencyFormatter.format(price)}`);
         remainingDays -= 1;
         cursor = addDays(cursor, 1);
+    }
+
+    if (remainingDays > 0 && !hasDayRates) {
+        if (smallestWeeklyRate) {
+            const price = selectPrice(smallestWeeklyRate);
+            basePrice += price;
+            breakdown.push(`Mindestmiete (${smallestWeeklyRate.label}): ${currencyFormatter.format(price)}`);
+        } else if (calculatorConfig.weekendRate) {
+            const price = selectPrice(calculatorConfig.weekendRate);
+            basePrice += price;
+            breakdown.push(`Pauschale (${calculatorConfig.weekendRate.label}): ${currencyFormatter.format(price)}`);
+        } else {
+            return { error: 'Für einzelne Tage ist noch kein Preis hinterlegt. Bitte kontaktieren Sie uns direkt.' };
+        }
     }
 
     const { seasonSurcharge, seasonWeeks } = calculateSeasonImpact(start, end, pricing?.seasonPeriods);
