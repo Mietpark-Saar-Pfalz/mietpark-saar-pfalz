@@ -277,12 +277,10 @@ function calculatePrice({ startDate, endDate, includeRoofRack, pricing }) {
             const price = selectPrice(smallestWeeklyRate);
             basePrice += price;
             breakdown.push(`Mindestmiete (${smallestWeeklyRate.label}): ${currencyFormatter.format(price)}`);
-            remainingDays = 0;
         } else if (calculatorConfig.weekendRate) {
             const price = selectPrice(calculatorConfig.weekendRate);
             basePrice += price;
             breakdown.push(`Pauschale (${calculatorConfig.weekendRate.label}): ${currencyFormatter.format(price)}`);
-            remainingDays = 0;
         } else {
             return { error: 'Für einzelne Tage ist noch kein Preis hinterlegt. Bitte kontaktieren Sie uns direkt.' };
         }
