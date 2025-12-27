@@ -8,15 +8,15 @@
       <period label="Weihnachtsferien (15.12 – 14.01)" start="12-15" end="01-14" surchargePerWeek="15" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Woche" withRack="55" withoutRack="55" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="90" withoutRack="90" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="135" withoutRack="135" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="55" withoutRack="45" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="90" withoutRack="75" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="135" withoutRack="115" seasonNote="+15€ / Woche in der Saison" />
     </tableRows>
     <calculator>
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="55" withoutRack="55" />
-        <rate label="2 Wochen" weeks="2" withRack="90" withoutRack="90" />
-        <rate label="3 Wochen" weeks="3" withRack="135" withoutRack="135" />
+        <rate label="1 Woche" weeks="1" withRack="55" withoutRack="45" />
+        <rate label="2 Wochen" weeks="2" withRack="90" withoutRack="75" />
+        <rate label="3 Wochen" weeks="3" withRack="135" withoutRack="115" />
       </weeklyRates>
     </calculator>
   </product>
@@ -29,15 +29,15 @@
       <period label="Weihnachtsferien (15.12 – 14.01)" start="12-15" end="01-14" surchargePerWeek="15" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Woche" withRack="55" withoutRack="55" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="90" withoutRack="90" seasonNote="+15€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="135" withoutRack="135" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="55" withoutRack="45" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="90" withoutRack="75" seasonNote="+15€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="135" withoutRack="115" seasonNote="+15€ / Woche in der Saison" />
     </tableRows>
     <calculator>
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="55" withoutRack="55" />
-        <rate label="2 Wochen" weeks="2" withRack="90" withoutRack="90" />
-        <rate label="3 Wochen" weeks="3" withRack="135" withoutRack="135" />
+        <rate label="1 Woche" weeks="1" withRack="55" withoutRack="45" />
+        <rate label="2 Wochen" weeks="2" withRack="90" withoutRack="75" />
+        <rate label="3 Wochen" weeks="3" withRack="135" withoutRack="115" />
       </weeklyRates>
     </calculator>
   </product>
@@ -49,15 +49,15 @@
       <period label="Sommerferien (Juli &amp; August)" start="07-01" end="08-31" surchargePerWeek="10" />
     </seasonPeriods>
     <tableRows>
-      <row duration="1 Woche" withRack="45" withoutRack="45" seasonNote="+10€ / Woche in der Saison" />
-      <row duration="2 Wochen" withRack="70" withoutRack="70" seasonNote="+10€ / Woche in der Saison" />
-      <row duration="3 Wochen" withRack="110" withoutRack="110" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="1 Woche" withRack="45" withoutRack="35" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="2 Wochen" withRack="70" withoutRack="55" seasonNote="+10€ / Woche in der Saison" />
+      <row duration="3 Wochen" withRack="110" withoutRack="85" seasonNote="+10€ / Woche in der Saison" />
     </tableRows>
     <calculator>
       <weeklyRates>
-        <rate label="1 Woche" weeks="1" withRack="45" withoutRack="45" />
-        <rate label="2 Wochen" weeks="2" withRack="70" withoutRack="70" />
-        <rate label="3 Wochen" weeks="3" withRack="110" withoutRack="110" />
+        <rate label="1 Woche" weeks="1" withRack="45" withoutRack="35" />
+        <rate label="2 Wochen" weeks="2" withRack="70" withoutRack="55" />
+        <rate label="3 Wochen" weeks="3" withRack="110" withoutRack="85" />
       </weeklyRates>
     </calculator>
   </product>

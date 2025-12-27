@@ -48,7 +48,8 @@ export default function ShareButtons({
             }
             setCopyState('copied');
             window.setTimeout(() => setCopyState('idle'), 2000);
-        } catch {
+        } catch (error) {
+            console.error('Copy failed:', error);
             setCopyState('error');
             window.setTimeout(() => setCopyState('idle'), 2500);
         }
