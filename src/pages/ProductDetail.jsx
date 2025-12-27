@@ -7,6 +7,7 @@ import SEOHead from '../components/SEOHead';
 import NewsletterSection from '../components/NewsletterSection';
 import PriceTable from '../components/PriceTable';
 import PriceCalculator from '../components/PriceCalculator';
+import ShareButtons from '../components/ShareButtons';
 
 const buildPriceBreakdownText = (quote) => {
     if (!quote) {
@@ -94,6 +95,19 @@ export default function ProductDetail() {
     const getTodayDate = () => {
         const today = new Date();
         return today.toISOString().split('T')[0];
+    };
+
+    const addDaysToDateString = (dateString, days) => {
+        const d = new Date(dateString);
+        if (Number.isNaN(d.getTime())) return null;
+        d.setDate(d.getDate() + days);
+        return d.toISOString().split('T')[0];
+    };
+
+    const getTomorrowDate = () => {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return tomorrow.toISOString().split('T')[0];
     };
 
     // Handle form input changes
@@ -310,6 +324,29 @@ export default function ProductDetail() {
     const images = product.gallery && product.gallery.length > 0 ? product.gallery : (product.image ? [product.image] : []);
 
     const canonicalUrl = `https://mietpark-saar-pfalz.com/product/${product.id}`;
+    const shareUrl = canonicalUrl;
+
+    const metaChips = [
+        product.volume ? { label: 'Volumen', value: `${product.volume} L` } : null,
+        product.dimensions ? { label: 'Maße', value: product.dimensions } : null,
+        product.details?.maxLoad ? { label: 'Zuladung', value: product.details.maxLoad } : null,
+        product.details?.weight ? { label: 'Eigengewicht', value: product.details.weight } : null,
+        product.details?.deposit ? { label: 'Kaution', value: product.details.deposit } : null,
+    ].filter(Boolean);
+
+    const heroPriceText = product.prices?.text || (product.prices?.base ? `ab ${product.prices.base}€` : null);
+
+    const minRentalStart = getTodayDate();
+    const minRentalEnd = (() => {
+        if (product.id === 5) {
+            // Hüpfburg: Enddatum mindestens morgen bzw. Start+1
+            if (formData.rental_start) {
+                return addDaysToDateString(formData.rental_start, 1) || getTomorrowDate();
+            }
+            return getTomorrowDate();
+        }
+        return formData.rental_start || getTodayDate();
+    })();
 
     // Schema.org Product Data
     const productSchema = {
@@ -396,11 +433,47 @@ export default function ProductDetail() {
                     <p style={{
                         color: 'rgba(255,255,255,0.95)',
                         fontSize: '1.2rem',
-                        maxWidth: '700px',
+                        maxWidth: '760px',
                         lineHeight: '1.6',
-                        marginBottom: 'var(--spacing-lg)',
+                        marginBottom: 'var(--spacing-md)',
                         textShadow: '0 1px 3px rgba(0,0,0,0.1)'
                     }}>{product.description}</p>
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginBottom: 'var(--spacing-lg)' }}>
+                        <span style={{
+                            background: 'rgba(255,255,255,0.18)',
+                            color: 'white',
+                            padding: '0.35rem 0.8rem',
+                            borderRadius: '999px',
+                            fontWeight: 600,
+                            letterSpacing: '0.01em',
+                            border: '1px solid rgba(255,255,255,0.3)'
+                        }}>Mieten in Homburg & Saarpfalz</span>
+                        {heroPriceText && (
+                            <span style={{
+                                background: 'rgba(255,255,255,0.12)',
+                                color: 'white',
+                                padding: '0.35rem 0.8rem',
+                                borderRadius: '999px',
+                                fontWeight: 600,
+                                letterSpacing: '0.01em',
+                                border: '1px solid rgba(255,255,255,0.24)'
+                            }}>Preisinfo: {heroPriceText}</span>
+                        )}
+                        {product.details?.note && (
+                            <span style={{
+                                background: 'rgba(255,255,255,0.12)',
+                                color: 'white',
+                                padding: '0.35rem 0.8rem',
+                                borderRadius: '999px',
+                                fontWeight: 600,
+                                letterSpacing: '0.01em',
+                                border: '1px solid rgba(255,255,255,0.24)'
+                            }}>{product.details.note}</span>
+                        )}
+                    </div>
+
+                    <ShareButtons title={product.title} url={shareUrl} variant="hero" compact />
                 </div>
             </div>
 
@@ -413,83 +486,108 @@ export default function ProductDetail() {
 
                 {/* Info Section */}
                 <section className="detail-section" style={{ marginBottom: 'var(--spacing-xxxl)' }}>
-                    <h2 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Informationen</h2>
-                    <div className="card" style={{ padding: 'var(--spacing-xl)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 'var(--spacing-xl)' }}>
-                            <div>
-                                <h3 style={{ marginTop: 0 }}>Beschreibung</h3>
-                                <p>{product.description}</p>
-                                <p><strong>Abmessungen:</strong> {product.dimensions}</p>
-                                {product.details?.maxLoad && <p><strong>Max. Zuladung:</strong> {product.details.maxLoad}</p>}
-                                {product.details?.weight && <p><strong>Eigengewicht:</strong> {product.details.weight}</p>}
-                                {product.details?.mountingSystem && <p><strong>Befestigung:</strong> {product.details.mountingSystem}</p>}
-                                {product.details?.opening && <p><strong>Öffnung:</strong> {product.details.opening}</p>}
-                                {product.details?.skiCapacity && <p><strong>Ski-Kapazität:</strong> {product.details.skiCapacity}</p>}
-                                {product.details?.snowboardCapacity && <p><strong>Snowboard-Kapazität:</strong> {product.details.snowboardCapacity}</p>}
-                                {product.details?.capacity && <p><strong>Kapazität:</strong> {product.details.capacity}</p>}
-                                {product.details?.foldedDimensions && <p><strong>Klappmaß:</strong> {product.details.foldedDimensions}</p>}
+                    <h2 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Informationen & Highlights</h2>
+                    <div className="product-detail-grid">
+                        <div className="info-panel card">
+                            <p className="info-overline">Gut zu wissen</p>
+                            <h3 style={{ marginTop: 0, marginBottom: 'var(--spacing-sm)', color: 'var(--primary)' }}>
+                                {product.title} mieten – zuverlässig, sauber, startklar
+                            </h3>
+                            <p style={{ color: '#1f2937', marginBottom: 'var(--spacing-md)' }}>
+                                {product.description} Jetzt in Homburg und Umgebung mieten, inkl. persönlicher Einweisung vor Ort.
+                            </p>
 
-                                {product.details?.features && (
-                                    <div style={{ marginTop: 'var(--spacing-md)' }}>
-                                        <h4 style={{ marginBottom: 'var(--spacing-xs)' }}>Eigenschaften:</h4>
-                                        <ul style={{ paddingLeft: '1.2rem', margin: 0 }}>
-                                            {product.details.features.map((f, i) => (
-                                                <li key={i}>{f}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
+                            {metaChips.length > 0 && (
+                                <div className="meta-chip-row">
+                                    {metaChips.map((chip, idx) => (
+                                        <span key={idx} className="meta-chip">
+                                            <strong>{chip.label}:</strong> {chip.value}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
 
-                                {product.volume && (
-                                    <div style={{ marginTop: 'var(--spacing-md)' }}>
-                                        <strong>Stauraum (~{product.volume} L):</strong>
-                                        <div style={{ display: 'flex', gap: 'var(--spacing-xs)', marginTop: 'var(--spacing-xs)', fontSize: '1.5rem' }} title={`${product.volume} Liter Stauraum`}>
-                                            {[...Array(Math.floor(product.volume / 100))].map((_, i) => (
-                                                <span key={i} role="img" aria-label="Koffer">🧳</span>
-                                            ))}
-                                        </div>
-                                        <p style={{ fontSize: '0.85rem', color: '#6c757d', marginTop: 'var(--spacing-xxs)' }}>1 Koffer ≈ 100 Liter</p>
+                            {product.details?.features && (
+                                <div style={{ marginTop: 'var(--spacing-lg)' }}>
+                                    <h4 style={{ marginBottom: 'var(--spacing-xs)' }}>Produkt-Highlights</h4>
+                                    <ul className="feature-list">
+                                        {product.details.features.map((f, i) => (
+                                            <li key={i}>{f}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {product.volume && (
+                                <div className="volume-row">
+                                    <strong>Stauraum (~{product.volume} L):</strong>
+                                    <div className="volume-icons" title={`${product.volume} Liter Stauraum`}>
+                                        {[...Array(Math.floor(product.volume / 100))].map((_, i) => (
+                                            <span key={i} role="img" aria-label="Koffer">🧳</span>
+                                        ))}
                                     </div>
-                                )}
+                                    <p className="muted-text">1 Koffer ≈ 100 Liter</p>
+                                </div>
+                            )}
+
+                            <div className="secondary-facts">
+                                {product.details?.mountingSystem && <span><strong>Befestigung:</strong> {product.details.mountingSystem}</span>}
+                                {product.details?.opening && <span><strong>Öffnung:</strong> {product.details.opening}</span>}
+                                {product.details?.skiCapacity && <span><strong>Ski-Kapazität:</strong> {product.details.skiCapacity}</span>}
+                                {product.details?.snowboardCapacity && <span><strong>Snowboard-Kapazität:</strong> {product.details.snowboardCapacity}</span>}
+                                {product.details?.capacity && <span><strong>Kapazität:</strong> {product.details.capacity}</span>}
+                                {product.details?.foldedDimensions && <span><strong>Klappmaß:</strong> {product.details.foldedDimensions}</span>}
                             </div>
-                            <div style={{ background: '#f8f9fa', padding: 'var(--spacing-md)', borderRadius: 'var(--border-radius-md)', minWidth: '250px' }}>
-                                <h4 style={{ marginTop: 0, color: 'var(--primary)' }}>Preise</h4>
-                                <ul style={{ listStyle: 'none', padding: 0 }}>
-                                    {product.prices?.tiers ? (
-                                        product.prices.tiers.map((tier, idx) => (
-                                            <li key={idx} style={{ marginBottom: 'var(--spacing-xs)', display: 'flex', justifyContent: 'space-between' }}>
-                                                <span>{tier.duration}:</span>
-                                                <strong>{tier.price}</strong>
-                                            </li>
-                                        ))
-                                    ) : product.prices?.base ? (
-                                        <>
-                                            <li style={{ marginBottom: 'var(--spacing-xs)', display: 'flex', justifyContent: 'space-between' }}>
-                                                <span>Basismiete (Woche):</span>
-                                                <strong>{product.prices.base}€</strong>
-                                            </li>
-                                            {![3, 7].includes(product.id) && (
-                                                <p style={{ fontSize: '0.9rem', color: '#6c757d' }}>Dachträger ist optional und kann im Formular ausgewählt werden (falls benötigt).</p>
-                                            )}
-                                        </>
-                                    ) : (
-                                        <li style={{ marginBottom: 'var(--spacing-xs)' }}>
-                                            <strong>{product.prices?.text || product.price}</strong>
-                                        </li>
-                                    )}
-                                    {product.details?.deposit && (
-                                        <li style={{ marginTop: 'var(--spacing-md)', borderTop: '1px solid #ddd', paddingTop: 'var(--spacing-xs)', fontSize: '0.9rem' }}>
-                                            Kaution: {product.details.deposit}
-                                        </li>
-                                    )}
-                                    {product.details?.note && (
-                                        <li style={{ marginTop: 'var(--spacing-xs)', paddingTop: 'var(--spacing-xs)', fontSize: '0.9rem', color: '#dc3545', fontWeight: 'bold' }}>
-                                            {product.details.note}
-                                        </li>
-                                    )}
-                                </ul>
-                            </div>
+
+                            {product.details?.note && (
+                                <div className="note-box">{product.details.note}</div>
+                            )}
                         </div>
+
+                        <aside className="price-summary-card">
+                            <p className="info-overline">Preis & Konditionen</p>
+                            <h3 style={{ marginTop: 0, marginBottom: 'var(--spacing-sm)', color: '#111827' }}>
+                                {product.prices?.text || 'Individuelle Preise auf Anfrage'}
+                            </h3>
+
+                            <ul className="price-list">
+                                {product.prices?.tiers ? (
+                                    product.prices.tiers.map((tier, idx) => (
+                                        <li key={idx}>
+                                            <span>{tier.duration}</span>
+                                            <strong>{tier.price}</strong>
+                                        </li>
+                                    ))
+                                ) : product.prices?.base ? (
+                                    <>
+                                        <li>
+                                            <span>Basismiete (Woche)</span>
+                                            <strong>{product.prices.base}€</strong>
+                                        </li>
+                                        {![3, 7].includes(product.id) && (
+                                            <li className="muted-text" style={{ display: 'block' }}>
+                                                Dachträger ist optional und kann im Formular ausgewählt werden (falls benötigt).
+                                            </li>
+                                        )}
+                                    </>
+                                ) : (
+                                    <li>
+                                        <span>Preis</span>
+                                        <strong>{product.prices?.text || product.price}</strong>
+                                    </li>
+                                )}
+                            </ul>
+
+                            {product.details?.deposit && (
+                                <div className="muted-text" style={{ marginTop: 'var(--spacing-sm)' }}>
+                                    Kaution: {product.details.deposit}
+                                </div>
+                            )}
+
+                            <a className="btn btn-primary" href="#booking-form" style={{ width: '100%', textAlign: 'center', marginTop: 'var(--spacing-md)' }}>
+                                Jetzt anfragen
+                            </a>
+                        </aside>
                     </div>
                 </section>
 
@@ -540,7 +638,7 @@ export default function ProductDetail() {
                 <hr style={{ margin: 'var(--spacing-xxl) 0', opacity: 0.1 }} />
 
                 {/* Booking Form Section */}
-                <section className="detail-section" style={{ marginBottom: 'var(--spacing-xxxl)' }}>
+                <section id="booking-form" className="detail-section" style={{ marginBottom: 'var(--spacing-xxxl)' }}>
                     <h2 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Buchungsanfrage</h2>
                     <div className="form-card" style={{ backgroundColor: '#f8f9fa', padding: 'var(--spacing-xl)', borderRadius: 'var(--border-radius-md)' }}>
                         {/* Hüpfburg Rich Info Display */}
@@ -657,12 +755,12 @@ export default function ProductDetail() {
                             <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 1fr) minmax(250px, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
                                 <div className="form-group">
                                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Zeitraum Von</label>
-                                    <input type="date" name="rental_start" value={formData.rental_start} onChange={handleInputChange} min={getTodayDate()} required style={{ width: '100%', padding: '0.8rem', borderRadius: '6px', border: fieldErrors.rental_start ? '2px solid #dc3545' : '1px solid #ddd', background: fieldErrors.rental_start ? '#ffe6e6' : 'white' }} />
+                                    <input type="date" name="rental_start" value={formData.rental_start} onChange={handleInputChange} min={minRentalStart} required style={{ width: '100%', padding: '0.8rem', borderRadius: '6px', border: fieldErrors.rental_start ? '2px solid #dc3545' : '1px solid #ddd', background: fieldErrors.rental_start ? '#ffe6e6' : 'white' }} />
                                     {fieldErrors.rental_start && <p style={{ color: '#dc3545', fontSize: '0.85rem', marginTop: 'var(--spacing-xxs)' }}>Bitte geben Sie ein gültiges Startdatum ein.</p>}
                                 </div>
                                 <div className="form-group">
                                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Zeitraum Bis</label>
-                                    <input type="date" name="rental_end" value={formData.rental_end} onChange={handleInputChange} min={formData.rental_start || getTodayDate()} required style={{ width: '100%', padding: '0.8rem', borderRadius: '6px', border: fieldErrors.rental_end ? '2px solid #dc3545' : '1px solid #ddd', background: fieldErrors.rental_end ? '#ffe6e6' : 'white' }} />
+                                    <input type="date" name="rental_end" value={formData.rental_end} onChange={handleInputChange} min={minRentalEnd} required style={{ width: '100%', padding: '0.8rem', borderRadius: '6px', border: fieldErrors.rental_end ? '2px solid #dc3545' : '1px solid #ddd', background: fieldErrors.rental_end ? '#ffe6e6' : 'white' }} />
                                     {fieldErrors.rental_end && <p style={{ color: '#dc3545', fontSize: '0.85rem', marginTop: 'var(--spacing-xxs)' }}>Bitte geben Sie ein gültiges Enddatum ein, das nach dem Startdatum liegt.</p>}
                                 </div>
                             </div>

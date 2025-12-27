@@ -58,6 +58,8 @@ export default function Home() {
         };
     }
 
+    const heroImageWebp = heroConfig.image.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+
     const titleAnimation = useSpring({
         from: { opacity: 0, transform: 'translateY(-50px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
@@ -183,7 +185,7 @@ export default function Home() {
 
             {/* Hero Section */}
             <section className="hero" id="home" style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('${heroConfig.image}')`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('${heroImageWebp}'), url('${heroConfig.image}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center 40%',
                 position: 'relative'
@@ -293,40 +295,44 @@ export default function Home() {
                     >Wählen Sie einen Artikel für Details und Buchung.</p>
 
                     <div className="products-list-vertical" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xxl)', maxWidth: '900px', margin: '0 auto' }}>
-                        {products.map(product => (
-                            <Link to={`/product/${product.id}`} key={product.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <div className="card product-card-horizontal"
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.transform = 'translateY(-8px)';
-                                        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.transform = 'translateY(0)';
-                                        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.08)';
-                                    }}
-                                >
-                                    <div className="product-image">
-                                        {product.image ? (
-                                            <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-                                                {/* TODO: Bilder in WebP konvertieren und <picture>-Elemente verwenden für bessere Performance */}
-                                                <img
-                                                    src={product.image}
-                                                    alt={product.title}
-                                                    loading="lazy"
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        objectFit: 'contain',
-                                                        transition: 'transform 0.4s ease'
-                                                    }}
-                                                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                                                    onMouseLeave={(e) => e.target.style.transform = 'scale(1.0)'}
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc' }}>Kein Bild</div>
-                                        )}
-                                    </div>
+                        {products.map(product => {
+                            const imageWebp = product.image?.replace(/\.(png|jpe?g)$/i, '.webp');
+                            return (
+                                <Link to={`/product/${product.id}`} key={product.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <div className="card product-card-horizontal"
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(-8px)';
+                                            e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.08)';
+                                        }}
+                                    >
+                                        <div className="product-image">
+                                            {product.image ? (
+                                                <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+                                                    <picture>
+                                                        {imageWebp && <source type="image/webp" srcSet={imageWebp} />}
+                                                        <img
+                                                            src={product.image}
+                                                            alt={product.title}
+                                                            loading="lazy"
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '100%',
+                                                                objectFit: 'contain',
+                                                                transition: 'transform 0.4s ease'
+                                                            }}
+                                                            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                                                            onMouseLeave={(e) => e.target.style.transform = 'scale(1.0)'}
+                                                        />
+                                                    </picture>
+                                                </div>
+                                            ) : (
+                                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc' }}>Kein Bild</div>
+                                            )}
+                                        </div>
                                     <div className="product-card-body">
                                         <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', fontSize: '1.8rem', fontWeight: 'bold' }}>
                                             {product.title}
@@ -358,47 +364,9 @@ export default function Home() {
                                         </div>
                                     </div>
                                 </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* FAQ and Blog Section */}
-            <section className="section section-dark">
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <h2
-                        className="section-title"
-                        style={{
-                            marginBottom: 'var(--spacing-md)',
-                            color: 'var(--white)',
-                            textShadow: '0 2px 4px rgba(0,0,0,0.35)'
-                        }}
-                    >Häufig gestellte Fragen & Tipps</h2>
-                    <p
-                        className="section-subtitle"
-                        style={{
-                            marginBottom: 'var(--spacing-xxxl)',
-                            color: 'rgba(255,255,255,0.9)',
-                            textShadow: '0 2px 4px rgba(0,0,0,0.25)'
-                        }}
-                    >Antworten auf Ihre Fragen und nützliche Blogartikel</p>
-
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--spacing-xl)', flexWrap: 'wrap' }}>
-                        <Link to="/faq" className="btn btn-primary" style={{ padding: 'var(--spacing-md) var(--spacing-xxl)' }}>Zu den FAQs</Link>
-                        <Link to="/blog" className="btn btn-secondary" style={{ padding: 'var(--spacing-md) var(--spacing-xxl)' }}>Zum Blog</Link>
-                    </div>
-
-                    <div className="faq-preview" style={{ marginTop: 'var(--spacing-xxxl)', textAlign: 'left' }}>
-                        <h3 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-md)' }}>Beliebte Fragen</h3>
-                        <div className="faq-item" style={{ marginBottom: 'var(--spacing-md)', padding: 'var(--spacing-md)', background: '#f8f9fa', borderRadius: 'var(--border-radius-md)', borderLeft: '4px solid var(--accent)' }}>
-                            <h4 style={{ margin: '0 0 var(--spacing-xxs) 0', color: 'var(--text-main)' }}>Wie funktioniert die Buchung?</h4>
-                            <p style={{ margin: 0, color: 'var(--text-muted)' }}>Ganz einfach: Wählen Sie Ihr Wunschprodukt, senden Sie eine unverbindliche Anfrage über das Formular und wir melden uns zeitnah mit einem Angebot.</p>
-                        </div>
-                        <div className="faq-item" style={{ marginBottom: 'var(--spacing-md)', padding: 'var(--spacing-md)', background: '#f8f9fa', borderRadius: 'var(--border-radius-md)', borderLeft: '4px solid var(--accent)' }}>
-                            <h4 style={{ margin: '0 0 var(--spacing-xxs) 0', color: 'var(--text-main)' }}>Welche Dachbox passt auf mein Auto?</h4>
-                            <p style={{ margin: 0, color: 'var(--text-muted)' }}>Die meisten unserer Dachboxen passen auf gängige Dachträgersysteme. Im Formular können Sie Ihr Fahrzeugmodell angeben, wir beraten Sie gerne.</p>
-                        </div>
+                                </Link>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
