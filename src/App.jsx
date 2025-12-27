@@ -49,6 +49,7 @@ function App() {
             <Route path="/agb" element={<Agb />} />
             <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
+            <Route path="/confirm" element={<NewsletterConfirm />} />
           </Routes>
         </main>
         <Footer />
