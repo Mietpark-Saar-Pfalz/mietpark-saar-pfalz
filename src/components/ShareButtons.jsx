@@ -48,7 +48,8 @@ export default function ShareButtons({
             }
             setCopyState('copied');
             window.setTimeout(() => setCopyState('idle'), 2000);
-        } catch {
+        } catch (error) {
+            console.error('Failed to copy to clipboard:', error);
             setCopyState('error');
             window.setTimeout(() => setCopyState('idle'), 2500);
         }
@@ -65,8 +66,9 @@ export default function ShareButtons({
                 return;
             }
             await copyToClipboard();
-        } catch {
+        } catch (error) {
             // User canceled share or share failed → try copy
+            console.error('Native share failed:', error);
             await copyToClipboard();
         }
     }, [copyToClipboard, shareText, title, url]);
