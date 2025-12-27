@@ -65,8 +65,15 @@ export default function ShareButtons({
                 return;
             }
             await copyToClipboard();
-        } catch {
-            // User canceled share or share failed → try copy
+        } catch (error) {
+            // User canceled share (AbortError) - this is expected, no need to log
+            if (error?.name === 'AbortError') {
+                await copyToClipboard();
+                return;
+            }
+            // Log unexpected errors for debugging
+            console.error('Share failed:', error);
+            // Fallback to copy on any error
             await copyToClipboard();
         }
     }, [copyToClipboard, shareText, title, url]);
