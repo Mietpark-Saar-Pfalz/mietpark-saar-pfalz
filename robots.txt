@@ -4,9 +4,6 @@ Allow: /
 # Sitemap
 Sitemap: https://mietpark-saar-pfalz.com/sitemap.xml
 
-# Crawl-Delay für ressourcenschonendes Crawling
-Crawl-delay: 1
-
 # Wichtige Seiten priorisieren
 Allow: /blog/
 Allow: /product/
