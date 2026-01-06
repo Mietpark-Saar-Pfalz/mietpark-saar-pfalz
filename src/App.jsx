@@ -97,6 +97,21 @@ function App() {
         <Header />
         <main id="main" tabIndex={-1}>
           <Routes>
+            {/* Legacy / vanity URLs */}
+            <Route path="/kontakt" element={<Navigate to="/#contact" replace />} />
+            <Route path="/vermietung" element={<Navigate to="/#products" replace />} />
+
+            <Route path="/datenschutzerklarung" element={<Navigate to="/datenschutz" replace />} />
+            <Route path="/datenschutzerklaerung" element={<Navigate to="/datenschutz" replace />} />
+
+            <Route path="/hupfburg/*" element={<Navigate to="/product/5" replace />} />
+            <Route path="/dachbox/*" element={<Navigate to="/product/1" replace />} />
+
+            <Route path="/vermietung/hupfburg/*" element={<Navigate to="/product/5" replace />} />
+            <Route path="/vermietung/fahrradtrager/*" element={<Navigate to="/product/4" replace />} />
+            <Route path="/vermietung/dachbox-und-hechbox/*" element={<Navigate to="/product/3" replace />} />
+            <Route path="/vermietung/partybox/*" element={<Navigate to="/" replace />} />
+
             <Route path="/partybox/*" element={<Navigate to="/" replace />} />
             <Route
               path="/"
