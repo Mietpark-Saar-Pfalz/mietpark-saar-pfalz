@@ -1,3 +1,19 @@
+## [1.0.8] - 2026-01-06
+
+### ✨ Added - Neue Features
+
+- **Widerruf-Seite**: Neue Seite unter `/widerruf` (Widerrufsbelehrung & Musterformular).
+- **RSS Feed**: Neuer RSS 2.0 Feed unter `/feed/index.xml`.
+
+### 🔧 Changed - Verbesserungen
+
+- **Sitemap**: Ergänzung der URL `/vermietung/fahrradtrager/` in `public/sitemap.xml`.
+- **Partybox-Handling**: `/partybox` wird auf die Startseite umgeleitet (client-seitig via Router).
+
+### 🧰 Tooling
+
+- **Commitlint**: Commitlint-Dependencies ergänzt, damit Husky `commit-msg` Hook ohne interaktive `npx`-Installationen stabil läuft.
+
 ## [1.0.7] - 2025-12-25
 
 ### ✨ Added - Neue Features

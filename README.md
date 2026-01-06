@@ -34,10 +34,12 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Structured Data** - Rich Snippets für Google (LocalBusiness, Product Schema)
 - **Open Graph & Twitter Cards** - Optimale Social Media Darstellung
 - **Sitemap & Robots.txt** - Vollständige Crawling-Unterstützung inkl. Newsletter-Bestätigungsseite
+- **RSS Feed** - RSS 2.0 Feed unter `/feed/index.xml` (z. B. für News/Angebote)
 - **Core Web Vitals** - Lighthouse Score > 90 in allen Kategorien
 
 ### 🚀 Technische Features
 - **SPA mit Fallback** - Client-side Routing mit 404.html Fallback für direkte URLs
+- **Legacy-URL Handling** - z. B. `/partybox` wird auf die Startseite geleitet (client-seitig via Router)
 - **Progressive Enhancement** - Funktioniert auch ohne JavaScript
 - **Offline-Capable** - Service Worker bereit für PWA-Features
 - **Accessibility** - WCAG 2.1 AA konform
@@ -54,6 +56,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 
 ### Entwicklung & Build
 - **ESLint** - Code-Qualität und Konsistenz
+- **Commit Hooks** - Husky + Commitlint (Conventional Commits) zur Sicherung konsistenter Commit Messages
 - **Vite Plugins** - Optimierte Asset-Verarbeitung
 - **CSS Custom Properties** - Moderne Styling-Architektur
 - **PostCSS** - CSS-Processing und Autoprefixing
