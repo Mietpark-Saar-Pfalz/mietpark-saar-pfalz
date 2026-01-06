@@ -3,8 +3,8 @@
 /hupfburg/      /product/5   301
 /dachbox        /product/1   301
 /dachbox/       /product/1   301
-/partybox       /404.html    404
-/partybox/      /404.html    404
+/partybox       /           301
+/partybox/      /           301
 /vermietung/fahrradtrager/   /product/4   301
 /vermietung/dachbox-und-hechbox   /product/3   301
 
