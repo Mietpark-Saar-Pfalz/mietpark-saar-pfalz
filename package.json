@@ -20,15 +20,17 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "fast-xml-parser": "^5.3.3",
+    "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-helmet-async": "^2.0.5",
+    "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.11.0",
     "react-spring": "^10.0.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.2.0",
-    "@commitlint/config-conventional": "^20.2.0",
+    "@commitlint/cli": "^20.3.0",
+    "@commitlint/config-conventional": "^20.3.0",
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
