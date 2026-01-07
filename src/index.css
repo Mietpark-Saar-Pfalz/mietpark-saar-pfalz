@@ -734,12 +734,14 @@ button {
 .logo {
   height: 60px; /* Adjust based on logo needs */
   display: block;
+  flex-shrink: 0; /* prevent logo from being squeezed by nav */
 }
 
 .logo img {
-  height: 100%;
+  height: 50px; /* explicit height for stable aspect */
   width: auto;
   display: block;
+  object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
   image-rendering: -webkit-optimize-contrast;
 }
