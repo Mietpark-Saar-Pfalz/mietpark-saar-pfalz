@@ -738,12 +738,18 @@ button {
 }
 
 .logo img {
-  height: 50px; /* explicit height for stable aspect */
-  width: auto;
+  width: 160px; /* explicit width for consistent display */
+  height: auto;
   display: block;
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
   image-rendering: -webkit-optimize-contrast;
+}
+
+@media (max-width: 768px) {
+  .logo img {
+    width: 130px;
+  }
 }
 
 .nav-desktop { /* New class for desktop navigation */

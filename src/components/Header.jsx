@@ -20,7 +20,7 @@ export default function Header() {
             <header className="header">
                 <div className="container header-content">
                     <Link to="/" className="logo">
-                        <img src="/images/logo.png" alt="Mietpark Saar-Pfalz" style={{ height: '50px' }} />
+                        <img src="/images/logo.png" alt="Mietpark Saar-Pfalz" />
                     </Link>
                     {/* Desktop Navigation */}
                     <nav className="nav-desktop">
