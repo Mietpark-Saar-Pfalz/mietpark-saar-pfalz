@@ -739,6 +739,9 @@ button {
 .logo img {
   height: 100%;
   width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .nav-desktop { /* New class for desktop navigation */
