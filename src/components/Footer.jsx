@@ -29,6 +29,15 @@ export default function Footer() {
             </div>
             <div className="footer-bottom">
                 <p>&copy; {new Date().getFullYear()} Mietpark Saar-Pfalz. Alle Rechte vorbehalten.</p>
+                <p style={{ marginTop: '0.5rem' }}>
+                    Website by <strong>Serverraum247</strong> ·{' '}
+                    <a
+                        href="mailto:webmaster@serverraum247.dev"
+                        style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                    >
+                        webmaster@serverraum247.dev
+                    </a>
+                </p>
             </div>
 
         </footer>

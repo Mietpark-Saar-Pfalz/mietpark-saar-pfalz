@@ -20,6 +20,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+.windsurf/
 .DS_Store
 *.suo
 *.ntvs*
@@ -36,3 +37,6 @@ docs/newsletter-templates/*.txt
 # Cloudflare Wrangler state
 .wrangler/
 workers/**/.wrangler/
+
+# Local AI tooling
+AI_RULES.md

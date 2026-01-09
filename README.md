@@ -21,6 +21,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Persönliche Hilfe vor Ort** - Betreiber Daniel Brußig beantwortet jede Anfrage direkt, inklusive Telefon/Email + Avatar-Callout auf allen Produktseiten
 - **Newsletter CTA überall** - Einheitliche NewsletterSection inklusive Double-Opt-In-Flow auf Start-, Blog- und Produktdetailseiten
 - **Interaktive Preistafeln & Preisrechner** - Jede Produktseite verfügt über eine Preistabelle sowie einen dynamischen Rechner, der Mietzeitraum, Saisonaufschläge und Dachträger-Optionen sofort berücksichtigt
+- **Webmaster/Creator CTA** - Am Ende der Startseite ist ein hervorgehobener Hinweis für Website-Projekte in Homburg/Saar integriert (Serverraum247)
 
 ### 🎨 Benutzeroberfläche
 - **Moderne UI/UX** - Clean Design mit natürlichen Farben (Waldgrün)
@@ -242,6 +243,14 @@ mietpark-saar-pfalz/
 - **Structured Data:** LocalBusiness & Product Schema
 - **Sitemap:** Automatische Generierung aller URLs
 - **Robots.txt:** Crawling-Optimierung
+
+### Creator/Credits (Footer + Structured Data)
+
+- **Footer Credit (global):** `src/components/Footer.jsx` enthält im unteren Bereich einen Hinweis "Website by Serverraum247" inkl. Mail-Link (`webmaster@serverraum247.dev`).
+- **Webmaster-Section (Startseite):** `src/pages/Home.jsx` enthält am Ende der Seite eine hervorgehobene CTA-Box (Section-ID: `webmaster`).
+- **Globales JSON-LD (Trust/SEO):** `src/components/SEOHead.jsx` rendert zusätzlich zu page-spezifischem Schema immer ein kleines JSON-LD Snippet (Schema.org `Person`) für "Serverraum247".
+
+Hinweis: Die Startseite verwaltet zusätzlich ein eigenes LocalBusiness-Schema per Script-ID `local-business-schema` (in `Home.jsx`). Dadurch werden andere JSON-LD Scripts (z. B. das globale Creator-Snippet aus `SEOHead.jsx`) nicht mehr entfernt.
 
 ### Performance-Metriken
 - **First Contentful Paint:** < 1.5s

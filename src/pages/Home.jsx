@@ -106,6 +106,7 @@ export default function Home() {
 
     // Structured Data Script in useEffect hinzufügen
     React.useEffect(() => {
+        const localBusinessSchemaScriptId = 'local-business-schema';
         const localBusinessSchema = {
             "@context": "http://schema.org",
             "@type": "LocalBusiness",
@@ -153,20 +154,21 @@ export default function Home() {
         };
 
         // Entferne vorhandene Structured Data
-        const existingScript = document.querySelector('script[type="application/ld+json"]');
+        const existingScript = document.querySelector(`#${localBusinessSchemaScriptId}`);
         if (existingScript) {
             existingScript.remove();
         }
 
         // Neue Structured Data hinzufügen
         const script = document.createElement('script');
+        script.id = localBusinessSchemaScriptId;
         script.type = 'application/ld+json';
         script.textContent = JSON.stringify(localBusinessSchema);
         document.head.appendChild(script);
 
         // Cleanup beim Unmount
         return () => {
-            const scriptToRemove = document.querySelector('script[type="application/ld+json"]');
+            const scriptToRemove = document.querySelector(`#${localBusinessSchemaScriptId}`);
             if (scriptToRemove) {
                 scriptToRemove.remove();
             }
@@ -419,6 +421,68 @@ export default function Home() {
                                     <a href="tel:+491737615995" className="btn btn-secondary support-btn">Jetzt anrufen</a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="section bg-light" id="webmaster">
+                <div className="container" style={{ maxWidth: '960px' }}>
+                    <div
+                        className="card"
+                        style={{
+                            padding: 'var(--spacing-xxl)',
+                            borderRadius: 'var(--border-radius-lg)',
+                            background: 'linear-gradient(135deg, rgba(26,77,46,0.08) 0%, rgba(144,169,85,0.14) 100%)',
+                            border: '1px solid rgba(26,77,46,0.18)',
+                            boxShadow: 'var(--shadow-md)'
+                        }}
+                    >
+                        <div style={{ display: 'grid', gap: 'var(--spacing-md)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                                <span
+                                    style={{
+                                        background: 'rgba(26,77,46,0.12)',
+                                        color: 'var(--primary)',
+                                        padding: '0.35rem 0.75rem',
+                                        borderRadius: '999px',
+                                        fontWeight: 700,
+                                        letterSpacing: '0.02em'
+                                    }}
+                                >
+                                    Webseitenersteller
+                                </span>
+                                <strong style={{ color: 'var(--primary)', fontSize: '1.2rem' }}>Serverraum247</strong>
+                            </div>
+
+                            <p style={{ margin: 0, color: 'var(--text-main)', lineHeight: 1.7 }}>
+                                Sie möchten eine moderne Website für Ihr Unternehmen in <strong>Homburg/Saar</strong> oder Umgebung? Ich unterstütze Sie gerne
+                                bei Konzeption, Umsetzung und Pflege – schnell, zuverlässig und suchmaschinenfreundlich.
+                            </p>
+
+                            <div style={{ display: 'flex', gap: 'var(--spacing-md)', flexWrap: 'wrap', alignItems: 'center' }}>
+                                <a
+                                    className="btn btn-accent"
+                                    href="mailto:webmaster@serverraum247.dev?subject=Anfrage%20Webseite%20Homburg%2FSaar"
+                                >
+                                    Jetzt Kontakt aufnehmen
+                                </a>
+                                <a
+                                    href="mailto:webmaster@serverraum247.dev"
+                                    style={{
+                                        color: 'var(--primary)',
+                                        fontWeight: 700,
+                                        textDecoration: 'underline',
+                                        textUnderlineOffset: '3px'
+                                    }}
+                                >
+                                    webmaster@serverraum247.dev
+                                </a>
+                            </div>
+
+                            <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                                Tipp: Schreiben Sie kurz Branche, gewünschte Seiten (z. B. Start, Leistungen, Kontakt) und ob Sie bereits Texte/Bilder haben.
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,19 @@ export default function SEOHead({
   const fullTitle = title ? `${title} | ${siteTitle}` : `${siteTitle} - Dachboxen, Fahrradträger & mehr mieten`;
   const metaDesc = description || defaultDesc;
 
+  const creatorSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Serverraum247',
+    email: 'webmaster@serverraum247.dev',
+    areaServed: {
+      '@type': 'City',
+      name: 'Homburg/Saar'
+    }
+  };
+
+  const schemas = [creatorSchema, ...(schema ? [schema] : [])];
+
   return (
     <Helmet>
       {/* Basic Metadata */}
@@ -43,11 +56,11 @@ export default function SEOHead({
       <meta name="twitter:image" content={metaImage} />
 
       {/* Structured Data (JSON-LD) */}
-      {schema && (
-        <script type="application/ld+json">
-          {JSON.stringify(schema)}
+      {schemas.map((entry, index) => (
+        <script key={`schema-${index}`} type="application/ld+json">
+          {JSON.stringify(entry)}
         </script>
-      )}
+      ))}
     </Helmet>
   );
 }
