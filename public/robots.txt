@@ -16,5 +16,11 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-# Bilder erlauben (für bessere Indexierung)
-Allow: /images/
+# Rechtliche Seiten (nicht indexieren)
+Disallow: /impressum
+Disallow: /impressum/
+Disallow: /datenschutz
+Disallow: /datenschutz/
+Disallow: /agb
+Disallow: /agb/
+
