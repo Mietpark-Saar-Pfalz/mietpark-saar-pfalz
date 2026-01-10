@@ -32,6 +32,37 @@
       "priceRange": "$$"
     }
     </script>
+    <script type="text/javascript">
+      // Dynamically set noindex/noimageai meta tags for legal pages
+      // This runs before React mounts to ensure search engines see the correct directives
+      (function() {
+        var path = window.location.pathname;
+        var search = window.location.search;
+        
+        // Extract the actual route from SPA redirect query parameter (e.g., /?/impressum becomes /impressum)
+        var actualPath = path;
+        if (search && search.includes('/?/')) {
+          actualPath = '/' + decodeURIComponent(search.split('/?/')[1]).split('&')[0];
+        }
+        
+        // Check if current path is a legal page
+        var isLegalPage = /\/(impressum|datenschutz|agb)\/?/.test(actualPath);
+        
+        if (isLegalPage) {
+          // Add noindex, nofollow meta tag
+          var noindexMeta = document.createElement('meta');
+          noindexMeta.name = 'robots';
+          noindexMeta.content = 'noindex, nofollow';
+          document.head.appendChild(noindexMeta);
+          
+          // Add noimageai meta tag
+          var noimageaiMeta = document.createElement('meta');
+          noimageaiMeta.name = 'robots';
+          noimageaiMeta.content = 'noai, noimageai';
+          document.head.appendChild(noimageaiMeta);
+        }
+      })();
+    </script>
   </head>
   <body>
     <!-- Video Background - wird über CSS gesteuert -->
