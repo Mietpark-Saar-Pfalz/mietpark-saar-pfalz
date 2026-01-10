@@ -10,6 +10,8 @@ export default function Datenschutz() {
                 title="Datenschutzerklärung"
                 description="Datenschutzerklärung des Mietpark Saar-Pfalz. Informationen zur Erhebung, Verarbeitung und Nutzung Ihrer personenbezogenen Daten."
                 url="/datenschutz"
+                noindex={true}
+                noimageai={true}
             />
             {/* Hero Section */}
             <div style={{

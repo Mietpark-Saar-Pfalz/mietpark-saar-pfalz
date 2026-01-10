@@ -9,6 +9,8 @@ export default function Impressum() {
         title="Impressum"
         description="Impressum von Mietpark Saar-Pfalz. Inhaber: Daniel Brußig. Kontaktinformationen und rechtliche Hinweise."
         url="/impressum"
+        noindex={true}
+        noimageai={true}
       />
       <h1>Impressum</h1>
 

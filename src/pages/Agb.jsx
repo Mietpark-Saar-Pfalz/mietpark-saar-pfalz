@@ -9,6 +9,8 @@ export default function Agb() {
                 title="AGB - Allgemeine Geschäftsbedingungen"
                 description="Allgemeine Geschäftsbedingungen (AGB) von Mietpark Saar-Pfalz für die Vermietung von Dachboxen, Trägersystemen und Hüpfburgen."
                 url="/agb"
+                noindex={true}
+                noimageai={true}
             />
             <h1>Allgemeine Geschäftsbedingungen (AGB)</h1>
             <p className="subtitle">von Mietpark Saar-Pfalz in Homburg/Saar</p>

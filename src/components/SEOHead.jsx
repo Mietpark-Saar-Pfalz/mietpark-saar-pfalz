@@ -8,7 +8,9 @@ export default function SEOHead({
   image,
   url,
   type = 'website',
-  schema
+  schema,
+  noindex = false,
+  noimageai = false
 }) {
   const siteTitle = 'Mietpark Saar-Pfalz';
   const defaultDesc = 'Ihr zuverlässiger Partner für Dachboxen, Heckboxen, Fahrradträger und Hüpfburgen in Homburg. Flexible Mietpreise, Montageservice inklusive.';
@@ -39,6 +41,8 @@ export default function SEOHead({
       <title>{fullTitle}</title>
       <meta name="description" content={metaDesc} />
       {keywords && <meta name="keywords" content={keywords} />}
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      {noimageai && <meta name="robots" content="noai, noimageai" />}
       <link rel="canonical" href={metaUrl} />
 
       {/* Open Graph / Facebook */}
