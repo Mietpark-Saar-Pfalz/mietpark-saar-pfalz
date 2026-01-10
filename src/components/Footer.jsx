@@ -17,13 +17,19 @@ export default function Footer() {
                     <p>Email: kontakt@mietpark-saar-pfalz.com</p>
                 </div>
                 <div className="footer-section">
-                    <h3>Links</h3>
-                    <ul>
+                    <h3>Navigation</h3>
+                    <ul className="footer-links">
                         <li><Link to="/">Startseite</Link></li>
+                        <li><a href="/#products">Vermietung</a></li>
                         <li><Link to="/blog">Blog</Link></li>
+                    </ul>
+                </div>
+                <div className="footer-section">
+                    <h3>Rechtliches</h3>
+                    <ul className="footer-links">
                         <li><Link to="/impressum">Impressum</Link></li>
                         <li><Link to="/agb">AGB</Link></li>
-                        <li><Link to="/datenschutz">Datenschutz</Link></li>
+                        <li><Link to="/datenschutz">Datenschutzerklärung</Link></li>
                     </ul>
                 </div>
             </div>

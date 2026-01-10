@@ -28,9 +28,6 @@ export default function Header() {
                             <li><Link to="/">Startseite</Link></li>
                             <li><a href="/#products">Vermietung</a></li>
                             <li><Link to="/blog">Blog</Link></li>
-                            <li><Link to="/impressum">Impressum</Link></li>
-                            <li><Link to="/agb">AGB</Link></li>
-                            <li><Link to="/datenschutz">Datenschutz</Link></li>
                             <li><a href="/#contact">Kontakt</a></li>
                         </ul>
                     </nav>
@@ -55,9 +52,6 @@ export default function Header() {
                             <li><Link to="/" onClick={toggleMobileMenu}>Startseite</Link></li>
                             <li><a href="/#products" onClick={toggleMobileMenu}>Vermietung</a></li>
                             <li><Link to="/blog" onClick={toggleMobileMenu}>Blog</Link></li>
-                            <li><Link to="/impressum" onClick={toggleMobileMenu}>Impressum</Link></li>
-                            <li><Link to="/agb" onClick={toggleMobileMenu}>AGB</Link></li>
-                            <li><Link to="/datenschutz" onClick={toggleMobileMenu}>Datenschutz</Link></li>
                             <li><a href="/#contact" onClick={toggleMobileMenu}>Kontakt</a></li>
                             <li><a href="https://wa.me/491737615995" target="_blank" rel="noopener noreferrer" onClick={toggleMobileMenu} className="whatsapp-link-mobile">WhatsApp</a></li>
                             <li><a href="/#contact" className="btn btn-primary" onClick={toggleMobileMenu}>Anfrage senden</a></li>
