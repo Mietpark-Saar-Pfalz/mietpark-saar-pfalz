@@ -131,6 +131,21 @@ Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys
 - Der Workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) exportiert diese Secrets während des Builds, sodass die statische Seite mit den richtigen Werten generiert wird.
 - Änderungen an den Keys erfordern einen neuen Build, damit die Werte in der ausgelieferten App landen.
 
+## 🌍 SEO & Cloudflare Optimierungen
+
+### Sitemap & RSS Feed
+- **Sitemap**: `/sitemap.xml` enthält alle wichtigen URLs für Suchmaschinen (Startseite, Produkte, Blog, Impressum, Datenschutz, AGB, Widerruf, Newsletter-Bestätigung).
+- **RSS Feed**: Neuer RSS 2.0 Feed unter `/feed/index.xml` mit konfigurierbarem `source`-Attribut für Tracking.
+- **Cloudflare Redirects**: 
+  - `/feed/` und `/feed` werden serverseitig (301) auf `/feed/index.xml` weitergeleitet (Cloudflare Rule).
+  - `http://` wird auf `https://` weitergeleitet (Always Use HTTPS).
+  - `www.` wird auf Apex-Domain weitergeleitet (Redirect Rule).
+
+### Rechtliche Seiten & Compliance
+- **Impressum, AGB, Datenschutzerklärung**: Sind ausschließlich im Footer platziert (dezent, keine Button-Hervorhebung).
+- **2-Click-Erreichbarkeit**: Von jeder Seite mit maximal 2 Klicks erreichbar (Seite → Footer → Link).
+- **Kein verstecktes Menü**: Alle Links sind sichtbar, keine Akkordeons oder Load-More-Mechanismen.
+
 ## 📬 Newsletter-Setup (Cloudflare Worker + Brevo)
 
 Der Newsletter wird über ein serverloses Setup mit Cloudflare Workers und Brevo (Sendinblue) realisiert. So bleiben API-Keys geheim, Double-Opt-In ist rechtssicher nachweisbar und die Frontend-App bleibt komplett statisch. Das Frontend sendet je nach Einsatzort (`home`, `article`, `product_detail`) einen `source`-Wert mit, damit der Worker jede Anmeldung sauber einsortieren und auswerten kann.

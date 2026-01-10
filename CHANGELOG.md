@@ -1,3 +1,26 @@
+## [Unreleased] - 2026-01-11
+
+### ✨ Added - Neue Features
+
+- **Feed-Redirect-Regel**: Cloudflare Redirect Rule für `/feed/` und `/feed` → `/feed/index.xml` (301 Permanent) implementiert, damit Bots/GSC die XML korrekt erkennen.
+
+### 🔧 Changed - Verbesserungen
+
+- **Header-Navigation**: Impressum, AGB, Datenschutzerklärung aus Header entfernt (Desktop & Mobile). Navigation ist nun fokussiert auf: Startseite, Vermietung, Blog, Kontakt.
+- **Footer-Struktur**: Neue dedizierte „Rechtliches"-Sektion mit Impressum, AGB, Datenschutzerklärung. Links sind dezent gestylt (Standard-Footer-Links, keine Button-Hervorhebung).
+- **Logo-Styling**: Logo-Kontrastverbesserung mit Drop-Shadow und stabilisierter Breite (Desktop 160px, Mobil 130px); verhindert Flex-Shrinking und Unsichtbarkeit durch sehr helles PNG.
+
+### ✅ Compliance & Rechtlich
+
+- **2-Click-Erreichbarkeit**: Impressum, AGB, Datenschutzerklärung sind von jeder Seite in maximal 2 Klicks erreichbar (über Footer). Erfüllt DE/EU-Rechtliche Anforderungen.
+- **Keine versteckten Menüs**: Alle Links sind sichtbar, keine Akkordeons oder Load-More-Mechanismen.
+
+### 🧹 Bugfixes
+
+- **Cloudflare-Redirects**: `/feed` und `/feed/` liefern jetzt sauber mit 301 auf `/feed/index.xml`, nicht mehr 200 HTML.
+
+---
+
 ## [1.0.8] - 2026-01-06
 
 ### ✨ Added - Neue Features
