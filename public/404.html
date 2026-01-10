@@ -4,6 +4,26 @@
     <meta charset="utf-8">
     <title>Mietpark Saar-Pfalz</title>
     <script type="text/javascript">
+      // Set noindex/noimageai meta tags for legal pages
+      // This helps search engines and AI crawlers understand these pages should not be indexed
+      var pathname = window.location.pathname;
+      var isLegalPage = /\/(impressum|datenschutz|agb)\/?$/.test(pathname);
+      
+      if (isLegalPage) {
+        // Add noindex, nofollow meta tag
+        var noindexMeta = document.createElement('meta');
+        noindexMeta.name = 'robots';
+        noindexMeta.content = 'noindex, nofollow';
+        document.head.appendChild(noindexMeta);
+        
+        // Add noimageai meta tag
+        var noimageaiMeta = document.createElement('meta');
+        noimageaiMeta.name = 'robots';
+        noimageaiMeta.content = 'noai, noimageai';
+        document.head.appendChild(noimageaiMeta);
+      }
+    </script>
+    <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
