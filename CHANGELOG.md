@@ -3,17 +3,20 @@
 ### ✨ Added - Neue Features
 
 - **Feed-Redirect-Regel**: Cloudflare Redirect Rule für `/feed/` und `/feed` → `/feed/index.xml` (301 Permanent) implementiert, damit Bots/GSC die XML korrekt erkennen.
+- **Noindex/Noimageai Meta-Tags für Legal-Seiten**: Impressum, Datenschutzerklärung und AGB erhalten `<meta name="robots" content="noindex, nofollow">` und `<meta name="robots" content="noai, noimageai">`. Diese Seiten werden nicht von Suchmaschinen indexiert und nicht von KI-Modellen für Training verwendet.
 
 ### 🔧 Changed - Verbesserungen
 
 - **Header-Navigation**: Impressum, AGB, Datenschutzerklärung aus Header entfernt (Desktop & Mobile). Navigation ist nun fokussiert auf: Startseite, Vermietung, Blog, Kontakt.
 - **Footer-Struktur**: Neue dedizierte „Rechtliches"-Sektion mit Impressum, AGB, Datenschutzerklärung. Links sind dezent gestylt (Standard-Footer-Links, keine Button-Hervorhebung).
 - **Logo-Styling**: Logo-Kontrastverbesserung mit Drop-Shadow und stabilisierter Breite (Desktop 160px, Mobil 130px); verhindert Flex-Shrinking und Unsichtbarkeit durch sehr helles PNG.
+- **SEOHead-Komponente**: Neue Parameter `noindex` und `noimageai` hinzugefügt, um Meta-Tags flexibel zu setzen.
 
 ### ✅ Compliance & Rechtlich
 
 - **2-Click-Erreichbarkeit**: Impressum, AGB, Datenschutzerklärung sind von jeder Seite in maximal 2 Klicks erreichbar (über Footer). Erfüllt DE/EU-Rechtliche Anforderungen.
 - **Keine versteckten Menüs**: Alle Links sind sichtbar, keine Akkordeons oder Load-More-Mechanismen.
+- **AI-Training Opt-Out**: Legal-Seiten sind mit `noai, noimageai` gekennzeichnet, um Missbrauch durch KI-Modelle zu verhindern.
 
 ### 🧹 Bugfixes
 

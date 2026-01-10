@@ -145,6 +145,7 @@ Damit das Anfrageformular sicher funktioniert, benötigt die App eigene API-Keys
 - **Impressum, AGB, Datenschutzerklärung**: Sind ausschließlich im Footer platziert (dezent, keine Button-Hervorhebung).
 - **2-Click-Erreichbarkeit**: Von jeder Seite mit maximal 2 Klicks erreichbar (Seite → Footer → Link).
 - **Kein verstecktes Menü**: Alle Links sind sichtbar, keine Akkordeons oder Load-More-Mechanismen.
+- **noindex & noimageai Meta-Tags**: Legal-Seiten erhalten `<meta name="robots" content="noindex, nofollow">` und `<meta name="robots" content="noai, noimageai">`, um sie vor Suchmaschinen und KI-Training-Crawler zu schützen.
 
 ## 📬 Newsletter-Setup (Cloudflare Worker + Brevo)
 
