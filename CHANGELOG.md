@@ -23,6 +23,7 @@
 ### 🧹 Bugfixes
 
 - **Cloudflare-Redirects**: `/feed` und `/feed/` liefern jetzt sauber mit 301 auf `/feed/index.xml`, nicht mehr 200 HTML.
+- **SPA Meta-Tags für Legal-Seiten**: Injiziere `noindex` und `noimageai` Meta-Tags in `public/404.html`, damit Crawler diese Direktiven sehen können, auch wenn sie das React-JS nicht ausführen. Dies ist essentiell für GitHub Pages SPAs, wo Server-Side Rendering nicht verfügbar ist.
 
 ---
 
