@@ -4,6 +4,7 @@
 
 - **Feed-Redirect-Regel**: Cloudflare Redirect Rule für `/feed/` und `/feed` → `/feed/index.xml` (301 Permanent) implementiert, damit Bots/GSC die XML korrekt erkennen.
 - **Noindex/Noimageai Meta-Tags für Legal-Seiten**: Impressum, Datenschutzerklärung und AGB erhalten `<meta name="robots" content="noindex, nofollow">` und `<meta name="robots" content="noai, noimageai">`. Diese Seiten werden nicht von Suchmaschinen indexiert und nicht von KI-Modellen für Training verwendet.
+- **robots.txt Disallow-Regeln**: Rechtliche Seiten (`/impressum`, `/datenschutz`, `/agb`) sind nun auch in robots.txt mit Disallow markiert, um eine zusätzliche Crawling-Barriere zu schaffen.
 
 ### 🔧 Changed - Verbesserungen
 
@@ -17,6 +18,7 @@
 - **2-Click-Erreichbarkeit**: Impressum, AGB, Datenschutzerklärung sind von jeder Seite in maximal 2 Klicks erreichbar (über Footer). Erfüllt DE/EU-Rechtliche Anforderungen.
 - **Keine versteckten Menüs**: Alle Links sind sichtbar, keine Akkordeons oder Load-More-Mechanismen.
 - **AI-Training Opt-Out**: Legal-Seiten sind mit `noai, noimageai` gekennzeichnet, um Missbrauch durch KI-Modelle zu verhindern.
+- **robots.txt Crawling-Schutz**: Legal-Seiten sind in robots.txt mit Disallow markiert (ergänzend zu Meta-Tags).
 
 ### 🧹 Bugfixes
 

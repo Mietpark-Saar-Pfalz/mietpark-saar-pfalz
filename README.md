@@ -35,6 +35,11 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 - **Structured Data** - Rich Snippets für Google (LocalBusiness, Product Schema)
 - **Open Graph & Twitter Cards** - Optimale Social Media Darstellung
 - **Sitemap & Robots.txt** - Vollständige Crawling-Unterstützung inkl. Newsletter-Bestätigungsseite
+  - Legal-Seiten (`/impressum`, `/datenschutz`, `/agb`) ausdrücklich mit Disallow markiert
+  - Feed-Redirect: `/feed/` → `/feed/index.xml` (301 Permanent via Cloudflare)
+- **Legal-Page-Schutz** - Noindex/Noimageai Meta-Tags auf Impressum, Datenschutz, AGB
+  - `<meta name="robots" content="noindex, nofollow">` verhindert Suchmaschinen-Indexierung
+  - `<meta name="robots" content="noai, noimageai">` blockiert KI-Training auf Legal-Inhalten
 - **RSS Feed** - RSS 2.0 Feed unter `/feed/index.xml` (z. B. für News/Angebote)
 - **Core Web Vitals** - Lighthouse Score > 90 in allen Kategorien
 
