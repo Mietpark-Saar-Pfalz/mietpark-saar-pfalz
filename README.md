@@ -1,7 +1,7 @@
 # Mietpark Saar-Pfalz 🌲❄️
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://mietpark-saar-pfalz.com)
-[![GitHub Pages](https://img.shields.io/badge/Deployed-GitHub%20Pages-blue)](https://mietpark-saar-pfalz.github.io/mietpark-saar-pfalz/)
+[![GitHub Pages](https://img.shields.io/badge/Deployed-GitHub%20Pages-blue)](https://serverraum247.github.io/mietpark-saar-pfalz/)
 [![React](https://img.shields.io/badge/React-19.2.0-61dafb)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.3.0-646cff)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
@@ -89,7 +89,7 @@ Mietpark Saar-Pfalz ist Ihre zuverlässige Anlaufstelle für die Miete von Trans
 
 1. **Repository klonen:**
    ```bash
-   git clone https://github.com/Mietpark-Saar-Pfalz/mietpark-saar-pfalz.git
+   git clone https://github.com/Serverraum247/mietpark-saar-pfalz.git
    cd mietpark-saar-pfalz
    ```
 
@@ -295,7 +295,7 @@ Hinweis: Die Startseite verwaltet zusätzlich ein eigenes LocalBusiness-Schema p
 
 2. **Custom Domain konfigurieren:**
    - Settings → Pages → Custom domain: `mietpark-saar-pfalz.com`
-   - DNS bei Provider: CNAME Record → `mietpark-saar-pfalz.github.io`
+   - DNS bei Provider: CNAME Record → `serverraum247.github.io`
 
 3. **SSL-Zertifikat:**
    - Automatisch über Let's Encrypt
@@ -319,7 +319,7 @@ git log --oneline origin/gh-pages
 - Workflow: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
 - Triggert bei jedem Push/PR auf `main`
 - Schritte: `npm ci` → `npm run lint` → `npm test` → `npm run build` (+ `npm run build:custom` Test)
-- Deployment via `peaceiris/actions-gh-pages@v3` nach `gh-pages` inkl. CNAME `mietpark-saar-pfalz.com`
+- Deployment via `peaceiris/actions-gh-pages@v4` nach `gh-pages` inkl. CNAME `mietpark-saar-pfalz.com`
 - Statusausgabe im Job verrät Live-URL & Build-Größe
 
 ## 📊 Analytics & Monitoring
@@ -409,7 +409,7 @@ Alle wichtigen Änderungen werden in der [CHANGELOG.md](CHANGELOG.md) dokumentie
 - Persönlich erreichbar: Unsere Homepage zeigt Daniel Brußig mit Avatar in der Hilfe-Sektion, damit jede Frage direkt an den Betreiber geht.
 
 ### Technischer Support
-- **Issues:** [GitHub Issues](https://github.com/Mietpark-Saar-Pfalz/mietpark-saar-pfalz/issues)
+- **Issues:** [GitHub Issues](https://github.com/Serverraum247/mietpark-saar-pfalz/issues)
 - **Email:** dbrussig@gmail.com
 
 ## 📄 Lizenz

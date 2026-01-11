@@ -151,7 +151,7 @@ git add .
 git commit -m "chore: prepare for private repository"
 
 # 2. Backup erstellen (optional)
-git clone https://github.com/Mietpark-Saar-Pfalz/mietpark-saar-pfalz.git backup-repo
+git clone https://github.com/Serverraum247/mietpark-saar-pfalz.git backup-repo
 ```
 
 ### Schritt 2: Repository auf Private umstellen

@@ -6,7 +6,7 @@ Willkommen beim Mietpark Saar-Pfalz Projekt! Vielen Dank, dass Sie sich für ein
 
 1. **Repository klonen:**
    ```bash
-   git clone https://github.com/Mietpark-Saar-Pfalz/mietpark-saar-pfalz.git
+   git clone https://github.com/Serverraum247/mietpark-saar-pfalz.git
    cd mietpark-saar-pfalz
    ```
 
