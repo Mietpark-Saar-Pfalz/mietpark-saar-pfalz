@@ -67,7 +67,7 @@ export const products = [
     },
     {
         id: 6,
-        title: "Dachbox 3 M",
+        title: "Bermude 100 Dachbox M",
         description: "Kompakt und praktisch. 147 x 88 x 44 cm. Ideal für Campingausrüstung.",
         prices: {
             base: 45,
