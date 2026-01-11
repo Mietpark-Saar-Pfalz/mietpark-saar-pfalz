@@ -19,26 +19,41 @@ Diese Ordner enthält Dokumentation und Konfigurationen für **Cloudflare-Featur
 
 Falls du KI-Bots von Legal-Seiten blocken möchtest:
 
-1. **Datei öffnen**: [`WAF_DEPLOYMENT.md`](./WAF_DEPLOYMENT.md)
+### Option A: Manual Setup (Cloudflare Dashboard)
+1. **Datei öffnen**: [`WAF_MANUAL_SETUP.md`](./WAF_MANUAL_SETUP.md)
+2. **Expression copy & paste** in Dashboard
+3. **Deploy** via Cloudflare UI
+
+### Option B: API Deployment (Automatisiert)
+1. **Datei öffnen**: [`WAF_API_DEPLOYMENT.md`](./WAF_API_DEPLOYMENT.md)
 2. **API Token holen** bei Cloudflare (2 Min)
 3. **Token in `.env.local` eintragen**
-4. **Deployment ausführen**: `npm run deploy:waf`
+4. **Curl-Commands ausführen** (siehe Doku)
 5. **Monitoring aktivieren** (Security → Events)
 
 ---
 
 ## 📋 Dateien in diesem Ordner
 
-- **`WAF_DEPLOYMENT.md`** — Wrangler/Node.js-basiertes Deployment
-  - Automatisches Setup via `npm run deploy:waf`
-  - API Token Management
-  - Test-Befehle mit curl
-  - Troubleshooting
+- **`WAF_API_DEPLOYMENT.md`** — ✅ **EMPFOHLEN** - Ruleset Engine API
+  - Vollständige dokumentation der funktionierenden Methode
+  - Curl-Commands für PUT-requests
+  - Errorbehebung (was nicht funktioniert)
+  - Test-Befehle und Ergebnisse
 
-- **`WAF_CONFIG.md`** — Manuelle Konfiguration (Fallback)
-  - Für alle, die das Dashboard lieber nutzen
-  - Vollständige Anleitung mit Expressions
+- **`WAF_DEPLOYMENT.md`** — Alte Dokumentation (Wrangler/Firewall Rules)
+  - ⚠️ Firewall Rules API funktioniert nicht (malformed_request_body)
+  - Für Referenz archiviert
+
+- **`WAF_MANUAL_SETUP.md`** — Cloudflare Dashboard Manual
+  - Für Fälle, wo API nicht zur Verfügung steht
+  - Copy & Paste expressions
   - Test-Befehle
+
+- **`WAF_CONFIG.md`** — Allgemeine WAF Konfigurationsanleitung
+  - Best Practices
+  - Expression-Syntax
+  - Monitoring
 
 ---
 

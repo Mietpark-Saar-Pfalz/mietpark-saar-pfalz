@@ -1,7 +1,8 @@
-# WAF-Regel manuell anpassen
+# WAF-Regel manuell anpassen (Dashboard)
 
-## 🎯 Problem
-Die API akzeptiert die Rule-Struktur nicht. Daher: manuelle Anpassung im Cloudflare Dashboard.
+## ⚠️ API-Kompatibilität
+
+Die Cloudflare Firewall Rules API funktioniert leider nicht für alle Zone-Konfigurationen. Daher: **manuelle Konfiguration im Dashboard** (2-Minuten-Setup).
 
 ## 📋 So passt du die Rule an:
 
@@ -16,7 +17,7 @@ Gehe zu: https://dash.cloudflare.com/?account=600df42578d05bdf7c2a08a4f93f0b70&z
 
 **Name**: `Block AI Bots on Legal Pages`
 
-**Expression** (Copy & Paste):
+**Expression** (Copy & Paste exakt):
 ```
 (http.request.uri.path eq "/impressum" or
  http.request.uri.path eq "/impressum/" or
@@ -25,11 +26,10 @@ Gehe zu: https://dash.cloudflare.com/?account=600df42578d05bdf7c2a08a4f93f0b70&z
  http.request.uri.path eq "/agb" or
  http.request.uri.path eq "/agb/")
 and
-(cf.verified_bot_category eq "AI Crawler" or
- cf.bot_management.verified_bot_category eq "AI Crawler")
+cf.verified_bot_category eq "AI Crawler"
 ```
 
-**Action**: Managed Challenge (oder Block)
+**Action**: `Managed Challenge` (oder `Block` wenn schärfer)
 
 **Deploy**: Klick "Deploy"
 
@@ -51,7 +51,7 @@ curl -I https://mietpark-saar-pfalz.com/blog \
 # Test 3: GPTBot auf /impressum (sollte 403 sein)
 curl -I https://mietpark-saar-pfalz.com/impressum \
   -H "User-Agent: Mozilla/5.0 (compatible; GPTBot/1.0; +https://openai.com/gptbot)"
-# Expected: HTTP 403 Forbidden
+# Expected: HTTP 403 Forbidden oder Managed Challenge (CAPTCHA)
 ```
 
 ---
@@ -66,4 +66,12 @@ curl -I https://mietpark-saar-pfalz.com/impressum \
 
 ---
 
-**Sobald konfiguriert, schreib mir Bescheid und wir testen es!**
+## 💡 Warum API nicht funktioniert
+
+Die Firewall Rules API (`/zones/{id}/firewall/rules`) hat Kompatibilitätsprobleme mit bestimmten Zone-Konfigurationen. Das Dashboard verwendet andere interne APIs, die stabiler sind.
+
+**Alternative für Zukunft**: Wenn du später API-Automatisierung willst, kannst du Cloudflare Wrangler Workers + Deploy Hooks verwenden.
+
+---
+
+**Sobald konfiguriert → Test-Befehle laufen lassen und Bescheid geben!**
