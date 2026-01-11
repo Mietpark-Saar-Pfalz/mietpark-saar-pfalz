@@ -5,6 +5,7 @@
 - **Feed-Redirect-Regel**: Cloudflare Redirect Rule für `/feed/` und `/feed` → `/feed/index.xml` (301 Permanent) implementiert, damit Bots/GSC die XML korrekt erkennen.
 - **Noindex/Noimageai Meta-Tags für Legal-Seiten**: Impressum, Datenschutzerklärung und AGB erhalten `<meta name="robots" content="noindex, nofollow">` und `<meta name="robots" content="noai, noimageai">`. Diese Seiten werden nicht von Suchmaschinen indexiert und nicht von KI-Modellen für Training verwendet.
 - **robots.txt Disallow-Regeln**: Rechtliche Seiten (`/impressum`, `/datenschutz`, `/agb`) sind nun auch in robots.txt mit Disallow markiert, um eine zusätzliche Crawling-Barriere zu schaffen.
+- **Cloudflare WAF Deployment (Wrangler)**: Node.js-basiertes Skript zur automatischen Konfiguration von WAF-Regeln. Mit `npm run deploy:waf` kannst du KI-Bots auf Legal-Seiten blocken (optional, nur mit Cloudflare Pro+). WAF Expression filtert nach `/impressum`, `/datenschutz`, `/agb` + `cf.verified_bot_category eq "AI Crawler"` und setzt Managed Challenge oder Block.
 
 ### 🔧 Changed - Verbesserungen
 
