@@ -1,0 +1,26 @@
+{
+  "name": "mietpark-saar-pfalz",
+  "main": "src/index.ts",
+  "type": "javascript",
+  "compatibility_date": "2026-01-11",
+  "account_id": "600df42578d05bdf7c2a08a4f93f0b70",
+  
+  // Newsletter Worker (if needed in future)
+  "routes": [
+    {
+      "pattern": "mietpark-saar-pfalz.com/api/newsletter",
+      "zone_name": "mietpark-saar-pfalz.com"
+    }
+  ],
+  
+  "env": {
+    "production": {
+      "routes": [
+        {
+          "pattern": "mietpark-saar-pfalz.com/api/newsletter",
+          "zone_name": "mietpark-saar-pfalz.com"
+        }
+      ]
+    }
+  }
+}
