@@ -16,13 +16,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ACCOUNT_ID = '600df42578d05bdf7c2a08a4f93f0b70';
 const DOMAIN = 'mietpark-saar-pfalz.com';
 
-// Lese API Token aus Environment oder .env
+// Lese API Token aus Environment oder .env.local
 let apiToken = process.env.CLOUDFLARE_API_TOKEN;
 
-if (!apiToken && fs.existsSync(path.join(__dirname, '.env'))) {
-  const envContent = fs.readFileSync(path.join(__dirname, '.env'), 'utf-8');
-  const match = envContent.match(/CLOUDFLARE_API_TOKEN=(.+)/);
-  if (match) apiToken = match[1].trim();
+// Falls nicht im Environment, versuche aus .env.local zu lesen
+if (!apiToken) {
+  const envLocalPath = path.join(__dirname, '..', '.env.local');
+  if (fs.existsSync(envLocalPath)) {
+    const envContent = fs.readFileSync(envLocalPath, 'utf-8');
+    const match = envContent.match(/CLOUDFLARE_API_TOKEN=(.+)/);
+    if (match) {
+      apiToken = match[1].trim();
+    }
+  }
 }
 
 if (!apiToken) {
@@ -90,26 +96,51 @@ async function deployWAF() {
 
     // 2. Check if rule already exists
     console.log('🔍 Step 2: Checking for existing rule...');
-    const existingRules = await makeRequest('GET', `/zones/${zoneId}/firewall/waf/rules?search=Block%20AI%20Bots`);
+    let existingRules = [];
+    try {
+      // Versuche zunächst den WAF-Regeln-Endpoint
+      const rulesResponse = await makeRequest('GET', `/zones/${zoneId}/firewall/rules?name=Block%20AI%20Bots`);
+      if (rulesResponse && rulesResponse.length > 0) {
+        existingRules = rulesResponse;
+      }
+    } catch (e) {
+      // Fallback: Versuche Custom Firewall Rules
+      console.log('  (WAF rules endpoint nicht verfügbar, versuche custom rules)');
+    }
     
-    if (existingRules && existingRules.length > 0) {
+    if (existingRules.length > 0) {
       console.log('⚠️  Rule already exists. Skipping creation.\n');
       console.log(`Rule ID: ${existingRules[0].id}`);
       return;
     }
 
-    // 3. Create WAF Rule
-    console.log('✏️  Step 3: Creating WAF Rule...');
+    // 3. Create Firewall Rule (statt WAF Rule)
+    console.log('✏️  Step 3: Creating Firewall Rule...');
     
-    const wafRule = {
+    const firewallRule = {
       name: 'Block AI Bots on Legal Pages',
-      mode: 'managed_challenge', // Use managed challenge instead of block
-      expression: `(http.request.uri.path contains "/impressum" or http.request.uri.path contains "/datenschutz" or http.request.uri.path contains "/agb") and (cf.verified_bot_category eq "AI Crawler" or cf.bot_management.verified_bot_category eq "AI Crawler")`,
       description: 'Block AI Crawlers (OpenAI, Perplexity, etc.) from accessing legal pages. Allows regular SEO bots.',
+      filter: {
+        expression: `(http.request.uri.path contains "/impressum" or http.request.uri.path contains "/datenschutz" or http.request.uri.path contains "/agb") and (cf.verified_bot_category eq "AI Crawler" or cf.bot_management.verified_bot_category eq "AI Crawler")`
+      },
+      action: 'managed_challenge',
+      priority: 1,
+      products: ['firewall'],
       enabled: true,
     };
 
-    const createdRule = await makeRequest('POST', `/zones/${zoneId}/firewall/waf/rules`, wafRule);
+    let createdRule;
+    try {
+      // Versuche neuen Firewall Rules API (Ruleset Engine)
+      createdRule = await makeRequest('POST', `/zones/${zoneId}/firewall/rules`, firewallRule);
+    } catch (e) {
+      console.error('Firewall Rules API fehlgeschlagen. Details:', e.message);
+      console.error('\n⚠️  Hinweis: Dein Cloudflare Plan unterstützt möglicherweise keine WAF.');
+      console.error('WAF ist nur in Pro+ Plans verfügbar.');
+      console.error('\n💡 Alternative: Manuelle Konfiguration im Dashboard:');
+      console.error('https://dash.cloudflare.com/?account=600df42578d05bdf7c2a08a4f93f0b70&zone=' + zoneId + '&page=waf');
+      process.exit(1);
+    }
     
     console.log('✅ WAF Rule Created Successfully!\n');
     console.log(`Rule ID: ${createdRule.id}`);
