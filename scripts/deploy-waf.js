@@ -117,15 +117,13 @@ async function deployWAF() {
     // 3. Create Firewall Rule (statt WAF Rule)
     console.log('✏️  Step 3: Creating Firewall Rule...');
     
+    // Cloudflare Firewall Rules API expects a specific format
     const firewallRule = {
-      name: 'Block AI Bots on Legal Pages',
-      description: 'Block AI Crawlers (OpenAI, Perplexity, etc.) from accessing legal pages. Allows regular SEO bots.',
+      description: 'Block AI Crawlers (OpenAI, Perplexity, etc.) from accessing legal pages only. Allows regular SEO bots.',
       filter: {
-        expression: `(http.request.uri.path contains "/impressum" or http.request.uri.path contains "/datenschutz" or http.request.uri.path contains "/agb") and (cf.verified_bot_category eq "AI Crawler" or cf.bot_management.verified_bot_category eq "AI Crawler")`
+        expression: `(http.request.uri.path eq "/impressum" or http.request.uri.path eq "/impressum/" or http.request.uri.path eq "/datenschutz" or http.request.uri.path eq "/datenschutz/" or http.request.uri.path eq "/agb" or http.request.uri.path eq "/agb/") and (cf.verified_bot_category eq "AI Crawler" or cf.bot_management.verified_bot_category eq "AI Crawler")`
       },
       action: 'managed_challenge',
-      priority: 1,
-      products: ['firewall'],
       enabled: true,
     };
 
