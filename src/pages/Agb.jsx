@@ -175,6 +175,28 @@ export default function Agb() {
             </section>
 
             <section className="legal-section">
+                <h2>§8.1 Anzahlung bei Buchungen in der Hauptsaison</h2>
+                <p>
+                    Für Buchungen in der Hauptsaison (High Season) ist bei Angebotsannahme eine Anzahlung in Höhe von <strong>30% der Gesamtmiete</strong> zu leisten.
+                </p>
+                <p>
+                    <strong>Definition Hauptsaison:</strong> Als Hauptsaison gelten die folgenden Zeiträume:
+                </p>
+                <ul className="legal-list">
+                    <li>Weihnachtsferien und Winterferien (Dezember bis Februar)</li>
+                    <li>Osterferien (März bis April)</li>
+                    <li>Sommerferien (Juli bis August)</li>
+                    <li>Herbstferien (Oktober bis November)</li>
+                </ul>
+                <p>
+                    Die Anzahlung wird auf die Gesamtmiete angerechnet. Der Restbetrag ist spätestens bei Abholung bzw. Lieferung des Mietgegenstandes fällig.
+                </p>
+                <p>
+                    <strong>Stornierung und Rückzahlung:</strong> Im Falle einer Stornierung durch den Mieter wird die Anzahlung gemäß der in § 10.2 geregelten Stornobedingungen verrechnet. Ein eventuell verbleibender Restbetrag wird dem Mieter zurückerstattet.
+                </p>
+            </section>
+
+            <section className="legal-section">
                 <h2>§9 Versicherung</h2>
                 <p>
                     Eine Versicherung der Mietgegenstände durch den Vermieter ist nicht im Mietpreis enthalten. Der Mieter ist für die Versicherung der Mietgegenstände und seines Reisegepäcks selbst verantwortlich. Es wird dem Mieter empfohlen, sich diesbezüglich mit seiner Kfz-Versicherung in Verbindung zu setzen.

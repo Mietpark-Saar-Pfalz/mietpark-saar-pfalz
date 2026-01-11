@@ -836,6 +836,17 @@ export default function ProductDetail() {
                                 </div>
                             )}
 
+                            {/* High Season Anzahlung Hinweis für Dachboxen (ID 1,2,6) und Heckbox (ID 3) */}
+                            {[1, 2, 3, 6].includes(product.id) && (
+                                <div style={{ marginBottom: '1.5rem', padding: '1rem', border: '2px solid #ffc107', borderRadius: '8px', background: '#fff9e6', color: '#856404' }}>
+                                    <strong>💰 Anzahlung in der Hauptsaison:</strong>
+                                    <p style={{ marginTop: '0.5rem', marginBottom: 0, fontSize: '0.95rem' }}>
+                                        Bei Buchungen in der Hauptsaison (Weihnachts-, Winter-, Oster-, Sommer- und Herbstferien) ist eine Anzahlung von <strong>30% der Gesamtmiete</strong> bei Angebotsannahme erforderlich. 
+                                        Im Falle einer Stornierung wird die Anzahlung gemäß unserer <a href="/agb" style={{ color: '#856404', textDecoration: 'underline' }}>Stornobedingungen</a> verrechnet.
+                                    </p>
+                                </div>
+                            )}
+
                             {/* Optional Image Upload for Dachbox 1-3 and Dachträger einzeln (ID 7) */}
                             {[1, 2, 6, 7].includes(product.id) && (
                                 <div className="form-group" style={{ marginBottom: '1.5rem' }}>
