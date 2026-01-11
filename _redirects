@@ -1,0 +1,12 @@
+# Canonical redirects for SEO and coverage
+/hupfburg       /product/5   301
+/hupfburg/      /product/5   301
+/dachbox        /product/1   301
+/dachbox/       /product/1   301
+/partybox       /           301
+/partybox/      /           301
+/vermietung/fahrradtrager/   /product/4   301
+/vermietung/dachbox-und-hechbox   /product/3   301
+
+# SPA fallback
+/*    /index.html   200

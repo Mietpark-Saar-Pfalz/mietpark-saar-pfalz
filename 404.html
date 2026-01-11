@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mietpark Saar-Pfalz</title>
+    <script type="text/javascript">
+      // Set noindex/noimageai meta tags for legal pages
+      // This helps search engines and AI crawlers understand these pages should not be indexed
+      var pathname = window.location.pathname;
+      var isLegalPage = /\/(impressum|datenschutz|agb)\/?$/.test(pathname);
+      
+      if (isLegalPage) {
+        // Add noindex, nofollow meta tag
+        var noindexMeta = document.createElement('meta');
+        noindexMeta.name = 'robots';
+        noindexMeta.content = 'noindex, nofollow';
+        document.head.appendChild(noindexMeta);
+        
+        // Add noimageai meta tag
+        var noimageaiMeta = document.createElement('meta');
+        noimageaiMeta.name = 'robots';
+        noimageaiMeta.content = 'noai, noimageai';
+        document.head.appendChild(noimageaiMeta);
+      }
+    </script>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script takes the current url and converts the path and query
+      // string into just a query string, and then redirects the browser
+      // to the new url with only a query string and hash fragment,
+      // e.g., http://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+      // http://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+      // Note: this 404.html file must be at least 512 bytes for it to work
+      // with Internet Explorer (it is currently > 512 bytes)
+
+      // For Custom Domain (mietpark-saar-pfalz.com), we need to keep 0 path segments
+      // since we're serving from the root domain, not a repository path
+      var pathSegmentsToKeep = 0;
+
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to the main page...</p>
+    <p>Falls die automatische Weiterleitung nicht funktioniert, <a href="/">klicken Sie hier</a>.</p>
+  </body>
+</html>

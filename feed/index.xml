@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Mietpark Saar-Pfalz – Neuigkeiten & Angebote</title>
+    <link>https://mietpark-saar-pfalz.com/</link>
+    <description>Ihr zuverlässiger Partner für Dachboxen, Fahrradträger und mehr in Homburg.</description>
+    <language>de-DE</language>
+    <lastBuildDate>Mon, 06 Jan 2026 00:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>Unsere Vermietung für Fahrradträger</title>
+      <link>https://mietpark-saar-pfalz.com/vermietung/fahrradtrager/</link>
+      <guid isPermaLink="true">https://mietpark-saar-pfalz.com/vermietung/fahrradtrager/</guid>
+      <pubDate>Sun, 28 Dec 2025 00:00:00 GMT</pubDate>
+      <description>Alle Informationen zur Vermietung von Fahrradträgern, inkl. Verfügbarkeit und Anfrage.</description>
+    </item>
+
+    <item>
+      <title>Blog Übersicht</title>
+      <link>https://mietpark-saar-pfalz.com/blog</link>
+      <guid isPermaLink="true">https://mietpark-saar-pfalz.com/blog</guid>
+      <pubDate>Wed, 31 Dec 2025 00:00:00 GMT</pubDate>
+      <description>Neuigkeiten, Tipps und Hinweise rund um Transportlösungen.</description>
+    </item>
+  </channel>
+</rss>

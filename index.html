@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dachbox & Fahrradträger mieten | Mietpark Saar-Pfalz Homburg</title>
+    <meta name="description" content="Mieten statt kaufen: Dachboxen, Heckboxen, Fahrradträger und Wintersport-Equipment in Homburg & Saarland. Persönliche Beratung, Montagehilfe und flexible Abholung." />
+    <link rel="alternate" hreflang="de" href="https://mietpark-saar-pfalz.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://mietpark-saar-pfalz.com/" />
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Mietpark Saar-Pfalz",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Kastanienweg 17",
+        "addressLocality": "Homburg",
+        "postalCode": "66424",
+        "addressCountry": "DE"
+      },
+      "telephone": "+49 173 761 5995",
+      "email": "kontakt@mietpark-saar-pfalz.com",
+      "url": "https://mietpark-saar-pfalz.com/",
+      "image": "https://mietpark-saar-pfalz.com/images/logo.png",
+      "description": "Ihr zuverlässiger Partner für Dachboxen, Fahrradträger und mehr in Homburg.",
+      "hasMap": "https://www.google.com/maps/place/Mietpark+Saar-Pfalz/@49.333333,7.333333,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d49.333333!4d7.333333",
+      "openingHours": "Mo-Fr 09:00-18:00",
+      "priceRange": "$$"
+    }
+    </script>
+    <script type="text/javascript">
+      // Dynamically set noindex/noimageai meta tags for legal pages
+      // This runs before React mounts to ensure search engines see the correct directives
+      (function() {
+        var path = window.location.pathname;
+        var search = window.location.search;
+        
+        // Extract the actual route from SPA redirect query parameter (e.g., /?/impressum becomes /impressum)
+        var actualPath = path;
+        if (search && search.includes('/?/')) {
+          actualPath = '/' + decodeURIComponent(search.split('/?/')[1]).split('&')[0];
+        }
+        
+        // Check if current path is a legal page
+        var isLegalPage = /\/(impressum|datenschutz|agb)\/?/.test(actualPath);
+        
+        if (isLegalPage) {
+          // Add noindex, nofollow meta tag
+          var noindexMeta = document.createElement('meta');
+          noindexMeta.name = 'robots';
+          noindexMeta.content = 'noindex, nofollow';
+          document.head.appendChild(noindexMeta);
+          
+          // Add noimageai meta tag
+          var noimageaiMeta = document.createElement('meta');
+          noimageaiMeta.name = 'robots';
+          noimageaiMeta.content = 'noai, noimageai';
+          document.head.appendChild(noimageaiMeta);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-Dtg_ifIj.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BPwQ1O-P.css">
+  </head>
+  <body>
+    <!-- Video Background - wird über CSS gesteuert -->
+    <video
+      id="background-video"
+      autoplay
+      muted
+      loop
+      preload="auto"
+      poster="/images/winter_bg.jpg"
+      oncanplay="console.log('Video kann abgespielt werden')"
+      onerror="console.error('Video-Fehler:', this.error)"
+      onloadeddata="console.log('Video geladen')"
+    >
+      <source src="/video/winter1.mp4" type="video/mp4">
+      <!-- Fallback wird über CSS poster-Attribut und body background geregelt -->
+    </video>
+
+    <script>
+      // Aktiviert Inline-Playback dort, wo es unterstützt wird (ohne Lint-Warnung für nicht unterstützte Browser)
+      (() => {
+        const video = document.getElementById('background-video');
+        if (!video) return;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+      })();
+    </script>
+
+    <!-- Video Debug Info (nur im Entwicklungsmodus) -->
+    <div id="video-debug">
+      <div>Video Status: <span id="video-status">Lade...</span></div>
+      <div>Autoplay: <span id="autoplay-status">Prüfe...</span></div>
+      <button class="video-debug-toggle" onclick="toggleVideo()">Video umschalten</button>
+    </div>
+
+    <script>
+      // Video Debug Informationen (nur für Entwicklung)
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        document.getElementById('video-debug').style.display = 'block';
+
+        const video = document.getElementById('background-video');
+        const statusEl = document.getElementById('video-status');
+        const autoplayEl = document.getElementById('autoplay-status');
+
+        function updateStatus() {
+          statusEl.textContent = video.readyState >= 3 ? 'Bereit' : 'Lädt...';
+          autoplayEl.textContent = !video.paused ? 'Aktiv' : 'Blockiert';
+        }
+
+        video.addEventListener('loadstart', updateStatus);
+        video.addEventListener('canplay', updateStatus);
+        video.addEventListener('play', updateStatus);
+        video.addEventListener('pause', updateStatus);
+        video.addEventListener('error', () => {
+          statusEl.textContent = 'Fehler: ' + video.error?.code;
+          autoplayEl.textContent = 'Blockiert';
+        });
+
+        window.toggleVideo = function() {
+          if (video.paused) {
+            video.play().catch(e => console.log('Video-Play fehlgeschlagen:', e));
+          } else {
+            video.pause();
+          }
+        };
+
+        // Play-Button Funktionalität
+        const playBtn = document.getElementById('video-play-btn');
+        let autoplayAttempted = false;
+
+        // Zeige Play-Button wenn Autoplay blockiert wird
+        video.addEventListener('play', () => {
+          playBtn.style.display = 'none';
+          autoplayEl.textContent = 'Aktiv';
+        });
+
+        video.addEventListener('pause', () => {
+          if (autoplayAttempted && video.currentTime === 0) {
+            playBtn.style.display = 'flex';
+            autoplayEl.textContent = 'Blockiert';
+          }
+        });
+
+        // Play-Button Event
+        playBtn.addEventListener('click', () => {
+          video.play().catch(e => {
+            console.log('Video-Play fehlgeschlagen:', e);
+            alert('Video konnte nicht gestartet werden. Möglicherweise ist das Video-Format nicht unterstützt.');
+          });
+        });
+
+        // Versuche Video zu starten nach User-Interaktion
+        let userInteracted = false;
+        function tryAutoplay() {
+          if (!userInteracted && !autoplayAttempted) {
+            autoplayAttempted = true;
+            video.play().then(() => {
+              console.log('Autoplay erfolgreich');
+            }).catch(e => {
+              console.log('Autoplay blockiert:', e);
+              playBtn.style.display = 'flex';
+            });
+          }
+        }
+
+        // Versuche Autoplay bei verschiedenen User-Interaktionen
+        document.addEventListener('click', () => {
+          userInteracted = true;
+          tryAutoplay();
+        });
+
+        document.addEventListener('scroll', () => {
+          userInteracted = true;
+          tryAutoplay();
+        }, { once: true });
+
+        // Initialer Autoplay-Versuch (wird meist blockiert)
+        setTimeout(tryAutoplay, 1000);
+      }
+    </script>
+
+    <!-- Video Play Button (erscheint wenn Video blockiert wird) -->
+    <button id="video-play-btn" title="Winter-Video abspielen" aria-label="Winter-Hintergrundvideo abspielen">
+      ▶️
+    </button>
+
+    <div id="root"></div>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back to the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+  </body>
+</html>
